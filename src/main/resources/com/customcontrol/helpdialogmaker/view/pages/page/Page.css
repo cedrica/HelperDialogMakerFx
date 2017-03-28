@@ -1,0 +1,37 @@
+.box{
+	-fx-background-color:#66ccff;-fx-border-radius:50.0;-fx-background-radius:50.0;
+}
+.round-page-button{
+	-fx-background-color:transparent;
+	-fx-background-radius:20.0;
+	-fx-border-radius:20.0;
+	-fx-border-color:gray;
+	-fx-border-width:1;
+}
+
+.button, .label{
+	-fx-text-fill:#fff
+}
+
+#btnInfo:hover{
+	-fx-cursor: hand;
+	-fx-background-color:#3399ff;
+	-fx-text-fill:#fff;
+}
+#btnInfo{
+		-fx-background-radius:20.0;
+	-fx-border-radius:20.0;
+	-fx-max-height:20;
+	-fx-max-width:20;
+	-fx-background-color:#fff;-fx-border-color:#fff;
+	-fx-text-fill:gray;
+}
+
+#btnOk{
+	-fx-cursor: hand;
+			-fx-background-radius:10.0;
+	-fx-border-radius:10.0;
+	-fx-background-color:#fff;
+	-fx-border-color:#fff;
+	-fx-text-fill:gray;
+}

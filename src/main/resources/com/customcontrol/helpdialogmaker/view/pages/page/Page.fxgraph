@@ -1,0 +1,71 @@
+package com.customcontrol.helpdialogmaker.view.pages.page
+
+import javafx.scene.layout.VBox
+import javafx.scene.layout.HBox
+import javafx.scene.control.Label
+import javafx.scene.control.Button
+import org.controlsfx.glyphfont.Glyph
+import javafx.geometry.Insets
+import javafx.scene.layout.StackPane
+import javafx.scene.control.TextField
+import com.customcontrol.helpdialogmaker.viewmodel.PageViewModel
+import com.customcontrol.helpdialogmaker.view.PageView
+
+component Box controlledby PageView styledwith [ "/com/customcontrol/helpdialogmaker/view/pages/page/Page.css" ] {
+	define PageViewModel id pageViewModel HBox {
+		stylesheets : [
+			"/com/customcontrol/helpdialogmaker/view/pages/page/Page.css"
+		],
+		padding : Insets {
+			left : 10,
+			right : 10
+		},
+		styleClass : [
+			"box"
+		],
+		maxHeight : 50,
+		minHeight : 40,
+		spacing : 5,
+		HBox {
+			spacing : 5,
+			alignment : "CENTER",
+			Label id lblHome {
+				graphic : Glyph {
+					icon : "HOME",
+					fontFamily : "FontAwesome"
+				}
+			}
+
+		},
+		HBox {
+			static hgrow : "ALWAYS",
+			alignment : "CENTER",
+			StackPane {
+				static hgrow : "ALWAYS",
+				Label id lblName {
+					text : bind pageViewModel#name
+				},
+				TextField id tfName {
+
+					visible : true
+				}
+			}
+		},
+		HBox{alignment : "CENTER_RIGHT",
+			StackPane {
+				Button id btnInfo {
+					text : "..."
+				},
+				Button id btnOk {
+					graphic : Glyph{
+						style : "-fx-text-fill:green",
+						icon : "CHECK",
+						fontFamily : "FontAwesome"
+					},
+					visible : true
+				}
+			}
+		}
+
+	}
+}
