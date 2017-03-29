@@ -1,3 +1,4 @@
+
 package com.customcontrol.helpdialogmaker.view.pages.page.pageinfo
 
 import javafx.scene.layout.VBox
@@ -5,9 +6,9 @@ import javafx.scene.layout.HBox
 import javafx.scene.control.Label
 import javafx.scene.control.Button
 import org.controlsfx.glyphfont.Glyph
-import com.customcontrol.helpdialogmaker.view.BoxInfo
 import javafx.geometry.Insets
-component BoxInfo controlledby BoxInfo styledwith["/com/customcontrol/helpdialogmaker/view/pages/page/pageinfo/PageInfo.css"]{
+import com.customcontrol.helpdialogmaker.view.PageInfoView
+component BoxInfo controlledby PageInfoView styledwith["/com/customcontrol/helpdialogmaker/view/pages/page/pageinfo/PageInfo.css"]{
 	VBox {
 		padding : Insets{
 			bottom : 10,

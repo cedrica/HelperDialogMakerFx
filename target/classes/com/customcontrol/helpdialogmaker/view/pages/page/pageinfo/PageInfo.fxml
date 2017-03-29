@@ -11,7 +11,7 @@
 <?import org.controlsfx.glyphfont.Glyph?>
 <?scenebuilder-stylesheet /com/customcontrol/helpdialogmaker/view/pages/page/pageinfo/PageInfo.css?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.customcontrol.helpdialogmaker.view.BoxInfo" spacing="5">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.customcontrol.helpdialogmaker.view.PageInfoView" spacing="5">
 
 	<HBox fx:id="hbRename" maxHeight="30" alignment="CENTER" VBox.vgrow="ALWAYS"> 
 		<Label style="-fx-text-fill:#333" text="Umbenennen"> 

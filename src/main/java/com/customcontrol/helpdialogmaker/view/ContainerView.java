@@ -7,6 +7,7 @@ import org.controlsfx.control.PopOver;
 import org.controlsfx.control.PopOver.ArrowLocation;
 
 import com.customcontrol.helpdialogmaker.consts.Screens;
+import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 import com.customcontrol.helpdialogmaker.helper.Helper;
 
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class ContainerView implements Initializable {
 
@@ -24,12 +26,10 @@ public class ContainerView implements Initializable {
 	@FXML
 	Button			btnView;
 	private PopOver	popOver;
-
+	private Stage stage;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	
-		
-		btnSS.setOnAction(this::onCreateNewPage);
+//		btnSS.setOnAction(this::onCreateNewPage);
 		btnPages.setOnAction(this::onPagesClick);
 	}
 
@@ -37,11 +37,26 @@ public class ContainerView implements Initializable {
 		popOver = new PopOver();
 		popOver.setArrowLocation(ArrowLocation.TOP_CENTER);
 		FXMLLoader fxmlLoader = Helper.createView(Screens.PAGES);
+		PagesView pagesView = fxmlLoader.getController();
+		pagesView.setStage(stage);
 		popOver.setContentNode(fxmlLoader.getRoot());
-		popOver.setDetachable(false);
+		popOver.setDetachable(true);
 		popOver.show(btnPages);
+		popOver.addEventFilter(PopOverEvent.CLOSE, e ->{
+			popOver.hide();
+		});
 	}
 	
+	
+	public Stage getStage() {
+		return stage;
+	}
+
+	
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
 	public void onCreateNewPage(ActionEvent evt) {
 		popOver = new PopOver();
 		popOver.setArrowLocation(ArrowLocation.TOP_CENTER);
