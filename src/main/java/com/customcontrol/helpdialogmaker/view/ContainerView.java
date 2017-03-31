@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class ContainerView implements Initializable {
@@ -25,8 +26,10 @@ public class ContainerView implements Initializable {
 	Button			btnSS;
 	@FXML
 	Button			btnView;
+	@FXML WebView wvPreview;
 	private PopOver	popOver;
 	private Stage stage;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 //		btnSS.setOnAction(this::onCreateNewPage);
@@ -34,6 +37,7 @@ public class ContainerView implements Initializable {
 	}
 
 	public void onPagesClick(ActionEvent evt) {
+		btnPages.setDisable(true);
 		popOver = new PopOver();
 		popOver.setArrowLocation(ArrowLocation.TOP_CENTER);
 		FXMLLoader fxmlLoader = Helper.createView(Screens.PAGES);
@@ -44,6 +48,7 @@ public class ContainerView implements Initializable {
 		popOver.show(btnPages);
 		popOver.addEventFilter(PopOverEvent.CLOSE, e ->{
 			popOver.hide();
+			btnPages.setDisable(false);
 		});
 	}
 	
@@ -57,12 +62,4 @@ public class ContainerView implements Initializable {
 		this.stage = stage;
 	}
 
-	public void onCreateNewPage(ActionEvent evt) {
-		popOver = new PopOver();
-		popOver.setArrowLocation(ArrowLocation.TOP_CENTER);
-		FXMLLoader fxmlLoader = Helper.createView(Screens.PAGE);
-		popOver.setContentNode(fxmlLoader.getRoot());
-		popOver.setDetachable(false);
-		popOver.show(btnPages);
-	}
 }

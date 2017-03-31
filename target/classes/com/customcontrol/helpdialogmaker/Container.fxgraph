@@ -4,6 +4,7 @@ import javafx.scene.layout.VBox
 import javafx.scene.layout.HBox
 import javafx.scene.control.Button
 import com.customcontrol.helpdialogmaker.view.ContainerView
+import javafx.scene.web.WebView
 
 component Container controlledby ContainerView styledwith["/com/customcontrol/helpdialogmaker/Container.css"]{
 	VBox {
@@ -22,6 +23,12 @@ component Container controlledby ContainerView styledwith["/com/customcontrol/he
 			},
 			Button id btnSS{
 				text : "S and S"
+			}
+		},
+		VBox{
+			static vgrow : "ALWAYS",
+			WebView id wvPreview{
+				static vgrow : "ALWAYS"
 			}
 		}
 	}

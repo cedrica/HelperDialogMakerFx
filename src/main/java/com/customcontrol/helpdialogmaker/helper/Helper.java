@@ -120,4 +120,11 @@ public class Helper {
 		return vbBox;
 	}
 	
+	public static void roundVBox(VBox vbBox,double size) {
+		vbBox.setMinSize(size, size);
+		Circle clip = new Circle(size/2,size/2, size/2);
+		vbBox.setClip(clip);
+		vbBox.setAlignment(Pos.CENTER);
+	}
+	
 }

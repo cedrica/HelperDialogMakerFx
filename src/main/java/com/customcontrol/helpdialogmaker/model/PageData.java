@@ -8,7 +8,6 @@ public class PageData {
 	private int				index;
 	private String			name;
 	private String			text;
-	private boolean			child;
 	private List<byte[]>	images;
 	private List<PageData>	subPages;
 
@@ -18,14 +17,6 @@ public class PageData {
 		subPages = new ArrayList<>();
 	}
 
-
-	public boolean isChild() {
-		return this.child;
-	}
-
-	public void setChild(boolean child) {
-		this.child = child;
-	}
 
 	public int getIndex() {
 		return index;

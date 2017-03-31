@@ -49,11 +49,11 @@ public class PagesView implements Initializable {
 	}
 
 	private void recursivInitPages(TreeItem<String> root, List<PageView> pages) {
+		root.setExpanded(true);
 		for (PageView pageView : pages) {
 			Node content = pageView.getMySquelet().getRoot();
 			if (pageView.isHome()) {
 				pageView.setHomeIconVisible(true);
-//				pageView.setNameEntrancePossible(false);
 			}
 			TreeItem<String> pageTreeItem = new TreeItem<String>("", content);
 			if (!pageView.getSubPages().isEmpty()) {
@@ -86,7 +86,6 @@ public class PagesView implements Initializable {
 			pageView.setStage(stage);
 			pageView.setMySquelet(fxmlLoader);
 			pageView.setHomeIconVisible(false);
-//			pageView.setNameEntrancePossible(true);
 			squelet.setUserData(pageView);
 			TreeItem<String> childItem = new TreeItem<String>("", squelet);
 			recursivAddSubPage(rootNode, childItem, pageData, pageView);
@@ -174,10 +173,8 @@ public class PagesView implements Initializable {
 		if (pages != null && pages.isEmpty()) {
 			pageView.setHome(true);
 			pageView.setHomeIconVisible(true);
-//			pageView.setNameEntrancePossible(true);
 		} else {
 			pageView.setHomeIconVisible(false);
-//			pageView.setNameEntrancePossible(true);
 		}
 		PageData pageData = new PageData(PAGE_INDEX_COUNTER++, pageView.getPageViewModel().getName());
 		pageView.getPageViewModel().setPageData(pageData);
