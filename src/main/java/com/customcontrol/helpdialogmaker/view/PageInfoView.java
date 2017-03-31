@@ -10,7 +10,6 @@ import com.customcontrol.helpdialogmaker.session.Session;
 import com.customcontrol.helpdialogmaker.viewmodel.PageInfoViewModel;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
@@ -25,41 +24,70 @@ public class PageInfoView implements Initializable {
 	@FXML
 	HBox						hbRemove;
 	private PageInfoViewModel	pageInfoViewModel;
-	private Stage stage;
-	
+	private Stage				stage;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		pageInfoViewModel = new PageInfoViewModel();
 		hbRemove.setOnMouseClicked(evt -> {
 			if (evt.getButton() == MouseButton.PRIMARY) {
-				List<FXMLLoader>pages = Session.createInstance().getPages();
-				int i = 0;
-				for (FXMLLoader fxmlLoader : pages) {
-					PageView pageView = fxmlLoader.getController();
-					if(pageInfoViewModel.getPage().getIndex() == pageView.getPageViewModel().getPage().getIndex()){
-						break;
+				List<PageView> pages = Session.createInstance().getPages();
+				if (pageInfoViewModel.isChild()) {
+					recursivSearchAndRemove(pageInfoViewModel.getPageData().getIndex(), pages);
+				} else {
+					for (PageView pageView : pages) {
+						if (pageInfoViewModel.getPageData().getIndex() == pageView.getPageViewModel().getPageData().getIndex()) {
+							break;
+						}
 					}
-					i++;
 				}
-				Session.createInstance().getPages().remove(i);
-				stage.fireEvent(new PageEvent(PageEvent.REMOVE,pageInfoViewModel.getPage()));
+				stage.fireEvent(new PageEvent(PageEvent.REMOVE, pageInfoViewModel.getPageData()));
 				hbRemove.fireEvent(new PopOverEvent(PopOverEvent.CLOSE));
 			}
 		});
-		
+
 		hbUnderPage.setOnMouseClicked(evt -> {
 			if (evt.getButton() == MouseButton.PRIMARY) {
+				hbUnderPage.fireEvent(new PopOverEvent(PopOverEvent.CLOSE));
+				stage.fireEvent(new PageEvent(PageEvent.ADD_SUB_PAGE, pageInfoViewModel.getPageData()));
 			}
 		});
-		
+
 		hbRename.setOnMouseClicked(evt -> {
 			if (evt.getButton() == MouseButton.PRIMARY) {
+				pageInfoViewModel.setEditable(true);
 			}
 		});
 	}
 
-	
-	
+
+	private void recursivSearchAndRemove(int childIndex, List<PageView> pages) {
+		boolean found = false;
+		int i = 0;
+		for (PageView pageView : pages) {
+			if (childIndex == pageView.getPageViewModel().getPageData().getIndex()) {
+				found = true;
+				break;
+			} else {
+				if (!pageView.getSubPages().isEmpty())//has children
+					recursivSearchAndRemove(childIndex, pageView.getSubPages());
+			}
+		}
+		if (found) {
+			for (PageView pageView : pages) {
+				i++;
+				if(pageView.getPageViewModel().getPageData().getIndex() == childIndex){
+					break;
+				}
+			}
+			pages.remove(i);
+			return;
+		}
+	}
+
+
+
+
 	public Stage getStage() {
 		return stage;
 	}
@@ -67,7 +95,7 @@ public class PageInfoView implements Initializable {
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
-	
+
 	public PageInfoViewModel getPageInfoViewModel() {
 		return this.pageInfoViewModel;
 	}

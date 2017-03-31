@@ -3,11 +3,11 @@ package com.customcontrol.helpdialogmaker.session;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.fxml.FXMLLoader;
+import com.customcontrol.helpdialogmaker.view.PageView;
 
 public class Session {
 	private static Session				session	= null;
-	public  List<FXMLLoader> pages = new ArrayList<>();
+	public  List<PageView> pages = new ArrayList<>();
 	
 	private Session() {
 	}
@@ -20,11 +20,11 @@ public class Session {
 		return session;
 	}
 
-	public List<FXMLLoader> getPages() {
+	public List<PageView> getPages() {
 		return pages;
 	}
 	
-	public void setPages(List<FXMLLoader> pages) {
+	public void setPages(List<PageView> pages) {
 		this.pages = pages;
 	}
 
