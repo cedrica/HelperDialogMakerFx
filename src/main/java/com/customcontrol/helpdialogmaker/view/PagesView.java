@@ -9,6 +9,7 @@ import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.customcontrol.helpdialogmaker.helper.Helper;
 import com.customcontrol.helpdialogmaker.model.PageData;
 import com.customcontrol.helpdialogmaker.session.Session;
+import com.customcontrol.helpdialogmaker.viewmodel.PagesViewModel;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,9 +35,11 @@ public class PagesView implements Initializable {
 	private TreeItem<String>	rootNode;
 	private int					PAGE_INDEX_COUNTER	= 1;
 	private Stage				stage;
-
+	private PagesViewModel pagesViewModel;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		pagesViewModel = new PagesViewModel();
 		rootNode = new TreeItem<String>("");
 		rootNode.setExpanded(true);
 		// Creating HOME
@@ -156,6 +159,7 @@ public class PagesView implements Initializable {
 
 	public void onClose(ActionEvent evt) {
 		tvBaum.fireEvent(new WindowEvent(null, WindowEvent.WINDOW_CLOSE_REQUEST));
+		pagesViewModel.setBtnPagesDisabled(false);
 	}
 
 	public void onAddPage(ActionEvent evt) {
@@ -195,5 +199,16 @@ public class PagesView implements Initializable {
 		handleEvent();
 	}
 
+	
+	public PagesViewModel getPagesViewModel() {
+		return pagesViewModel;
+	}
+
+	
+	public void setPagesViewModel(PagesViewModel pagesViewModel) {
+		this.pagesViewModel = pagesViewModel;
+	}
+
+	
 
 }

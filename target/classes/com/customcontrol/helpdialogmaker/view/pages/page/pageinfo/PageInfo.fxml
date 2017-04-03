@@ -23,6 +23,16 @@
 			<String fx:value="item-box-info" />
 		</styleClass>
 	</HBox>
+	<HBox fx:id="hbConfig" maxHeight="30" alignment="CENTER" VBox.vgrow="ALWAYS"> 
+		<Label style="-fx-text-fill:#333" text="Einstellung"> 
+			<graphic>
+				<Glyph style="-fx-text-fill:#333" icon="GEAR" fontFamily="FontAwesome"/> 
+			</graphic>
+		</Label>
+		<styleClass>
+			<String fx:value="item-box-info" />
+		</styleClass>
+	</HBox>
 	<HBox fx:id="hbUnderPage" maxHeight="30" alignment="CENTER" VBox.vgrow="ALWAYS"> 
 		<Label style="-fx-text-fill:#333" text="Unterseite"> 
 			<graphic>

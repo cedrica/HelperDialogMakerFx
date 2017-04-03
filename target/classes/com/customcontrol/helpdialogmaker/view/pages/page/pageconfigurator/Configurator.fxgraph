@@ -1,0 +1,84 @@
+package com.customcontrol.helpdialogmaker.view.pages.page.pageconfigurator
+
+import javafx.scene.layout.VBox
+import javafx.scene.control.TextArea
+import javafx.scene.control.Button
+import javafx.scene.control.Label
+import javafx.scene.control.ComboBox
+import javafx.scene.layout.HBox
+import org.controlsfx.glyphfont.Glyph
+import java.lang.Double
+import javafx.scene.image.ImageView
+import javafx.scene.web.HTMLEditor
+import javafx.scene.control.Separator
+import javafx.geometry.Insets
+import com.customcontrol.helpdialogmaker.view.ConfiguratorView
+
+component Configuration controlledby ConfiguratorView styledwith [
+	"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css" ] {
+	VBox {
+		stylesheets : [
+			"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css"
+		],
+		spacing : 10,
+		padding : Insets {
+			bottom : 10,
+			left : 10,
+			right : 10,
+			top : 10
+
+		},
+		HBox {
+			alignment : "CENTER",
+			Label id lblTitle {
+				text : "Home config"
+			}
+		},
+		HBox {
+			Button id btnAddNewRow{
+				graphic : Glyph {
+					icon : "PLUS_CIRCLE",
+					fontFamily : "FontAwesome"
+				},
+				text : "Neue Zeile hinzufügen"
+			}
+		},
+		HBox {
+			spacing : 5,
+			HBox {
+				static hgrow : "ALWAYS",
+				ComboBox < ? > id cbMuster {
+					static hgrow : "ALWAYS",
+					maxWidth : const Double#MAX_VALUE
+				}
+			},
+			VBox id vbInfo {
+				style : "-fx-border-width:1px;-fx-background-color:darkorange;",
+				VBox {
+					alignment : "CENTER",
+					static vgrow : "ALWAYS",
+					Label id lblInfo {
+						graphic : Glyph {
+							style : "-fx-text-fill:#fff",
+							icon : "INFO",
+							fontFamily : "FontAwesome",
+							fontSize : 20
+						}
+					}
+				}
+
+			}
+		},
+		Separator {
+			orientation : "HORIZONTAL"
+		},
+		VBox id vbMustContainer {
+			static vgrow : "ALWAYS",
+			spacing : 10
+	
+		},
+		Button id btnLoadImage {
+			text : "Seite speichern"
+		}
+	}
+}

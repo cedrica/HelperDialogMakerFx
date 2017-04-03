@@ -29,19 +29,19 @@ public class ContainerView implements Initializable {
 	@FXML WebView wvPreview;
 	private PopOver	popOver;
 	private Stage stage;
+	private PagesView pagesView;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-//		btnSS.setOnAction(this::onCreateNewPage);
 		btnPages.setOnAction(this::onPagesClick);
+		
 	}
 
 	public void onPagesClick(ActionEvent evt) {
-		btnPages.setDisable(true);
 		popOver = new PopOver();
 		popOver.setArrowLocation(ArrowLocation.TOP_CENTER);
 		FXMLLoader fxmlLoader = Helper.createView(Screens.PAGES);
-		PagesView pagesView = fxmlLoader.getController();
+		pagesView = fxmlLoader.getController();
 		pagesView.setStage(stage);
 		popOver.setContentNode(fxmlLoader.getRoot());
 		popOver.setDetachable(true);
@@ -50,6 +50,7 @@ public class ContainerView implements Initializable {
 			popOver.hide();
 			btnPages.setDisable(false);
 		});
+		btnPages.disableProperty().bind(pagesView.getPagesViewModel().btnPagesDisabledProperty());
 	}
 	
 	

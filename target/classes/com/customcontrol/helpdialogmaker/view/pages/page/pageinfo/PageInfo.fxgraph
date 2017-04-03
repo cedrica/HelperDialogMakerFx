@@ -36,6 +36,23 @@ component BoxInfo controlledby PageInfoView styledwith["/com/customcontrol/helpd
 				text : "Umbenennen"
 			}
 		},
+				HBox id hbConfig {
+			static vgrow : "ALWAYS",
+			maxHeight : 30,
+			alignment : "CENTER",
+			styleClass : [
+				"item-box-info"
+			],
+
+			Label {style : "-fx-text-fill:#333",
+				graphic : Glyph {
+					style : "-fx-text-fill:#333",
+					icon : "GEAR",
+					fontFamily : "FontAwesome"
+				},
+				text : "Einstellung"
+			}
+		},
 		HBox id hbUnderPage {
 			static vgrow : "ALWAYS",
 			maxHeight : 30,
