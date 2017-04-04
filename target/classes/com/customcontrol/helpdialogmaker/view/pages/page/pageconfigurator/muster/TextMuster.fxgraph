@@ -1,0 +1,8 @@
+package com.customcontrol.helpdialogmaker.view.pages.page.pageconfigurator.muster
+import javafx.scene.layout.VBox
+
+component TextMuster {
+	VBox {
+		//TODO Add Nodes
+	}
+}

@@ -13,11 +13,37 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.glyphfont.Glyph?>
 <?scenebuilder-stylesheet /com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css?>
+<?scenebuilder-stylesheet /com/customcontrol/helpdialogmaker/bootstrap.css?>
 
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.customcontrol.helpdialogmaker.view.ConfiguratorView" spacing="10">
 
 	<HBox alignment="CENTER"> 
-		<Label fx:id="lblTitle" text="Home config"/> 
+		<Label fx:id="lblTitle"> 
+			<styleClass>
+				<String fx:value="h1" />
+			</styleClass>
+		</Label>
+	</HBox>
+	<HBox spacing="5"> 
+		<VBox> 
+			<Label text="Muster Wählen"> 
+				<styleClass>
+					<String fx:value="bold" />
+				</styleClass>
+			</Label>
+			<HBox spacing="5"> 
+				<ComboBox fx:id="cbMuster" minHeight="30" HBox.hgrow="ALWAYS"> 
+					<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
+				</ComboBox>
+				<VBox fx:id="vbInfo" style="-fx-border-width:1px;-fx-background-color:darkorange;" alignment="CENTER" HBox.hgrow="ALWAYS"> 
+					<Label fx:id="lblInfo"> 
+						<graphic>
+							<Glyph style="-fx-text-fill:#fff" icon="INFO" fontFamily="FontAwesome" fontSize="15"/> 
+						</graphic>
+					</Label>
+				</VBox>
+			</HBox>
+		</VBox>
 	</HBox>
 	<HBox> 
 		<Button fx:id="btnAddNewRow" text="Neue Zeile hinzufügen"> 
@@ -26,27 +52,12 @@
 			</graphic>
 		</Button>
 	</HBox>
-	<HBox spacing="5"> 
-		<HBox HBox.hgrow="ALWAYS"> 
-			<ComboBox fx:id="cbMuster" HBox.hgrow="ALWAYS"> 
-				<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
-			</ComboBox>
-		</HBox>
-		<VBox fx:id="vbInfo" style="-fx-border-width:1px;-fx-background-color:darkorange;"> 
-			<VBox alignment="CENTER" VBox.vgrow="ALWAYS"> 
-				<Label fx:id="lblInfo"> 
-					<graphic>
-						<Glyph style="-fx-text-fill:#fff" icon="INFO" fontFamily="FontAwesome" fontSize="20"/> 
-					</graphic>
-				</Label>
-			</VBox>
-		</VBox>
-	</HBox>
 	<Separator orientation="HORIZONTAL"/> 
 	<VBox fx:id="vbMustContainer" spacing="10" VBox.vgrow="ALWAYS"/> 
 	<Button fx:id="btnLoadImage" text="Seite speichern"/> 
 	<stylesheets>
 		<String fx:value="/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css" />
+		<String fx:value="/com/customcontrol/helpdialogmaker/bootstrap.css" />
 	</stylesheets>
 	<padding>
 		<Insets bottom="10" left="10" right="10" top="10"/> 

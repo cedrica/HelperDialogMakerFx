@@ -71,6 +71,7 @@ public class PageInfoView implements Initializable {
 				FXMLLoader parent = Helper.createView(Screens.CONFIGURATOR);
 				Stage stage = DialogHelper.dialogStage(parent.getRoot(), Modality.WINDOW_MODAL, "Einstellung",null);
 				ConfiguratorView configuratorView = parent.getController();
+				configuratorView.getConfigurationViewModel().setTitle(pageInfoViewModel.getPageData().getName());
 				configuratorView.setStage(stage);
 			}
 		});

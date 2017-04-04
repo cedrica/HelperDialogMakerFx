@@ -66,6 +66,7 @@ public class PageView implements Initializable {
 
 	public void onOk(ActionEvent evt) {
 		 pageInfoView.getPageInfoViewModel().setEditable(false);
+		 pageViewModel.getPageData().setName(pageViewModel.getName());
 	}
 
 	public void onInfo(ActionEvent evt) {

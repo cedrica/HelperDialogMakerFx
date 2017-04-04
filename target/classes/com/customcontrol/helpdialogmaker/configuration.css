@@ -1,0 +1,12 @@
+.root{
+    /* Gradient and radial have to be generate via online generator */
+    
+    /* */
+    -fx-well-bg:gray;
+    -fx-well-label: #fff;
+    -fx-well-border-col:#fff;
+    -fx-date-picker-filter: #111;
+    -fx-button-label: gray;
+    -fx-button-label-hover: darkorange;
+    -fx-root-bg-color:#fff;
+}

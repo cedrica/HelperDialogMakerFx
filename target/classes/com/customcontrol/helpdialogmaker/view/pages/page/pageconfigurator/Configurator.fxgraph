@@ -15,10 +15,11 @@ import javafx.geometry.Insets
 import com.customcontrol.helpdialogmaker.view.ConfiguratorView
 
 component Configuration controlledby ConfiguratorView styledwith [
-	"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css" ] {
+	"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css","/com/customcontrol/helpdialogmaker/bootstrap.css" ] {
 	VBox {
 		stylesheets : [
-			"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css"
+			"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css",
+			"/com/customcontrol/helpdialogmaker/bootstrap.css"
 		],
 		spacing : 10,
 		padding : Insets {
@@ -31,11 +32,42 @@ component Configuration controlledby ConfiguratorView styledwith [
 		HBox {
 			alignment : "CENTER",
 			Label id lblTitle {
-				text : "Home config"
+				styleClass : ["h1"]
 			}
 		},
 		HBox {
-			Button id btnAddNewRow{
+			spacing : 5,
+			VBox {
+				Label {
+					styleClass : ["bold"],
+					text : "Muster Wählen"
+				},
+				HBox {
+					spacing : 5,
+					ComboBox < ? > id cbMuster {
+						static hgrow : "ALWAYS",
+						maxWidth : const Double#MAX_VALUE,
+						minHeight : 30
+					},
+					VBox id vbInfo {
+						style : "-fx-border-width:1px;-fx-background-color:darkorange;",
+						alignment : "CENTER",
+						static hgrow : "ALWAYS",
+						Label id lblInfo {
+							graphic : Glyph {
+								style : "-fx-text-fill:#fff",
+								icon : "INFO",
+								fontFamily : "FontAwesome",
+								fontSize : 15
+							}
+						}
+					}
+				}
+
+			}
+		},
+		HBox {
+			Button id btnAddNewRow {
 				graphic : Glyph {
 					icon : "PLUS_CIRCLE",
 					fontFamily : "FontAwesome"
@@ -43,39 +75,14 @@ component Configuration controlledby ConfiguratorView styledwith [
 				text : "Neue Zeile hinzufügen"
 			}
 		},
-		HBox {
-			spacing : 5,
-			HBox {
-				static hgrow : "ALWAYS",
-				ComboBox < ? > id cbMuster {
-					static hgrow : "ALWAYS",
-					maxWidth : const Double#MAX_VALUE
-				}
-			},
-			VBox id vbInfo {
-				style : "-fx-border-width:1px;-fx-background-color:darkorange;",
-				VBox {
-					alignment : "CENTER",
-					static vgrow : "ALWAYS",
-					Label id lblInfo {
-						graphic : Glyph {
-							style : "-fx-text-fill:#fff",
-							icon : "INFO",
-							fontFamily : "FontAwesome",
-							fontSize : 20
-						}
-					}
-				}
 
-			}
-		},
 		Separator {
 			orientation : "HORIZONTAL"
 		},
 		VBox id vbMustContainer {
 			static vgrow : "ALWAYS",
 			spacing : 10
-	
+
 		},
 		Button id btnLoadImage {
 			text : "Seite speichern"

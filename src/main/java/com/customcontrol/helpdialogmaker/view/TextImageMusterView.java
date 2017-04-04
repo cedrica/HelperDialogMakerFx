@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
 
-public class TextMuster  implements Initializable{
+public class TextImageMusterView  implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

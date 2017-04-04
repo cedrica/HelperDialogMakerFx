@@ -1,6 +1,7 @@
 package com.customcontrol.helpdialogmaker.event;
 
 
+import com.customcontrol.helpdialogmaker.model.ConfigurationData;
 import com.customcontrol.helpdialogmaker.model.PageData;
 
 import javafx.event.Event;
@@ -12,15 +13,30 @@ public class PageEvent extends Event {
 	public static final EventType<PageEvent>	REMOVE	= new EventType<>(Event.ANY, "REMOVE");
 	public static final EventType<PageEvent> ADD_SUB_PAGE = new EventType<>(Event.ANY, "ADD_SUB_PAGE");
 	public static final EventType<PageEvent> CONFIGURE = new EventType<>(Event.ANY, "CONFIGURE");
+	public static final EventType<PageEvent> REMOVE_ROW = new EventType<>(Event.ANY, "REMOVE_ROW");
 	private PageData pageData;
+	private ConfigurationData configurationData;
+	
 	public PageEvent(EventType<PageEvent> eventType, PageData pageData) {
 		super(eventType);
 		this.pageData = pageData;
+	}
+	
+	public PageEvent(EventType<PageEvent> eventType, ConfigurationData configurationData) {
+		super(eventType);
+		this.pageData = pageData;
+		this.configurationData = configurationData;
 	}
 	
 	public PageData getPage() {
 		return pageData;
 	}
 
+	
+	public ConfigurationData getConfigurationData() {
+		return configurationData;
+	}
+
+	
 	
 }

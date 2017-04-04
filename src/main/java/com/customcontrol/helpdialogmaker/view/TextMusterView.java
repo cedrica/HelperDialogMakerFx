@@ -5,12 +5,11 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
 
-public class ImageMuster implements Initializable {
+public class TextMusterView  implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }
