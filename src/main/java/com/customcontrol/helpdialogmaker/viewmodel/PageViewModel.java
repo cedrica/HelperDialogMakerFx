@@ -1,5 +1,6 @@
 package com.customcontrol.helpdialogmaker.viewmodel;
 
+import com.customcontrol.helpdialogmaker.model.ConfigurationData;
 import com.customcontrol.helpdialogmaker.model.PageData;
 
 import javafx.beans.property.BooleanProperty;
@@ -9,9 +10,10 @@ import javafx.beans.property.StringProperty;
 
 public class PageViewModel {
 
-	private StringProperty	name			= new SimpleStringProperty();
-	private BooleanProperty	tfNameVisible	= new SimpleBooleanProperty(true);
-	private PageData		pageData;
+	private StringProperty		name			= new SimpleStringProperty();
+	private BooleanProperty		tfNameVisible	= new SimpleBooleanProperty(true);
+	private PageData			pageData;
+	private ConfigurationData	configurationData;
 
 	public PageData getPageData() {
 		return pageData;
@@ -48,6 +50,16 @@ public class PageViewModel {
 
 	public final void setTfNameVisible(final boolean nameVisible) {
 		this.tfNameVisibleProperty().set(nameVisible);
+	}
+
+
+	public void setConfigurationData(ConfigurationData configurationData) {
+		this.configurationData = configurationData;
+	}
+
+
+	public ConfigurationData getConfigurationData() {
+		return this.configurationData;
 	}
 
 

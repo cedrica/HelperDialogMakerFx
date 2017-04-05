@@ -13,9 +13,11 @@ import javafx.scene.web.HTMLEditor
 import javafx.scene.control.Separator
 import javafx.geometry.Insets
 import com.customcontrol.helpdialogmaker.view.ConfiguratorView
+import javafx.scene.control.ScrollPane
 
 component Configuration controlledby ConfiguratorView styledwith [
-	"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css","/com/customcontrol/helpdialogmaker/bootstrap.css" ] {
+	"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css",
+	"/com/customcontrol/helpdialogmaker/bootstrap.css" ] {
 	VBox {
 		stylesheets : [
 			"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css",
@@ -32,14 +34,18 @@ component Configuration controlledby ConfiguratorView styledwith [
 		HBox {
 			alignment : "CENTER",
 			Label id lblTitle {
-				styleClass : ["h1"]
+				styleClass : [
+					"h1"
+				]
 			}
 		},
 		HBox {
 			spacing : 5,
 			VBox {
 				Label {
-					styleClass : ["bold"],
+					styleClass : [
+						"bold"
+					],
 					text : "Muster Wählen"
 				},
 				HBox {
@@ -79,13 +85,33 @@ component Configuration controlledby ConfiguratorView styledwith [
 		Separator {
 			orientation : "HORIZONTAL"
 		},
-		VBox id vbMustContainer {
+		ScrollPane {
 			static vgrow : "ALWAYS",
-			spacing : 10
 
+			fitToHeight : true,
+			fitToWidth : true,
+			VBox id vbMustContainer {
+				style : "-fx-background-color:#fff",
+				padding : Insets {
+					bottom : 10,
+					left : 10,
+					right : 10,
+					top : 10
+				},
+				spacing : 10,
+				fillWidth : true
+
+			}
 		},
-		Button id btnLoadImage {
-			text : "Seite speichern"
+		HBox {
+			alignment : "CENTER_RIGHT",
+			Button id btnSavePage {
+				text : "Seite speichern"
+			},
+			Button id btnClose {
+				text : "Schliessen"
+			}
 		}
+
 	}
 }

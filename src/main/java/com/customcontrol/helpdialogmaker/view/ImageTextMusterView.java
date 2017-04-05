@@ -24,6 +24,7 @@ import javafx.scene.web.HTMLEditor;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class ImageTextMusterView implements Initializable {
 
@@ -47,6 +48,7 @@ public class ImageTextMusterView implements Initializable {
 	private ImageTextMusterViewModel	imageTextMusterViewModel;
 	private byte[]						imageBytes;
 	private WebEngine					webEngine;
+	private Stage stage;
 	@FXML
 	HBox								hbViewer;
 	@FXML
@@ -90,7 +92,7 @@ public class ImageTextMusterView implements Initializable {
 	}
 
 	public void onRemoveRow(ActionEvent evt){
-		btnRemoveRow.fireEvent(new PageEvent(PageEvent.REMOVE_ROW, new ConfigurationData(imageTextMusterViewModel.getPosInVbMusterContainer())));
+		stage.fireEvent(new PageEvent(PageEvent.REMOVE_ROW, new ConfigurationData(imageTextMusterViewModel.getPosInVbMusterContainer())));
 	}
 	
 	public void onSave(ActionEvent evt) {
@@ -114,6 +116,16 @@ public class ImageTextMusterView implements Initializable {
 	}
 
 	
+	
+	public Stage getStage() {
+		return stage;
+	}
+
+	
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
 	public ImageTextMusterViewModel getImageTextMusterViewModel() {
 		return imageTextMusterViewModel;
 	}

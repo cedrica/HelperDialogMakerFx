@@ -8,9 +8,11 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.PopOver.ArrowLocation;
 
 import com.customcontrol.helpdialogmaker.consts.Screens;
+import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 import com.customcontrol.helpdialogmaker.helper.Helper;
 import com.customcontrol.helpdialogmaker.helper.PopOverHelper;
+import com.customcontrol.helpdialogmaker.model.ConfigurationData;
 import com.customcontrol.helpdialogmaker.viewmodel.PageViewModel;
 
 import javafx.event.ActionEvent;
@@ -42,6 +44,7 @@ public class PageView implements Initializable {
 	private FXMLLoader		mySquelet;
 	private List<PageView>	subPages;
 	private FXMLLoader		fxmlForPageInfoView;
+	private boolean rootNode;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -113,6 +116,10 @@ public class PageView implements Initializable {
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
+		stage.addEventFilter(PageEvent.TRANSFER_CONFIG_TO_PAGE, e->{
+			ConfigurationData configurationData = e.getConfigurationData();
+			pageViewModel.setConfigurationData(configurationData);
+		});
 	}
 
 
@@ -131,6 +138,15 @@ public class PageView implements Initializable {
 
 	public FXMLLoader getMySquelet() {
 		return mySquelet;
+	}
+
+	
+	public void setRootNode(boolean rootNode) {
+		this.rootNode = rootNode;
+	}
+
+	public boolean isRootNode() {
+		return this.rootNode;
 	}
 
 

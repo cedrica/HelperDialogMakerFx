@@ -1,9 +1,0 @@
-package com.customcontrol.helpdialogmaker.view.leftmenu
-
-import javafx.scene.layout.VBox
-
-component LeftMenu {
-	VBox {
-		//TODO Add Nodes
-	}
-}

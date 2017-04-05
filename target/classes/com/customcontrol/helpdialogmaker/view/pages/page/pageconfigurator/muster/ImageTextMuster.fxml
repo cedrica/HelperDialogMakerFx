@@ -13,32 +13,32 @@
 <?import javafx.scene.web.WebView?>
 <?import org.controlsfx.glyphfont.Glyph?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.customcontrol.helpdialogmaker.view.ImageTextMusterView">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.customcontrol.helpdialogmaker.view.ImageTextMusterView" spacing="5">
 
-	<VBox spacing="5"> 
-		<HBox spacing="5" maxHeight="30" alignment="CENTER_RIGHT"> 
-			<Button fx:id="btnRemoveRow" text="Zeile entfernen"> 
+	<HBox spacing="5" maxHeight="30" alignment="CENTER_RIGHT" visible="true"> 
+		<Button fx:id="btnRemoveRow" text="Zeile entfernen"> 
+			<graphic>
+				<Glyph style="-fx-text-fill:red" icon="REMOVE" fontFamily="FontAwesome" fontSize="15"/> 
+			</graphic>
+		</Button>
+		<StackPane> 
+			<Button fx:id="btnSave" text="Speichern" visible="true"> 
 				<graphic>
-					<Glyph style="-fx-text-fill:red" icon="REMOVE" fontFamily="FontAwesome" fontSize="15"/> 
+					<Glyph style="-fx-text-fill:gray" icon="CHECK" fontFamily="FontAwesome" fontSize="15"/> 
 				</graphic>
 			</Button>
-			<StackPane> 
-				<Button fx:id="btnSave" text="Speichern" visible="true"> 
-					<graphic>
-						<Glyph style="-fx-text-fill:gray" icon="CHECK" fontFamily="FontAwesome" fontSize="15"/> 
-					</graphic>
-				</Button>
-				<Button fx:id="btnEdit" text="Editieren" visible="false"> 
-					<graphic>
-						<Glyph style="-fx-text-fill:green;" icon="EDIT" fontFamily="FontAwesome" fontSize="15"/> 
-					</graphic>
-				</Button>
-			</StackPane>
+			<Button fx:id="btnEdit" text="Editieren" visible="false"> 
+				<graphic>
+					<Glyph style="-fx-text-fill:green;" icon="EDIT" fontFamily="FontAwesome" fontSize="15"/> 
+				</graphic>
+			</Button>
+		</StackPane>
+	</HBox>
+	<StackPane> 
+		<HBox fx:id="hbViewer" maxHeight="150" visible="false"> 
+			<WebView fx:id="webView" HBox.hgrow="ALWAYS"/> 
 		</HBox>
-		<HBox fx:id="hbViewer" visible="false" maxHeight="250" VBox.vgrow="ALWAYS"> 
-			<WebView fx:id="webView" minWidth="600" HBox.hgrow="ALWAYS"/> 
-		</HBox>
-		<HBox fx:id="hbEditor" maxHeight="250" spacing="5" visible="true"> 
+		<HBox fx:id="hbEditor" spacing="5" maxHeight="150" visible="true"> 
 			<StackPane> 
 				<VBox fx:id="vbLoadedImage" spacing="5" visible="false"> 
 					<ImageView fx:id="ivLoadedImage" fitHeight="220" fitWidth="200"/> 
@@ -54,5 +54,5 @@
 				<HTMLEditor fx:id="htmlEditor" HBox.hgrow="ALWAYS"/> 
 			</HBox>
 		</HBox>
-	</VBox>
-</StackPane>
+	</StackPane>
+</VBox>

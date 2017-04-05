@@ -9,6 +9,7 @@ import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 import com.customcontrol.helpdialogmaker.helper.DialogHelper;
 import com.customcontrol.helpdialogmaker.helper.Helper;
+import com.customcontrol.helpdialogmaker.model.ConfigurationData;
 import com.customcontrol.helpdialogmaker.session.Session;
 import com.customcontrol.helpdialogmaker.viewmodel.PageInfoViewModel;
 
@@ -73,6 +74,10 @@ public class PageInfoView implements Initializable {
 				ConfiguratorView configuratorView = parent.getController();
 				configuratorView.getConfigurationViewModel().setTitle(pageInfoViewModel.getPageData().getName());
 				configuratorView.setStage(stage);
+				stage.addEventFilter(PageEvent.TRANSFER_CONFIG_TO_PAGE, e ->{
+					ConfigurationData configurationData = e.getConfigurationData();
+					this.stage.fireEvent(new PageEvent(PageEvent.TRANSFER_CONFIG_TO_PAGE, configurationData));
+				});
 			}
 		});
 	}

@@ -14,6 +14,7 @@ public class PageEvent extends Event {
 	public static final EventType<PageEvent> ADD_SUB_PAGE = new EventType<>(Event.ANY, "ADD_SUB_PAGE");
 	public static final EventType<PageEvent> CONFIGURE = new EventType<>(Event.ANY, "CONFIGURE");
 	public static final EventType<PageEvent> REMOVE_ROW = new EventType<>(Event.ANY, "REMOVE_ROW");
+	public static final EventType<PageEvent> TRANSFER_CONFIG_TO_PAGE = new EventType<>(Event.ANY, "TRANSFER_CONFIG_TO_PAGE");
 	private PageData pageData;
 	private ConfigurationData configurationData;
 	

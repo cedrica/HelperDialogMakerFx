@@ -14,10 +14,9 @@
 
 	<HBox style="-fx-background-color:#fff" spacing="20" minHeight="30" alignment="CENTER"> 
 		<Button fx:id="btnPages" text="Seiten"/> 
-		<Button fx:id="btnView" text="Ansicht"/> 
-		<Button fx:id="btnSS" text="S and S"/> 
+		<Button fx:id="btnPreView" text="Preview"/> 
 	</HBox>
-	<VBox VBox.vgrow="ALWAYS"> 
+	<VBox fx:id="vbPlaceHolder" VBox.vgrow="ALWAYS"> 
 		<WebView fx:id="wvPreview" VBox.vgrow="ALWAYS"/> 
 	</VBox>
 	<stylesheets>

@@ -93,6 +93,8 @@ public class PagesView implements Initializable {
 			TreeItem<String> childItem = new TreeItem<String>("", squelet);
 			recursivAddSubPage(rootNode, childItem, pageData, pageView);
 		});
+		
+
 	}
 
 
@@ -182,6 +184,7 @@ public class PagesView implements Initializable {
 		}
 		PageData pageData = new PageData(PAGE_INDEX_COUNTER++, pageView.getPageViewModel().getName());
 		pageView.getPageViewModel().setPageData(pageData);
+		pageView.setRootNode(true);
 		Session.createInstance().getPages().add(pageView);
 		squelet.setUserData(pageView);
 		TreeItem<String> page = new TreeItem<String>("", squelet);

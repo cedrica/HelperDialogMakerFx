@@ -13,6 +13,7 @@ public class ImageTextMusterViewModel {
 	private byte[] imageBytes;
 	private String imageName;
 	private int posInVbMusterContainer;
+	private String wholeHtmlContent;
 	
 	
 	
@@ -77,7 +78,7 @@ public class ImageTextMusterViewModel {
 		String path = System.getProperty("user.dir") + "/images/"+ imageName;
 		path = path.replace("\\", "/");
 		String essential = htmlText.get().replace("<html dir=\"ltr\"><head></head><body contenteditable=\"true\">", "").replace("</body></html>", "");
-		String view =   "<html dir=\"ltr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+		wholeHtmlContent =   "<html dir=\"ltr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
 						+ "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">"
 						+ "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js\"></script>"
 						+ "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>"
@@ -93,8 +94,25 @@ public class ImageTextMusterViewModel {
 							+ "</div>"
 						+ "</body>"
 						+ "</html>";
-		return view;
+		return wholeHtmlContent;
 	}
+
+
+
+
+	
+	public String getWholeHtmlContent() {
+		return wholeHtmlContent;
+	}
+
+
+
+
+	
+	public void setWholeHtmlContent(String wholeHtmlContent) {
+		this.wholeHtmlContent = wholeHtmlContent;
+	}
+
 
 
 }

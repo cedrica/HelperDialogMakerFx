@@ -8,61 +8,61 @@ import org.controlsfx.glyphfont.Glyph
 import com.customcontrol.helpdialogmaker.view.ImageTextMusterView
 import javafx.scene.layout.StackPane
 import javafx.scene.web.WebView
+import java.lang.Double
 
 component ImageTextMuster controlledby ImageTextMusterView {
-	StackPane {
-
-		VBox {
+	VBox {
+		spacing : 5,
+		HBox {
 			spacing : 5,
-			HBox {
-				spacing : 5,
-				maxHeight : 30,
-				alignment : "CENTER_RIGHT",
-				Button id btnRemoveRow {
+			maxHeight : 30,
+
+			alignment : "CENTER_RIGHT",
+			Button id btnRemoveRow {
+				graphic : Glyph {
+					style : "-fx-text-fill:red",
+					icon : "REMOVE",
+					fontFamily : "FontAwesome",
+					fontSize : 15
+				},
+				text : "Zeile entfernen"
+			},
+			StackPane {
+				Button id btnSave {
 					graphic : Glyph {
-						style : "-fx-text-fill:red",
-						icon : "REMOVE",
+						style : "-fx-text-fill:gray",
+						icon : "CHECK",
 						fontFamily : "FontAwesome",
 						fontSize : 15
 					},
-					text : "Zeile entfernen"
+					text : "Speichern",
+					visible : true
 				},
-				StackPane {
-					Button id btnSave {
-						graphic : Glyph {
-							style : "-fx-text-fill:gray",
-							icon : "CHECK",
-							fontFamily : "FontAwesome",
-							fontSize : 15
-						},
-						text : "Speichern",
-						visible : true
+				Button id btnEdit {
+					graphic : Glyph {
+						style : "-fx-text-fill:green;",
+						icon : "EDIT",
+						fontFamily : "FontAwesome",
+						fontSize : 15
 					},
-					Button id btnEdit {
-						graphic : Glyph {
-							style : "-fx-text-fill:green;",
-							icon : "EDIT",
-							fontFamily : "FontAwesome",
-							fontSize : 15
-						},
-						text : "Editieren",
-						visible : false
-					}
+					text : "Editieren",
+					visible : false
 				}
+			},
+			visible : true
+		},
+		StackPane {
+			HBox id hbViewer {
+				maxHeight : 150,
+				WebView id webView {
+					static hgrow : "ALWAYS"
+				},
+				visible : false
 
 			},
-			HBox id hbViewer {
-				visible : false,
-				static vgrow : "ALWAYS",
-				maxHeight : 250,
-				WebView id webView {
-					static hgrow : "ALWAYS",
-					minWidth : 600
-				}
-			},
 			HBox id hbEditor {
-				maxHeight : 250,
 				spacing : 5,
+				maxHeight : 150,
 				StackPane {
 					VBox id vbLoadedImage {
 						spacing : 5,
@@ -100,4 +100,5 @@ component ImageTextMuster controlledby ImageTextMusterView {
 			}
 		}
 	}
+
 }

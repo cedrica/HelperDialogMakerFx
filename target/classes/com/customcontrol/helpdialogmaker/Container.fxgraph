@@ -18,14 +18,11 @@ component Container controlledby ContainerView styledwith["/com/customcontrol/he
 			Button id btnPages{
 				text : "Seiten"
 			},
-			Button id btnView{
-			text : "Ansicht"
-			},
-			Button id btnSS{
-				text : "S and S"
+			Button id btnPreView{
+			text : "Preview"
 			}
 		},
-		VBox{
+		VBox id vbPlaceHolder{
 			static vgrow : "ALWAYS",
 			WebView id wvPreview{
 				static vgrow : "ALWAYS"
