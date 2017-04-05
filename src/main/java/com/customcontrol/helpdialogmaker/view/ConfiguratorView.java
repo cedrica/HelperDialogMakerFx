@@ -27,6 +27,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class ConfiguratorView implements Initializable {
 
@@ -68,11 +69,18 @@ public class ConfiguratorView implements Initializable {
 		Helper.roundVBox(vbInfo, 30);
 		btnAddNewRow.setOnAction(this::onAddNewRow);
 		btnSavePage.setOnAction(this::onSavePage);
+		btnClose.setOnAction(this::onClose);
 		cbMuster.setItems(FXCollections.observableList(Arrays.asList(Muster.values())));
 		configurationViewModel.selectedMusterProperty().bind(cbMuster.getSelectionModel().selectedItemProperty());
 		btnAddNewRow.disableProperty().bind(musterSelected.or(cbMuster.getSelectionModel().selectedItemProperty().isNull()));
 		lblTitle.textProperty().bind(configurationViewModel.titleProperty());
 
+	}
+	
+	public void onClose(ActionEvent evt) {
+		ROW_INDEX = 0;
+		A_ROW_WAS_REMOVED = false;
+		this.stage.fireEvent(new WindowEvent(null,WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
 	public void onSavePage(ActionEvent evt) {
 		StringBuilder htmlContent = new StringBuilder();
@@ -90,9 +98,9 @@ public class ConfiguratorView implements Initializable {
 //				configurationData = ((TextMusterView)row).getTextMusterViewModel().getConfigurationData();
 //				htmlContent.append(configurationData.getHtmlContent());
 //			}
-			transferConfigurationToPage(htmlContent);
-			
 		}
+		transferConfigurationToPage(htmlContent);
+		onClose(evt);
 	}
 	
 	private void transferConfigurationToPage(StringBuilder htmlContent) {

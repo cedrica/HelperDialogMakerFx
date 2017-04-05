@@ -61,9 +61,9 @@
 			</padding>
 		</VBox>
 	</ScrollPane>
-	<HBox alignment="CENTER_RIGHT"> 
+	<HBox spacing="5" alignment="CENTER_RIGHT"> 
 		<Button fx:id="btnSavePage" text="Seite speichern"/> 
-		<Button fx:id="btnClose" text="Schliessen"/> 
+		<Button fx:id="btnClose" text="Abbrechen"/> 
 	</HBox>
 	<stylesheets>
 		<String fx:value="/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css" />

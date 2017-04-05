@@ -25,7 +25,6 @@ public class PageEvent extends Event {
 	
 	public PageEvent(EventType<PageEvent> eventType, ConfigurationData configurationData) {
 		super(eventType);
-		this.pageData = pageData;
 		this.configurationData = configurationData;
 	}
 	

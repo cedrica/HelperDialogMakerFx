@@ -78,23 +78,24 @@ public class ImageTextMusterViewModel {
 		String path = System.getProperty("user.dir") + "/images/"+ imageName;
 		path = path.replace("\\", "/");
 		String essential = htmlText.get().replace("<html dir=\"ltr\"><head></head><body contenteditable=\"true\">", "").replace("</body></html>", "");
-		wholeHtmlContent =   "<html dir=\"ltr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
-						+ "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">"
-						+ "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js\"></script>"
-						+ "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>"
-						+ "</head>"
-						+ "<body contenteditable=\"false\">"
-							+ "<div class=\"media\">"
+		wholeHtmlContent =  "<div class=\"media\">"
 								+ "<div class=\"media-left media-middle\">"
 									+ "<img src='file:///" +path+"' class=\"media-object\" style=\"width:60px\">"
 								+ "</div>"
 								+ "<div class=\"media-body\">"
 									+ essential		
 								+ "</div>"
-							+ "</div>"
+							+ "</div>";
+		String view =   "<html dir=\"ltr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+						+ "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">"
+						+ "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js\"></script>"
+						+ "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>"
+						+ "</head>"
+						+ "<body contenteditable=\"false\">"
+						+ wholeHtmlContent
 						+ "</body>"
 						+ "</html>";
-		return wholeHtmlContent;
+		return view;
 	}
 
 

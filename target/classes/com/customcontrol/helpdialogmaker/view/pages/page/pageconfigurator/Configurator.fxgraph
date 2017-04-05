@@ -104,12 +104,13 @@ component Configuration controlledby ConfiguratorView styledwith [
 			}
 		},
 		HBox {
+			spacing : 5,
 			alignment : "CENTER_RIGHT",
 			Button id btnSavePage {
 				text : "Seite speichern"
 			},
 			Button id btnClose {
-				text : "Schliessen"
+				text : "Abbrechen"
 			}
 		}
 
