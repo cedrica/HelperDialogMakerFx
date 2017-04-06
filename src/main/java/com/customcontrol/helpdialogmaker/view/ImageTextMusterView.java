@@ -1,5 +1,6 @@
 package com.customcontrol.helpdialogmaker.view;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,8 +9,10 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
 
+import com.customcontrol.helpdialogmaker.enums.Muster;
 import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.customcontrol.helpdialogmaker.model.ConfigurationData;
+import com.customcontrol.helpdialogmaker.model.OldConfigurationData;
 import com.customcontrol.helpdialogmaker.viewmodel.ImageTextMusterViewModel;
 
 import javafx.event.ActionEvent;
@@ -44,16 +47,16 @@ public class ImageTextMusterView implements Initializable {
 	HTMLEditor	htmlEditor;
 	@FXML
 	WebView		webView;
-
-	private ImageTextMusterViewModel	imageTextMusterViewModel;
-	private byte[]						imageBytes;
-	private WebEngine					webEngine;
-	private Stage stage;
 	@FXML
 	HBox								hbViewer;
 	@FXML
 	HBox								hbEditor;
 	@FXML Button btnRemoveRow;
+	private ImageTextMusterViewModel	imageTextMusterViewModel;
+	private byte[]						imageBytes;
+	private WebEngine					webEngine;
+	private Stage stage;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -61,12 +64,17 @@ public class ImageTextMusterView implements Initializable {
 		btnChooseImage.setOnAction(this::onFileChooserAction);
 		btnSave.setOnAction(this::onSave);
 		btnEdit.setOnAction(this::onEdit);
+		btnChangeImage.setOnAction(this::onChangeImage);
 		btnRemoveRow.setOnAction(this::onRemoveRow);
 		webEngine = webView.getEngine();
 		btnSave.setDisable(true);
 		btnEdit.setVisible(false);
 	}
 
+	public void onChangeImage(ActionEvent evt) {
+		onFileChooserAction(evt);
+	}
+	
 	public void onFileChooserAction(ActionEvent evt) {
 		FileChooser chooser = new FileChooser();
 		chooser.setTitle("Bild auswählen");
@@ -91,6 +99,20 @@ public class ImageTextMusterView implements Initializable {
 		}
 	}
 
+	public void setImageInImageView(byte[] bytes) {
+		imageTextMusterViewModel.setImageBytes(bytes);
+		InputStream is =  new ByteArrayInputStream(bytes);
+		Image image = new Image(is);
+		ivLoadedImage.setImage(image);
+		vbLoadedImage.setVisible(true);
+		btnChooseImage.setVisible(false);
+		btnSave.setDisable(false);
+	}
+	
+	public void setHtmlEditorText(String text){
+		htmlEditor.setHtmlText(text);
+	}
+
 	public void onRemoveRow(ActionEvent evt){
 		stage.fireEvent(new PageEvent(PageEvent.REMOVE_ROW, new ConfigurationData(imageTextMusterViewModel.getPosInVbMusterContainer())));
 	}
@@ -98,6 +120,11 @@ public class ImageTextMusterView implements Initializable {
 	public void onSave(ActionEvent evt) {
 		imageTextMusterViewModel.setHtmlText(htmlEditor.getHtmlText());
 		String totalContent = imageTextMusterViewModel.save(btnSave.getScene().getWindow());
+		OldConfigurationData oldConfigurationData = new OldConfigurationData();
+		oldConfigurationData.setHtmlText(imageTextMusterViewModel.getHtmlText());
+		oldConfigurationData.setImage(imageTextMusterViewModel.getImageBytes());
+		oldConfigurationData.setMuster(Muster.IMAGE_TEXT);
+		imageTextMusterViewModel.setOldConfigurationData(oldConfigurationData);
 		if (totalContent != null){
 			hbEditor.setVisible(false);
 			hbViewer.setVisible(true);

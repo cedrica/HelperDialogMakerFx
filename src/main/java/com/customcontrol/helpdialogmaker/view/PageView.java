@@ -8,11 +8,9 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.PopOver.ArrowLocation;
 
 import com.customcontrol.helpdialogmaker.consts.Screens;
-import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 import com.customcontrol.helpdialogmaker.helper.Helper;
 import com.customcontrol.helpdialogmaker.helper.PopOverHelper;
-import com.customcontrol.helpdialogmaker.model.ConfigurationData;
 import com.customcontrol.helpdialogmaker.viewmodel.PageViewModel;
 
 import javafx.event.ActionEvent;
@@ -110,16 +108,22 @@ public class PageView implements Initializable {
 	}
 
 
+	
+	public PageInfoView getPageInfoView() {
+		return pageInfoView;
+	}
+
+	
+	public void setPageInfoView(PageInfoView pageInfoView) {
+		this.pageInfoView = pageInfoView;
+	}
+
 	public Stage getStage() {
 		return stage;
 	}
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
-		stage.addEventFilter(PageEvent.TRANSFER_CONFIG_TO_PAGE, e->{
-			ConfigurationData configurationData = e.getConfigurationData();
-			pageViewModel.setConfigurationData(configurationData);
-		});
 	}
 
 

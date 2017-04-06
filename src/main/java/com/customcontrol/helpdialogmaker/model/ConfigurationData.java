@@ -5,12 +5,15 @@ public class ConfigurationData {
 	
 	private int rowIndex;
 	private StringBuilder htmlContent;
+
 	
 	public ConfigurationData(){
 		htmlContent = new StringBuilder();
 	}
 	
 	
+
+
 	public String getHtmlContent() {
 		return htmlContent.toString();
 	}

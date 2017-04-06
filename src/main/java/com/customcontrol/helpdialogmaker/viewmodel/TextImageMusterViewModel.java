@@ -9,7 +9,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Window;
 
-public class ImageTextMusterViewModel {
+public class TextImageMusterViewModel {
 	private StringProperty htmlText = new SimpleStringProperty();
 	private byte[] imageBytes;
 	private String imageName;
@@ -99,11 +99,11 @@ public class ImageTextMusterViewModel {
 		path = path.replace("\\", "/");
 		String essential = htmlText.get().replace("<html dir=\"ltr\"><head></head><body contenteditable=\"true\">", "").replace("</body></html>", "");
 		wholeHtmlContent =  "<div class=\"media\">"
+								+ "<div style=\"float:left;margin-right:5px;\">"
+									+ essential		
+								+ "</div>"
 								+ "<div class=\"media-left media-middle\">"
 									+ "<img src='file:///" +path+"' class=\"media-object\" style=\"width:60px\">"
-								+ "</div>"
-								+ "<div class=\"media-body\">"
-									+ essential		
 								+ "</div>"
 							+ "</div>";
 		String view =   "<html dir=\"ltr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"

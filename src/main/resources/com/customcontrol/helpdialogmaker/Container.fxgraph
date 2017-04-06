@@ -20,6 +20,9 @@ component Container controlledby ContainerView styledwith["/com/customcontrol/he
 			},
 			Button id btnPreView{
 			text : "Preview"
+			},
+			Button id btnSave{
+			text : "Save"
 			}
 		},
 		VBox id vbPlaceHolder{

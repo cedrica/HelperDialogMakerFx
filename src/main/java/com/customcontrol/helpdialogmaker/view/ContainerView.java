@@ -1,18 +1,24 @@
 package com.customcontrol.helpdialogmaker.view;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.apache.commons.io.FileUtils;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.control.PopOver.ArrowLocation;
 
+import com.customcontrol.helpdialogmaker.consts.HtmlPart;
 import com.customcontrol.helpdialogmaker.consts.Screens;
 import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 import com.customcontrol.helpdialogmaker.helper.Helper;
 import com.customcontrol.helpdialogmaker.model.ConfigurationData;
 import com.customcontrol.helpdialogmaker.model.PageData;
 import com.customcontrol.helpdialogmaker.session.Session;
+import com.google.common.io.Files;
+import com.preag.core.ui.utils.FileUtil;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 public class ContainerView implements Initializable {
@@ -38,11 +45,34 @@ public class ContainerView implements Initializable {
 	private PagesView	pagesView;
 	@FXML
 	VBox				vbPlaceHolder;
+	@FXML
+	Button				btnSave;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		btnPages.setOnAction(this::onPagesClick);
 		btnPreView.setOnAction(this::onPreview);
+		btnSave.setOnAction(this::onSave);
+	}
+
+	public void onSave(ActionEvent evt) {
+		String html = builtHtmlPage();
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		File to = directoryChooser.showDialog(stage);
+		if (to == null) {
+			return;
+		}
+		FileUtil.writeStringToFile(html, to.getAbsolutePath() + "/helperDialog.html");
+		File from = new File(System.getProperty("user.dir") + "/images");
+		for (File file : from.listFiles()) {
+			try {
+				byte[] imageBytes = FileUtils.readFileToByteArray(file);
+				FileUtil.writeBytesToFile(to, imageBytes);
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void onPreview(ActionEvent evt) {
@@ -51,30 +81,29 @@ public class ContainerView implements Initializable {
 	}
 
 	private String builtHtmlPage() {
-		String htmlPage = "<html dir=\"ltr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
-						+ "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">"
-						+ "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js\"></script>"
-						+ "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>"
-						+ "</head>"
-						+ "<body contenteditable=\"false\">";
+		String htmlPage = HtmlPart.HEAD;
 		htmlPage = builtHtmlPageRec(Session.createInstance().pages, htmlPage);
-		return htmlPage+="</body>"
-						+ "</html>";
+		return htmlPage += "</body>" + "</html>";
 	}
 
 	public String builtHtmlPageRec(List<PageView> pages, String htmlPage) {
 		for (PageView pageView : pages) {
 			PageData pageData = pageView.getPageViewModel().getPageData();
-			ConfigurationData configurationData = pageView.getPageViewModel().getConfigurationData();
-			String pageIndex = pageData.getIndex()+"";
-			if(!pageView.isRootNode()){
+			ConfigurationData configurationData = pageView.getPageInfoView().getPageInfoViewModel().getConfigurationData();
+			String pageIndex = pageData.getIndex() + "";
+			if (!pageView.isRootNode()) {
 				pageIndex = makePageIndex(pageIndex);
 			}
 			String title = pageData.getName() + "";
+			if (configurationData == null) {
+				htmlPage += "<h2><b>" + pageIndex + "</b>	" + title + "</h2><br/>";
+				continue;
+			}
+
 			String content = configurationData.getHtmlContent();
-			htmlPage += "<h2><b>"+pageIndex+".</b>	"+title+"</h2><br/><p>"+content+"</p>"; 
-			if(pageView.getSubPages().size() > 0){
-				builtHtmlPageRec(pageView.getSubPages(), htmlPage);
+			htmlPage += "<h2><b>" + pageIndex + "</b>	" + title + "</h2><br/><p>" + content + "</p>";
+			if (pageView.getSubPages().size() > 0) {
+				htmlPage = builtHtmlPageRec(pageView.getSubPages(), htmlPage);
 			}
 		}
 		return htmlPage;
@@ -83,7 +112,7 @@ public class ContainerView implements Initializable {
 	private String makePageIndex(String pageIndex) {
 		String res = "";
 		for (int i = 0; i < pageIndex.length(); i++) {
-			res += pageIndex.charAt(i)+".";
+			res += pageIndex.charAt(i) + ".";
 		}
 		return res;
 	}

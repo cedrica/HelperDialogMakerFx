@@ -9,7 +9,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Window;
 
-public class ImageTextMusterViewModel {
+public class ImageMusterViewModel {
 	private StringProperty htmlText = new SimpleStringProperty();
 	private byte[] imageBytes;
 	private String imageName;
@@ -97,14 +97,8 @@ public class ImageTextMusterViewModel {
 		Helper.saveImageLocaly(imageBytes, imageName);
 		String path = System.getProperty("user.dir") + "/images/"+ imageName;
 		path = path.replace("\\", "/");
-		String essential = htmlText.get().replace("<html dir=\"ltr\"><head></head><body contenteditable=\"true\">", "").replace("</body></html>", "");
-		wholeHtmlContent =  "<div class=\"media\">"
-								+ "<div class=\"media-left media-middle\">"
-									+ "<img src='file:///" +path+"' class=\"media-object\" style=\"width:60px\">"
-								+ "</div>"
-								+ "<div class=\"media-body\">"
-									+ essential		
-								+ "</div>"
+		wholeHtmlContent =  "<div style=\"margin:auto\">"
+							+ "<img src='file:///" +path+"' class=\"media-object\" style=\"width:60px\">"
 							+ "</div>";
 		String view =   "<html dir=\"ltr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
 						+ "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">"
