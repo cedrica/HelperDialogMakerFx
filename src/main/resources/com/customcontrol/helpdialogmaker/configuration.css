@@ -10,3 +10,51 @@
     -fx-button-label-hover: darkorange;
     -fx-root-bg-color:#fff;
 }
+/* HEADER */
+.h1-small,
+.h2-small,
+.h3-small {
+	-fx-font-size: 65.0%;
+  -fx-font-weight: normal;
+  -fx-background-color: #777;
+}
+
+.h4-small,
+.h5-small,
+.h6-small {
+  -fx-font-size: 75.0%;
+  -fx-font-weight: normal;
+  -fx-background-color: #777;
+}
+
+.h1 {
+  -fx-font-size: 36.0px;
+}
+
+
+.h2 {
+  -fx-font-size: 30.0px;
+}
+
+.h3 {
+  -fx-font-size: 24.0px;
+}
+
+.h4 {
+  -fx-font-size: 18.0px;
+}
+
+
+.h5 {
+  -fx-font-size: 14.0px;
+}
+
+
+.h6 {
+  -fx-font-size: 12.0px;
+}
+
+.combo-box{
+	-fx-min-width: 300
+}
+

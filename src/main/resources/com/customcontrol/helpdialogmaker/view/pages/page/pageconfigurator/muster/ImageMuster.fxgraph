@@ -10,6 +10,7 @@ import javafx.scene.layout.StackPane
 import javafx.scene.web.WebView
 import java.lang.Double
 import com.customcontrol.helpdialogmaker.view.ImageMusterView
+import com.jfoenix.controls.JFXButton
 component ImageMuster controlledby ImageMusterView {
 	VBox {
 		spacing : 5,
@@ -17,7 +18,10 @@ component ImageMuster controlledby ImageMusterView {
 			spacing : 5,
 			maxHeight : 30,
 			alignment : "CENTER_RIGHT",
-			Button id btnRemoveRow {
+			JFXButton id btnRemoveRow {
+				styleClass : [
+					"button-raised"
+				],
 				graphic : Glyph {
 					style : "-fx-text-fill:red",
 					icon : "REMOVE",
@@ -27,7 +31,10 @@ component ImageMuster controlledby ImageMusterView {
 				text : "Zeile entfernen"
 			},
 			StackPane {
-				Button id btnSave {
+				JFXButton id btnSave {
+					styleClass : [
+						"button-raised"
+					],
 					graphic : Glyph {
 						style : "-fx-text-fill:gray",
 						icon : "CHECK",
@@ -37,7 +44,10 @@ component ImageMuster controlledby ImageMusterView {
 					text : "Speichern",
 					visible : true
 				},
-				Button id btnEdit {
+				JFXButton id btnEdit {
+					styleClass : [
+						"button-raised"
+					],
 					graphic : Glyph {
 						style : "-fx-text-fill:green;",
 						icon : "EDIT",
@@ -71,14 +81,19 @@ component ImageMuster controlledby ImageMusterView {
 							fitHeight : 220,
 							fitWidth : 200
 						},
-						Button id btnChangeImage {
+						JFXButton id btnChangeImage {
+							styleClass : [
+								"button-raised"
+							],
 							text : "Bild ändern",
 							minWidth : 200
 						},
 						visible : false
 					},
-					Button id btnChooseImage {
-						style : "-fx-border-width:1px;-fx-border-color:green;-fx-background-color:#fff;-fx-border-radius:5;",
+					JFXButton id btnChooseImage {
+						styleClass : [
+							"button-raised"
+						],
 						minHeight : 200,
 						minWidth : 200,
 						graphic : Glyph {

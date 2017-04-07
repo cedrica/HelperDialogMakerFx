@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.customcontrol.helpdialogmaker.consts.HtmlPart;
 import com.customcontrol.helpdialogmaker.consts.Screens;
 import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.customcontrol.helpdialogmaker.helper.Helper;
@@ -21,22 +22,28 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 public class PagesView implements Initializable {
 
 	@FXML
-	Button						btnHelp;
+	Button				btnHelp;
 	@FXML
-	Button						btnClose;
+	Button				btnClose;
 	@FXML
-	Button						btnAddPage;
+	Button				btnAddPage;
 	@FXML
-	TreeView<String>			tvBaum;
+	TreeView<String>	tvBaum;
+	@FXML
+	WebView				webView;
+
 	private TreeItem<String>	rootNode;
 	private int					PAGE_INDEX_COUNTER	= 1;
 	private Stage				stage;
-	private PagesViewModel pagesViewModel;
-	
+	private PagesViewModel		pagesViewModel;
+
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		pagesViewModel = new PagesViewModel();
@@ -48,7 +55,7 @@ public class PagesView implements Initializable {
 		tvBaum.setRoot(rootNode);
 		tvBaum.setShowRoot(false);
 		btnAddPage.setOnAction(this::onAddPage);
-		btnClose.setOnAction(this::onClose);
+		// btnClose.setOnAction(this::onClose);
 	}
 
 	private void recursivInitPages(TreeItem<String> root, List<PageView> pages) {
@@ -93,17 +100,48 @@ public class PagesView implements Initializable {
 			TreeItem<String> childItem = new TreeItem<String>("", squelet);
 			recursivAddSubPage(rootNode, childItem, pageData, pageView);
 		});
-		
+
+		stage.addEventFilter(PageEvent.ADD_MENU_POINT, evt -> {
+			WebEngine webEngine = webView.getEngine();
+			String content = HtmlPart.MENU
+							+ "<body>"
+							+"<div style=\"background-color: #444; width:100%;height:30px;padding-left: 5px; padding-right: 5px; padding-top: 5px;position:fixed;top:0\">"
+							+ "<div class=\"col-lg-12\">" + "<div id=\"message\" style=\"color:white\"></div>"
+							+ "<i class=\"fa fa-home\" style=\"color: #fff; font-size: 25px;\" ></i>"
+							+ "<button id=\"menu-buton\" type=\"button\" class=\"pull-right\" style=\"background-color: transparent; border: none;\">"
+							+ "<i class=\"fa fa-bars\" style=\"color: #fff; font-size: 20px;\"></i></button></div></div>"
+							+ "<div id=\"menu\" style=\"position:fixed;top:0;width:100%;overflow:hidden;margin-top: 30px; "
+							+ "background-color: #000; opacity: 0.8; filter: alpha(opacity = 50);z-index:200;\"><ul>";
+			content += repeatProcess(Session.createInstance().pages, "");
+			content += "</div></body>";
+			 webEngine.loadContent(content);
+			
+		});
 
 	}
 
 
+	private String repeatProcess(List<PageView> subPages,String apres) {
+		for (PageView pageView : subPages) {
+			PageData pageData = pageView.getPageViewModel().getPageData();
+			apres += "<li><h4><a href=\"#section" + pageData.getIndex() + "\">" + pageData.getIndex() + " " + pageData.getName() + "</a></h4>";
+			if (pageView.getSubPages().size() > 0) {
+				apres += "<ul>";
+				repeatProcess(pageView.getSubPages(),apres);
+			} else {
+				apres += "</li>";
+			}
+		}
+		apres += "</ul>";
+		return apres;
+	}
+
 	private int calculIndex(PageData pageData) {
 		int res = 0;
 		if (!pageData.getSubPages().isEmpty()) {
-			res = pageData.getIndex()*10+pageData.getSubPages().size()+1;
-		}else{
-			res = pageData.getIndex()*10+1;
+			res = pageData.getIndex() * 10 + pageData.getSubPages().size() + 1;
+		} else {
+			res = pageData.getIndex() * 10 + 1;
 		}
 		return res;
 	}
@@ -202,16 +240,15 @@ public class PagesView implements Initializable {
 		handleEvent();
 	}
 
-	
+
 	public PagesViewModel getPagesViewModel() {
 		return pagesViewModel;
 	}
 
-	
+
 	public void setPagesViewModel(PagesViewModel pagesViewModel) {
 		this.pagesViewModel = pagesViewModel;
 	}
 
-	
 
 }

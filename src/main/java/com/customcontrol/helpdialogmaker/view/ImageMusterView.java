@@ -14,11 +14,11 @@ import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.customcontrol.helpdialogmaker.model.ConfigurationData;
 import com.customcontrol.helpdialogmaker.model.OldConfigurationData;
 import com.customcontrol.helpdialogmaker.viewmodel.ImageMusterViewModel;
+import com.jfoenix.controls.JFXButton;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -30,16 +30,16 @@ import javafx.stage.Stage;
 
 public class ImageMusterView implements Initializable {
 
-	@FXML Button btnRemoveRow;
-	@FXML Button btnSave;
-	@FXML Button btnEdit;
+	@FXML JFXButton btnRemoveRow;
+	@FXML JFXButton btnSave;
+	@FXML JFXButton btnEdit;
 	@FXML HBox hbViewer;
 	@FXML WebView webView;
 	@FXML HBox hbEditor;
 	@FXML VBox vbLoadedImage;
 	@FXML ImageView ivLoadedImage;
-	@FXML Button btnChangeImage;
-	@FXML Button btnChooseImage;
+	@FXML JFXButton btnChangeImage;
+	@FXML JFXButton btnChooseImage;
 
 	private ImageMusterViewModel	ImageMusterViewModel;
 	private byte[]						imageBytes;

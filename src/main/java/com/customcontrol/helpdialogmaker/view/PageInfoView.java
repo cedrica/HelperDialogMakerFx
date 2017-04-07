@@ -86,6 +86,11 @@ public class PageInfoView implements Initializable {
 					List<OldConfigurationData> oldConfigurationDatas = e.getOldConfigurationData();
 					pageInfoViewModel.setOldConfigurationData(oldConfigurationDatas);
 				});
+				
+				this.stage.fireEvent(new PageEvent(PageEvent.HANDE_BUTTON_ENABLING, true));
+				stage.setOnCloseRequest(e ->{
+					this.stage.fireEvent(new PageEvent(PageEvent.HANDE_BUTTON_ENABLING, false));
+				});
 			}
 		});
 	}

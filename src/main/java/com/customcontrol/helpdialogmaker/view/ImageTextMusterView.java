@@ -14,6 +14,7 @@ import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.customcontrol.helpdialogmaker.model.ConfigurationData;
 import com.customcontrol.helpdialogmaker.model.OldConfigurationData;
 import com.customcontrol.helpdialogmaker.viewmodel.ImageTextMusterViewModel;
+import com.jfoenix.controls.JFXButton;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,17 +33,17 @@ import javafx.stage.Stage;
 public class ImageTextMusterView implements Initializable {
 
 	@FXML
-	Button		btnChooseImage;
+	JFXButton		btnChooseImage;
 	@FXML
 	ImageView	ivLoadedImage;
 	@FXML
-	Button		btnChangeImage;
+	JFXButton		btnChangeImage;
 	@FXML
 	VBox		vbLoadedImage;
 	@FXML
-	Button		btnSave;
+	JFXButton		btnSave;
 	@FXML
-	Button		btnEdit;
+	JFXButton		btnEdit;
 	@FXML
 	HTMLEditor	htmlEditor;
 	@FXML

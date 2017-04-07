@@ -14,15 +14,16 @@ import javafx.scene.control.Separator
 import javafx.geometry.Insets
 import com.customcontrol.helpdialogmaker.view.ConfiguratorView
 import javafx.scene.control.ScrollPane
+import com.jfoenix.controls.JFXButton
+import com.jfoenix.controls.JFXComboBox
 
 component Configuration controlledby ConfiguratorView styledwith [
-	"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css",
-	"/com/customcontrol/helpdialogmaker/bootstrap.css" ] {
+	"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css"] {
 	VBox {
 		stylesheets : [
-			"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css",
-			"/com/customcontrol/helpdialogmaker/bootstrap.css"
+			"/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css"
 		],
+		style : "-fx-background-color:#fff",
 		spacing : 10,
 		padding : Insets {
 			bottom : 10,
@@ -33,24 +34,25 @@ component Configuration controlledby ConfiguratorView styledwith [
 		},
 		HBox {
 			alignment : "CENTER",
+			Label {
+				styleClass : [
+					"h1"
+				],
+				text :"Configurtaion der Seite "
+			},
 			Label id lblTitle {
 				styleClass : [
 					"h1"
-				]
+				],
+				style : "-fx-text-fill:#3399ff"
 			}
 		},
 		HBox {
 			spacing : 5,
 			VBox {
-				Label {
-					styleClass : [
-						"bold"
-					],
-					text : "Muster Wählen"
-				},
 				HBox {
-					spacing : 5,
-					ComboBox < ? > id cbMuster {
+					spacing : 10,
+					JFXComboBox < ? > id cbMuster {
 						static hgrow : "ALWAYS",
 						maxWidth : const Double#MAX_VALUE,
 						minHeight : 30
@@ -73,7 +75,8 @@ component Configuration controlledby ConfiguratorView styledwith [
 			}
 		},
 		HBox {
-			Button id btnAddNewRow {
+			JFXButton id btnAddNewRow {
+				styleClass : ["button-raised"],
 				graphic : Glyph {
 					icon : "PLUS_CIRCLE",
 					fontFamily : "FontAwesome"

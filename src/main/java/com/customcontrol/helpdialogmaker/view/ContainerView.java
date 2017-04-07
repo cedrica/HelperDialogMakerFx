@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
-import org.controlsfx.control.PopOver;
-import org.controlsfx.control.PopOver.ArrowLocation;
 
 import com.customcontrol.helpdialogmaker.consts.HtmlPart;
 import com.customcontrol.helpdialogmaker.consts.Screens;
@@ -17,7 +15,6 @@ import com.customcontrol.helpdialogmaker.helper.Helper;
 import com.customcontrol.helpdialogmaker.model.ConfigurationData;
 import com.customcontrol.helpdialogmaker.model.PageData;
 import com.customcontrol.helpdialogmaker.session.Session;
-import com.google.common.io.Files;
 import com.preag.core.ui.utils.FileUtil;
 
 import javafx.event.ActionEvent;
@@ -40,7 +37,6 @@ public class ContainerView implements Initializable {
 	@FXML
 	WebView				wvPreview;
 	WebEngine			webEngine;
-	private PopOver		popOver;
 	private Stage		stage;
 	private PagesView	pagesView;
 	@FXML
@@ -76,8 +72,10 @@ public class ContainerView implements Initializable {
 	}
 
 	public void onPreview(ActionEvent evt) {
+		vbPlaceHolder.getChildren().clear();
 		webEngine = wvPreview.getEngine();
 		webEngine.loadContent(builtHtmlPage());
+		vbPlaceHolder.getChildren().add(wvPreview);
 	}
 
 	private String builtHtmlPage() {
@@ -118,18 +116,14 @@ public class ContainerView implements Initializable {
 	}
 
 	public void onPagesClick(ActionEvent evt) {
-		popOver = new PopOver();
-		popOver.setArrowLocation(ArrowLocation.TOP_CENTER);
+		vbPlaceHolder.getChildren().clear();
 		FXMLLoader fxmlLoader = Helper.createView(Screens.PAGES);
 		pagesView = fxmlLoader.getController();
 		pagesView.setStage(stage);
-		popOver.setContentNode(fxmlLoader.getRoot());
-		popOver.setDetachable(true);
-		popOver.show(btnPages);
-		popOver.addEventFilter(PopOverEvent.CLOSE, e -> {
-			popOver.hide();
-			btnPages.setDisable(false);
+		stage.addEventFilter(PopOverEvent.CLOSE, e -> {
+			vbPlaceHolder.getChildren().clear();
 		});
+		vbPlaceHolder.getChildren().add(fxmlLoader.getRoot());
 		btnPages.disableProperty().bind(pagesView.getPagesViewModel().btnPagesDisabledProperty());
 	}
 

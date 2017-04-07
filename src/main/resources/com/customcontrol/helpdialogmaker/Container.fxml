@@ -4,23 +4,32 @@
 -->
 
 <?import java.lang.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 <?scenebuilder-stylesheet /com/customcontrol/helpdialogmaker/Container.css?>
+<?scenebuilder-stylesheet /com/customcontrol/helpdialogmaker/jfoenix-components.css?>
 
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.customcontrol.helpdialogmaker.view.ContainerView">
 
-	<HBox style="-fx-background-color:#fff" spacing="20" minHeight="30" alignment="CENTER"> 
+	<HBox spacing="20" minHeight="30" alignment="CENTER"> 
 		<Button fx:id="btnPages" text="Seiten"/> 
 		<Button fx:id="btnPreView" text="Preview"/> 
 		<Button fx:id="btnSave" text="Save"/> 
+		<styleClass>
+			<String fx:value="my-font" />
+		</styleClass>
 	</HBox>
 	<VBox fx:id="vbPlaceHolder" VBox.vgrow="ALWAYS"> 
 		<WebView fx:id="wvPreview" VBox.vgrow="ALWAYS"/> 
+		<padding>
+			<Insets left="10" right="10" top="10" bottom="10"/> 
+		</padding>
 	</VBox>
 	<stylesheets>
 		<String fx:value="/com/customcontrol/helpdialogmaker/Container.css" />
+		<String fx:value="/com/customcontrol/helpdialogmaker/jfoenix-components.css" />
 	</stylesheets>
 </VBox>

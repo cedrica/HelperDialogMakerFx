@@ -10,6 +10,7 @@ import javafx.scene.layout.StackPane
 import javafx.scene.control.TextField
 import com.customcontrol.helpdialogmaker.viewmodel.PageViewModel
 import com.customcontrol.helpdialogmaker.view.PageView
+import com.jfoenix.controls.JFXTextField
 
 component Box controlledby PageView styledwith [ "/com/customcontrol/helpdialogmaker/view/pages/page/Page.css" ] {
 	define PageViewModel id pageViewModel HBox {
@@ -45,8 +46,7 @@ component Box controlledby PageView styledwith [ "/com/customcontrol/helpdialogm
 				Label id lblName {
 					text : bind pageViewModel#name
 				},
-				TextField id tfName {
-
+				JFXTextField id tfName {
 					visible : true
 				}
 			}

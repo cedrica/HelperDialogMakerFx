@@ -8,10 +8,12 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.PopOver.ArrowLocation;
 
 import com.customcontrol.helpdialogmaker.consts.Screens;
+import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 import com.customcontrol.helpdialogmaker.helper.Helper;
 import com.customcontrol.helpdialogmaker.helper.PopOverHelper;
 import com.customcontrol.helpdialogmaker.viewmodel.PageViewModel;
+import com.jfoenix.controls.JFXTextField;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +21,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class PageView implements Initializable {
@@ -31,7 +32,7 @@ public class PageView implements Initializable {
 	@FXML
 	Label					lblHome;
 	@FXML
-	TextField				tfName;
+	JFXTextField				tfName;
 	@FXML
 	Button					btnOk;
 	@FXML
@@ -68,6 +69,7 @@ public class PageView implements Initializable {
 	public void onOk(ActionEvent evt) {
 		 pageInfoView.getPageInfoViewModel().setEditable(false);
 		 pageViewModel.getPageData().setName(pageViewModel.getName());
+		 stage.fireEvent(new PageEvent(PageEvent.ADD_MENU_POINT, pageViewModel.getPageData()));
 	}
 
 	public void onInfo(ActionEvent evt) {
@@ -124,6 +126,10 @@ public class PageView implements Initializable {
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
+		this.stage.addEventFilter(PageEvent.HANDE_BUTTON_ENABLING, e ->{
+			boolean disabled = e.isDisabled();
+			btnInfo.setDisable(disabled);
+		});
 	}
 
 

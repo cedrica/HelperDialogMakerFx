@@ -13,6 +13,8 @@ import com.customcontrol.helpdialogmaker.helper.Helper;
 import com.customcontrol.helpdialogmaker.model.ConfigurationData;
 import com.customcontrol.helpdialogmaker.model.OldConfigurationData;
 import com.customcontrol.helpdialogmaker.viewmodel.ConfigurationViewModel;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -22,7 +24,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
@@ -40,7 +41,7 @@ public class ConfiguratorView implements Initializable {
 	@FXML
 	Label							lblInfo;
 	@FXML
-	ComboBox<Muster>				cbMuster;
+	JFXComboBox<Muster>				cbMuster;
 	@FXML
 	VBox							vbInfo;
 	@FXML
@@ -50,7 +51,7 @@ public class ConfiguratorView implements Initializable {
 	@FXML
 	VBox							vbMusterContainer;
 	@FXML
-	Button							btnAddNewRow;
+	JFXButton							btnAddNewRow;
 	private ConfigurationViewModel	configurationViewModel;
 	private ImageTextMusterView		imageTextMusterView;
 	private TextImageMusterView		textImageTextMusterView;
@@ -73,9 +74,11 @@ public class ConfiguratorView implements Initializable {
 		btnAddNewRow.setOnAction(this::onAddNewRow);
 		btnSavePage.setOnAction(this::onSavePage);
 		btnClose.setOnAction(this::onClose);
+		cbMuster.setPromptText("Muster wählen");
 		cbMuster.setItems(FXCollections.observableList(Arrays.asList(Muster.values())));
 		configurationViewModel.selectedMusterProperty().bind(cbMuster.getSelectionModel().selectedItemProperty());
 		btnAddNewRow.disableProperty().bind(musterSelected.or(cbMuster.getSelectionModel().selectedItemProperty().isNull()));
+		btnAddNewRow.getStyleClass().add("button-raised");
 		lblTitle.textProperty().bind(configurationViewModel.titleProperty());
 	}
 
@@ -267,6 +270,7 @@ public class ConfiguratorView implements Initializable {
 			}
 			ROW_INDEX--;
 		});
+
 	}
 
 

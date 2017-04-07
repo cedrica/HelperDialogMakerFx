@@ -1,7 +1,4 @@
-.my-font{
-	-fx-background-color:#3399ff;
 
-}
 
 .label, .button {
 		-fx-text-fill: #fff
@@ -32,6 +29,9 @@
 	-fx-cursor: hand
 }
 
+.tree-view{
+	 -fx-background-color:  transparent 
+}
 /* .popover > .content {
     -fx-background-color: #3399ff; 
 

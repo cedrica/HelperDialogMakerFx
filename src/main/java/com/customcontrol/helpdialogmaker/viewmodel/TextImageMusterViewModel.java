@@ -103,7 +103,7 @@ public class TextImageMusterViewModel {
 									+ essential		
 								+ "</div>"
 								+ "<div class=\"media-left media-middle\">"
-									+ "<img src='file:///" +path+"' class=\"media-object\" style=\"width:60px\">"
+									+ "<img src='file:///" +path+"' class=\"media-object\">"
 								+ "</div>"
 							+ "</div>";
 		String view =   "<html dir=\"ltr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"

@@ -1,4 +1,3 @@
-
 package com.customcontrol.helpdialogmaker.view.pages
 
 import javafx.scene.layout.VBox
@@ -9,80 +8,97 @@ import javafx.scene.control.TreeView
 import javafx.geometry.Insets
 import org.controlsfx.glyphfont.Glyph
 import com.customcontrol.helpdialogmaker.view.PagesView
+import javafx.scene.web.WebView
 
 component Pages controlledby PagesView styledwith [ "/com/customcontrol/helpdialogmaker/view/pages/Pages.css" ] {
-	VBox {
+	HBox {
+		call VBox#vgrow : "ALWAYS",
 		stylesheets : [
 			"/com/customcontrol/helpdialogmaker/view/pages/Pages.css"
 		],
 
-		HBox {
-			styleClass : [
-				"my-font"
-			],
-			minHeight : 50,
-			padding : Insets {
-				left : 10,
-				right : 10
+		spacing : 10,
+
+		VBox {
+			style : "-fx-background-color:#fff",
+			static hgrow : "ALWAYS",
+			HBox {
+				styleClass : [
+					"my-font"
+				],
+				minHeight : 50,
+				padding : Insets {
+					left : 10,
+					right : 10
+				},
+				VBox {
+					alignment : "CENTER",
+					Label {
+						text : "Seiten"
+					}
+				},
+
+				HBox {
+					static hgrow : "ALWAYS",
+					spacing : 10,
+					alignment : "CENTER_RIGHT",
+					Button id btnHelp {
+						styleClass : [
+							"round-page-button"
+						],
+						graphic : Glyph {
+							icon : "QUESTION",
+							fontFamily : "FontAwesome"
+						}
+					}
+//					,
+//					Button id btnClose {
+//
+//						styleClass : [
+//							"round-page-button"
+//						],
+//						graphic : Glyph {
+//							icon : "REMOVE",
+//							fontFamily : "FontAwesome"
+//						}
+//					}
+				}
 			},
 			VBox {
-				alignment : "CENTER",
-				Label {
-					text : "Seiten"
+				static vgrow : "ALWAYS",
+				TreeView < ? > id tvBaum {
+					minWidth : 400,
+					static vgrow : "ALWAYS",
+					padding : Insets {
+						top : 10,
+						bottom : 10,
+						left : 10,
+						right : 10
+
+					}
 				}
 			},
 
 			HBox {
-				static hgrow : "ALWAYS",
-				spacing : 10,
-				alignment : "CENTER_RIGHT",
-				Button id btnHelp {
-					styleClass : [
-						"round-page-button"
-					],
-					graphic : Glyph {
-						icon : "QUESTION",
-						fontFamily : "FontAwesome"
-					}
+				alignment : "CENTER",
+				padding : Insets {
+					top : 10,
+					bottom : 10
 				},
-				Button id btnClose {
-
+				Button id btnAddPage {
 					styleClass : [
-						"round-page-button"
+						"my-font"
 					],
-					graphic : Glyph {
-						icon : "REMOVE",
-						fontFamily : "FontAwesome"
-					}
+					text : "+ Seite hinzufügen"
 				}
 			}
 		},
 		VBox {
-			static vgrow : "ALWAYS",
-			TreeView < ? > id tvBaum {
-				minWidth: 400,
-				padding : Insets {
-					top : 10,
-					bottom : 10,
-					left : 10,
-					right : 10
-
-				}
-			}
-		},
-
-		HBox {
-			alignment : "CENTER",
-			padding : Insets {
-				top : 10,
-				bottom : 10
-			},
-			Button id btnAddPage {
-				styleClass : [
-					"my-font"
-				],
-				text : "+ Seite hinzufügen"
+			static hgrow : "ALWAYS",
+			WebView id webView {
+				static vgrow : "ALWAYS"
 			}
 		}
 	}
+
 }

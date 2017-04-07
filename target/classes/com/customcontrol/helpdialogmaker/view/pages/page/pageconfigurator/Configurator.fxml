@@ -4,9 +4,10 @@
 -->
 
 <?import java.lang.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
@@ -14,12 +15,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.glyphfont.Glyph?>
 <?scenebuilder-stylesheet /com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css?>
-<?scenebuilder-stylesheet /com/customcontrol/helpdialogmaker/bootstrap.css?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.customcontrol.helpdialogmaker.view.ConfiguratorView" spacing="10">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.customcontrol.helpdialogmaker.view.ConfiguratorView" style="-fx-background-color:#fff" spacing="10">
 
 	<HBox alignment="CENTER"> 
-		<Label fx:id="lblTitle"> 
+		<Label text="Configurtaion der Seite "> 
+			<styleClass>
+				<String fx:value="h1" />
+			</styleClass>
+		</Label>
+		<Label fx:id="lblTitle" style="-fx-text-fill:#3399ff"> 
 			<styleClass>
 				<String fx:value="h1" />
 			</styleClass>
@@ -27,15 +32,10 @@
 	</HBox>
 	<HBox spacing="5"> 
 		<VBox> 
-			<Label text="Muster Wählen"> 
-				<styleClass>
-					<String fx:value="bold" />
-				</styleClass>
-			</Label>
-			<HBox spacing="5"> 
-				<ComboBox fx:id="cbMuster" minHeight="30" HBox.hgrow="ALWAYS"> 
+			<HBox spacing="10"> 
+				<JFXComboBox fx:id="cbMuster" minHeight="30" HBox.hgrow="ALWAYS"> 
 					<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
-				</ComboBox>
+				</JFXComboBox>
 				<VBox fx:id="vbInfo" style="-fx-border-width:1px;-fx-background-color:darkorange;" alignment="CENTER" HBox.hgrow="ALWAYS"> 
 					<Label fx:id="lblInfo"> 
 						<graphic>
@@ -47,11 +47,14 @@
 		</VBox>
 	</HBox>
 	<HBox> 
-		<Button fx:id="btnAddNewRow" text="Neue Zeile hinzufügen"> 
+		<JFXButton fx:id="btnAddNewRow" text="Neue Zeile hinzufügen"> 
+			<styleClass>
+				<String fx:value="button-raised" />
+			</styleClass>
 			<graphic>
 				<Glyph icon="PLUS_CIRCLE" fontFamily="FontAwesome"/> 
 			</graphic>
-		</Button>
+		</JFXButton>
 	</HBox>
 	<Separator orientation="HORIZONTAL"/> 
 	<ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS"> 
@@ -67,7 +70,6 @@
 	</HBox>
 	<stylesheets>
 		<String fx:value="/com/customcontrol/helpdialogmaker/view/pages/page/pageconfigurator/Configurator.css" />
-		<String fx:value="/com/customcontrol/helpdialogmaker/bootstrap.css" />
 	</stylesheets>
 	<padding>
 		<Insets bottom="10" left="10" right="10" top="10"/> 

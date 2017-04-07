@@ -100,7 +100,7 @@ public class ImageTextMusterViewModel {
 		String essential = htmlText.get().replace("<html dir=\"ltr\"><head></head><body contenteditable=\"true\">", "").replace("</body></html>", "");
 		wholeHtmlContent =  "<div class=\"media\">"
 								+ "<div class=\"media-left media-middle\">"
-									+ "<img src='file:///" +path+"' class=\"media-object\" style=\"width:60px\">"
+									+ "<img src='file:///" +path+"' class=\"media-object\">"
 								+ "</div>"
 								+ "<div class=\"media-body\">"
 									+ essential		
