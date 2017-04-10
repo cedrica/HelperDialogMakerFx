@@ -1,24 +1,35 @@
-<html dir="ltr">
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$("#menu").hide();
-		$("#menu-buton").click(function() {
-			$("#menu").slideToggle();
-		});
-		$("a").click(function() {
-			$("#menu").slideToggle();
-		});
-	});
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"
+	rel="stylesheet" />
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	rel="stylesheet" />
+
+<link href="helpHtml.css" rel="stylesheet" />
+
+<script> 
+$(document).ready(function(){
+	 $("#menu").hide();
+    $("#menu-buton").click(function(){
+        $("#menu").slideToggle();
+    });
+    
+    $("a").click(function(){
+    	$("#menu").slideToggle();
+        });
+});
 </script>
+
 </head>
 <body>
 	<div
@@ -35,9 +46,11 @@
 	<div id="menu"
 		style="position: fixed; top: 0; width: 100%; overflow: hidden; margin-top: 30px; background-color: #000; opacity: 0.8; filter: alpha(opacity = 50); z-index: 200;">
 		<ul>
-			<li><h4>
-					<a href="#section1">1 ddddd</a>
-				</h4>
-				<ul></ul>
+			<li><h4><a href="#section1">1 ggggggg</a></h4>
+				<ul>
+					<li><h4><a href="#section11">11 hhhhhhh</a></h4></li>
+				</ul>
+			</li>
+		</ul>
 	</div>
 </body>

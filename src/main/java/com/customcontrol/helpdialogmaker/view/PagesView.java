@@ -112,8 +112,8 @@ public class PagesView implements Initializable {
 							+ "<i class=\"fa fa-bars\" style=\"color: #fff; font-size: 20px;\"></i></button></div></div>"
 							+ "<div id=\"menu\" style=\"position:fixed;top:0;width:100%;overflow:hidden;margin-top: 30px; "
 							+ "background-color: #000; opacity: 0.8; filter: alpha(opacity = 50);z-index:200;\"><ul>";
-			content += repeatProcess(Session.createInstance().pages, "");
-			content += "</div></body>";
+			content += repeatProcess(Session.createInstance().pages, "",0);
+			content += "</ul></div></body>";
 			 webEngine.loadContent(content);
 			
 		});
@@ -121,18 +121,24 @@ public class PagesView implements Initializable {
 	}
 
 
-	private String repeatProcess(List<PageView> subPages,String apres) {
+	private String repeatProcess(List<PageView> subPages,String rr,int wasOpenForChildren) {
+		String apres = "";
 		for (PageView pageView : subPages) {
 			PageData pageData = pageView.getPageViewModel().getPageData();
 			apres += "<li><h4><a href=\"#section" + pageData.getIndex() + "\">" + pageData.getIndex() + " " + pageData.getName() + "</a></h4>";
 			if (pageView.getSubPages().size() > 0) {
 				apres += "<ul>";
-				repeatProcess(pageView.getSubPages(),apres);
-			} else {
+				apres += repeatProcess(pageView.getSubPages(),apres,++wasOpenForChildren);
+			} else if(wasOpenForChildren > 0 && pageView.getSubPages().size() == 0){
+				for(int i = 0; i<wasOpenForChildren; i++){
+					apres += "</li></ul>";
+				}
+				apres += "</li>";
+			}else{
 				apres += "</li>";
 			}
 		}
-		apres += "</ul>";
+		
 		return apres;
 	}
 
