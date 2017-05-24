@@ -27,7 +27,7 @@ component Container controlledby ContainerView styledwith [ "/com/customcontrol/
 				text : "Preview"
 			},
 			Button id btnSave {
-				text : "Save"
+				text : "Exportieren"
 			}
 		},
 		VBox id vbPlaceHolder {

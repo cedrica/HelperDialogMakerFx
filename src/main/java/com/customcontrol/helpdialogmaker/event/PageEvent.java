@@ -27,6 +27,9 @@ public class PageEvent extends Event {
 	private ConfigurationData configurationData;
 	private List<OldConfigurationData> oldConfigurationDatas;
 	
+	public PageEvent(EventType<PageEvent> eventType) {
+        super(eventType);
+    }
 	public PageEvent(EventType<PageEvent> eventType, boolean disabled) {
 		super(eventType);
 		this.disabled = disabled;

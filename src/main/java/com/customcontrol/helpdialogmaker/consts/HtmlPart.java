@@ -29,5 +29,6 @@ public class HtmlPart {
 						+ "<style>"
 						+ "ul {list-style-type: none;"
 						+ "}a{color:#fff;}li{margin: 0 0 13px 0;}p{text-align:justify}</style>"
-						+ "</head>";
+						+ "</head>"
+						+ "<body contenteditable=\"false\">";
 }

@@ -4,11 +4,13 @@ com\customcontrol\helpdialogmaker\viewmodel\TextImageMusterViewModel.class
 com\customcontrol\helpdialogmaker\viewmodel\TextMusterViewModel.class
 com\customcontrol\helpdialogmaker\helper\DialogHelper.class
 com\customcontrol\helpdialogmaker\view\TextMusterView.class
+META-INF\maven\com.customcontrol.helpdialogmaker\HelpDialogMaker\pom.xml
 com\customcontrol\helpdialogmaker\consts\Screens.class
 com\customcontrol\helpdialogmaker\viewmodel\ImageMusterViewModel.class
 com\customcontrol\helpdialogmaker\view\ImageTextMusterView.class
 com\customcontrol\helpdialogmaker\Main.class
 com\customcontrol\helpdialogmaker\consts\HtmlPart.class
+META-INF\MANIFEST.MF
 com\customcontrol\helpdialogmaker\enums\Muster.class
 com\customcontrol\helpdialogmaker\view\PagesView.class
 com\customcontrol\helpdialogmaker\view\ImageMusterView.class
@@ -21,6 +23,7 @@ com\customcontrol\helpdialogmaker\view\PageInfoView.class
 com\customcontrol\helpdialogmaker\viewmodel\PageViewModel.class
 com\customcontrol\helpdialogmaker\viewmodel\ConfigurationViewModel.class
 com\customcontrol\helpdialogmaker\view\TextImageMusterView.class
+META-INF\maven\com.customcontrol.helpdialogmaker\HelpDialogMaker\pom.properties
 com\customcontrol\helpdialogmaker\model\PageData.class
 com\customcontrol\helpdialogmaker\view\PageView.class
 com\customcontrol\helpdialogmaker\helper\Helper$1.class

@@ -17,7 +17,7 @@
 	<HBox spacing="20" minHeight="30" alignment="CENTER"> 
 		<Button fx:id="btnPages" text="Seiten"/> 
 		<Button fx:id="btnPreView" text="Preview"/> 
-		<Button fx:id="btnSave" text="Save"/> 
+		<Button fx:id="btnSave" text="Exportieren"/> 
 		<styleClass>
 			<String fx:value="my-font" />
 		</styleClass>

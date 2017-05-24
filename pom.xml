@@ -71,15 +71,15 @@
 				<groupId>com.zenjava</groupId>
 				<artifactId>javafx-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.preag.pepexcel.Main</mainClass>
-					<jfxMainAppJarName>PepExcel.jar</jfxMainAppJarName>
+					<mainClass>com.customcontrol.helpdialogmaker.Main</mainClass>
+					<jfxMainAppJarName>HelperDialogMaker.jar</jfxMainAppJarName>
 					<vendor>Project Real Estate AG</vendor>
 					<bundler>EXE</bundler>
 					<nativeReleaseVersion>${project.version}</nativeReleaseVersion>
 					<needShortcut>true</needShortcut>
 					<needMenu>true</needMenu>
-					<appName>PepExcel</appName>
-					<additionalAppResources>additionalresources/</additionalAppResources>
+					<appName>HelperDialogMaker</appName>
+					<additionalAppResources>additionalResources/</additionalAppResources>
 					<verbose>true</verbose>
 				</configuration>
 			</plugin>
