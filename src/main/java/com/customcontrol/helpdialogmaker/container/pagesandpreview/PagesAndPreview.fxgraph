@@ -1,0 +1,31 @@
+package com.customcontrol.helpdialogmaker.container.pagesandpreview
+
+import javafx.scene.layout.VBox
+import javafx.scene.layout.HBox
+import javafx.scene.control.Label
+import javafx.scene.control.Button
+import javafx.scene.control.TreeView
+import javafx.geometry.Insets
+import org.controlsfx.glyphfont.Glyph
+import javafx.scene.web.WebView
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.PagesAndPreview
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.PagesAndPreviewController
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.PagesView
+dynamic component PagesAndPreview controlledby PagesAndPreviewController styledwith [
+	"/com/customcontrol/helpdialogmaker/container/pagesandpreview/PagesAndPreview.css" ] {
+	PagesAndPreview id pagesAndPreview {
+		call VBox#vgrow : "ALWAYS",
+		stylesheets : [
+			"/com/customcontrol/helpdialogmaker/container/pagesandpreview/PagesAndPreview.css"
+		],
+
+		masterNode : PagesView id pagesView{
+		},
+		dividerPosition : 0.5,
+		detailNode : 		HBox id hbPlaceHolder{
+			
+		}
+		
+	}
+
+}

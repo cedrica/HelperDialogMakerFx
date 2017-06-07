@@ -1,0 +1,32 @@
+package com.customcontrol.helpdialogmaker.container
+
+import javafx.scene.layout.VBox
+import javafx.scene.layout.HBox
+import javafx.scene.control.Button
+import com.customcontrol.helpdialogmaker.view.ContainerView
+import javafx.scene.web.WebView
+import javafx.geometry.Insets
+import com.customcontrol.helpdialogmaker.container.ContainerController
+import com.customcontrol.helpdialogmaker.container.ContainerView
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.PagesAndPreview
+dynamic component ContainerView controlledby ContainerController styledwith [
+	"/com/customcontrol/helpdialogmaker/container/Container.css" ] {
+	ContainerView id containerView {
+		stylesheets : [
+			"/com/customcontrol/helpdialogmaker/container/Container.css"
+		],
+		spacing : 10,
+		HBox {
+			spacing : 20,
+			minHeight : 30,
+			alignment : "CENTER",
+			styleClass : [
+				"my-font"
+			],
+			Button{
+				text : "Exportieren"
+			}
+		},
+		PagesAndPreview id pagesAndPreview
+	}
+}

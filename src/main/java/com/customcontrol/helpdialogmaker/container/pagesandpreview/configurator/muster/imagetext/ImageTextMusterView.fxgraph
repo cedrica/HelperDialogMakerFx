@@ -1,0 +1,104 @@
+package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.imagetext
+import javafx.scene.layout.VBox
+import javafx.scene.layout.HBox
+import javafx.scene.control.Button
+import javafx.scene.image.ImageView
+import javafx.scene.web.HTMLEditor
+import org.controlsfx.glyphfont.Glyph
+import javafx.scene.layout.StackPane
+import javafx.scene.web.WebView
+import java.lang.Double
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.imagetext.ImageTextMusterController
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.imagetext.ImageTextMusterView
+
+dynamic component ImageTextMusterView controlledby ImageTextMusterController {
+	ImageTextMusterView id imageTextMusterView{
+		spacing : 5,
+		HBox {
+			spacing : 5,
+			maxHeight : 30,
+
+			alignment : "CENTER_RIGHT",
+			Button id btnRemoveRow {styleClass : ["button-raised"],
+				graphic : Glyph {
+					style : "-fx-text-fill:red",
+					icon : "REMOVE",
+					fontFamily : "FontAwesome",
+					fontSize : 15
+				},
+				text : "Zeile entfernen"
+			},
+			StackPane {
+				Button id btnSave {styleClass : ["button-raised"],
+					graphic : Glyph {
+						style : "-fx-text-fill:gray",
+						icon : "CHECK",
+						fontFamily : "FontAwesome",
+						fontSize : 15
+					},
+					text : "Speichern",
+					visible : true
+				},
+				Button id btnEdit {styleClass : ["button-raised"],
+					graphic : Glyph {
+						style : "-fx-text-fill:green;",
+						icon : "EDIT",
+						fontFamily : "FontAwesome",
+						fontSize : 15
+					},
+					text : "Editieren",
+					visible : false
+				}
+			},
+			visible : true
+		},
+		StackPane {
+			HBox id hbViewer {
+				maxHeight : 150,
+				WebView id webView {
+					static hgrow : "ALWAYS"
+				},
+				visible : false
+
+			},
+			HBox id hbEditor {
+				spacing : 5,
+				maxHeight : 150,
+				StackPane {
+					VBox id vbLoadedImage {
+						spacing : 5,
+						ImageView id ivLoadedImage {
+							fitHeight : 220,
+							fitWidth : 200
+						},
+						Button id btnChangeImage {styleClass : ["button-raised"],
+							text : "Bild ändern",
+							minWidth : 200
+						},
+						visible : false
+					},
+					Button id btnChooseImage {styleClass : ["button-raised"],
+						minHeight : 200,
+						minWidth : 200,
+						graphic : Glyph {
+							style : "-fx-text-fill:green",
+							icon : "FILE_IMAGE_ALT",
+							fontFamily : "FontAwesome",
+							fontSize : 50
+						},
+						visible : true
+					}
+
+				},
+				HBox {
+					static hgrow : "ALWAYS",
+					HTMLEditor id htmlEditor {
+						static hgrow : "ALWAYS"
+					}
+				},
+				visible : true
+			}
+		}
+	}
+
+}

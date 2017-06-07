@@ -1,29 +1,30 @@
 package com.customcontrol.helpdialogmaker;
 
-import com.customcontrol.helpdialogmaker.consts.Screens;
-import com.customcontrol.helpdialogmaker.helper.Helper;
-import com.customcontrol.helpdialogmaker.view.ContainerView;
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import com.customcontrol.helpdialogmaker.container.ContainerManager;
+import com.customcontrol.helpdialogmaker.container.ContainerView;
+import com.preag.core.exception.sevice.DefaultUncaughtExcpetionHandler;
+import com.preag.core.ui.app.DesktopApp;
 
-public class Main extends Application{
+public class Main extends DesktopApp {
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		FXMLLoader fxmlLoader = Helper.createView(Screens.CONTAINER);
-		ContainerView containerView = fxmlLoader.getController();
-		containerView.setStage(primaryStage);
-		Scene scene = new  Scene(fxmlLoader.getRoot());
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		primaryStage.setMaximized(true);
-	}
-	
-	public static void main(String[] args){
-		launch(args);
-	}
+
+    public static void main(String[] args) {
+        enablePreloader();
+        launch(args);
+    }
+
+    @Override
+    public void initialize() {
+        Thread.setDefaultUncaughtExceptionHandler(new DefaultUncaughtExcpetionHandler());
+        ContainerView containerView = BeanProvider.getContextualReference(ContainerView.class, false);
+        ContainerManager containerManager = BeanProvider.getContextualReference(ContainerManager.class, false);
+        containerManager.handleAddedEvents(containerView);
+        getPrimaryStage().setMaximized(true);
+        closePreloader();
+        showPrimaryStage(containerView);
+       
+    }
 
 }
