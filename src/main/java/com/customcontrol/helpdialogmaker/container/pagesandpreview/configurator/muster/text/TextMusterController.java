@@ -16,66 +16,81 @@ import javafx.scene.web.HTMLEditor;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
-public class TextMusterController  implements Initializable{
+public class TextMusterController implements Initializable {
 
-	@FXML Button btnRemoveRow;
-	@FXML Button btnSave;
-	@FXML Button btnEdit;
-	@FXML HBox hbViewer;
-	@FXML WebView webView;
-	@FXML HBox hbEditor;
-	@FXML HTMLEditor htmlEditor;
+    @FXML
+    Button btnRemoveRow;
 
-	private WebEngine					webEngine;
-    @FXML TextMusterView textMusterView;
+    @FXML
+    Button btnSave;
 
+    @FXML
+    Button btnEdit;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		
-		btnSave.setOnAction(this::onSave);
-		btnEdit.setOnAction(this::onEdit);
-		btnRemoveRow.setOnAction(this::onRemoveRow);
-		webEngine = webView.getEngine();
-		btnEdit.setVisible(false);
-		
-		textMusterView.htmlEditorTextProperty().addListener((obs,oldVal,newVal)->{
-		    setHtmlEditorText(newVal);
-		});
-	}
+    @FXML
+    HBox hbViewer;
 
+    @FXML
+    WebView webView;
 
-	
-	public void setHtmlEditorText(String text){
-		htmlEditor.setHtmlText(text);
-	}
+    @FXML
+    HBox hbEditor;
 
-	public void onRemoveRow(ActionEvent evt){
-	    textMusterView.fireEvent(new PopOverEvent(PopOverEvent.REMOVE_CONFIGURATION,textMusterView.getPosInVbMusterContainer(),false));
-	}
-	
-	public void onSave(ActionEvent evt) {
-		textMusterView.setHtmlText(htmlEditor.getHtmlText());
-		String totalContent = textMusterView.save(btnSave.getScene().getWindow());
-		ConfigurationData configurationData = new ConfigurationData();
-		configurationData.setHtmlText(textMusterView.getHtmlText());
-		configurationData.setMuster(Muster.TEXT);
-		textMusterView.setOldConfigurationData(configurationData);
-		if (totalContent != null){
-			hbEditor.setVisible(false);
-			hbViewer.setVisible(true);
-			webEngine.loadContent(totalContent);
-			btnEdit.setVisible(true);
-			btnSave.setVisible(false);
-		}
-			
-	}
+    @FXML
+    HTMLEditor htmlEditor;
 
-	public void onEdit(ActionEvent evt) {
-		hbEditor.setVisible(true);
-		hbViewer.setVisible(false);
-		btnEdit.setVisible(false);
-		btnSave.setVisible(true);
-	}
+    private WebEngine webEngine;
+
+    @FXML
+    TextMusterView textMusterView;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        btnSave.setOnAction(this::onSave);
+        btnEdit.setOnAction(this::onEdit);
+        btnRemoveRow.setOnAction(this::onRemoveRow);
+        webEngine = webView.getEngine();
+        btnEdit.setVisible(false);
+
+        textMusterView.htmlTextProperty().addListener((obs, oldVal, newVal) -> {
+            setHtmlEditorText(newVal);
+        });
+    }
+
+    public void setHtmlEditorText(String text) {
+        htmlEditor.setHtmlText(text);
+    }
+
+    public void onRemoveRow(ActionEvent evt) {
+        textMusterView.setConfigurationData(null);
+        textMusterView.fireEvent(new PopOverEvent(PopOverEvent.REMOVE_CONFIGURATION, textMusterView.getPosInVbMusterContainer(), false));
+    }
+
+    public void onSave(ActionEvent evt) {
+        textMusterView.setHtmlText(htmlEditor.getHtmlText());
+        builtWholeContent();
+        ConfigurationData configurationData = new ConfigurationData();
+        configurationData.setHtmlText(textMusterView.getHtmlText());
+        configurationData.setMuster(Muster.TEXT);
+        textMusterView.setConfigurationData(configurationData);
+        hbEditor.setVisible(false);
+        hbViewer.setVisible(true);
+        webEngine.loadContent(textMusterView.getWholeHtmlContent());
+        btnEdit.setVisible(true);
+        btnSave.setVisible(false);
+    }
+
+    public void builtWholeContent() {
+        String innerHtml = textMusterView.getHtmlText().replace("<html dir=\"ltr\"><head></head><body contenteditable=\"true\">", "").replace("</body></html>", "");
+        textMusterView.setWholeHtmlContent(innerHtml);
+    }
+
+    public void onEdit(ActionEvent evt) {
+        hbEditor.setVisible(true);
+        hbViewer.setVisible(false);
+        btnEdit.setVisible(false);
+        btnSave.setVisible(true);
+    }
 
 }

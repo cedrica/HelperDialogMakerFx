@@ -15,6 +15,7 @@ import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 
 import javafx.scene.Node;
+import javafx.util.Pair;
 
 @Singleton
 public class PageManager {
@@ -35,8 +36,10 @@ public class PageManager {
         popOverMenuView.addEventFilter(PopOverEvent.SHOW_CONFIGURATION, evt -> {
             evt.consume();
             int pageIndex = evt.getPageIndex();
-            configuratorManager.showConfigurator(containerView.getPagesAndPreview(), pageIndex, evt.getConfigurationDatas());
+            containerView.getPagesAndPreview().getPagesView().setEnablePopUpMenuBtn(new Pair<Integer, Boolean>(pageIndex,true));
+            configuratorManager.showConfigurator(containerView.getPagesAndPreview(), pageIndex, evt.getConfiguration());
         });
+        
         popOverMenuView.addEventHandler(PopOverEvent.REMOVE_PAGE, evt -> {
             evt.consume();
             int pageIndex = evt.getPageIndex();
@@ -46,11 +49,6 @@ public class PageManager {
             e.consume();
             int pageIndex = e.getPageIndex();
             containerView.getPagesAndPreview().getPagesView().setRenamePage(pageIndex);
-        });
-
-        popOverMenuView.addEventFilter(PopOverEvent.SHOW_CONFIGURATION, evt -> {
-            evt.consume();
-            containerView.fireEvent(new PopOverEvent(PopOverEvent.SHOW_CONFIGURATION));
         });
 
         containerView.addEventFilter(PageEvent.SHOW_POPOVERMENU, evt -> {

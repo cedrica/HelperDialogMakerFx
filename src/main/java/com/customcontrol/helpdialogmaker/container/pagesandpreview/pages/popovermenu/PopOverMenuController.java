@@ -36,7 +36,7 @@ public class PopOverMenuController implements Initializable {
     }
 
     public void onConfig() {
-        popOverMenuView.fireEvent(new PopOverEvent(PopOverEvent.SHOW_CONFIGURATION, popOverMenuView.getPageIndex(),true));
+        popOverMenuView.fireEvent(new PopOverEvent(PopOverEvent.SHOW_CONFIGURATION, popOverMenuView.getPageIndex(),popOverMenuView.getConfiguration()));
         popOverMenuView.fireEvent(new PopOverEvent(PopOverEvent.CLOSE));
     }
 }

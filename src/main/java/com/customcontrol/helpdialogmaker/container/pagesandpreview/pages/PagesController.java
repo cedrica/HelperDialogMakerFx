@@ -46,29 +46,44 @@ public class PagesController implements Initializable {
             pagesView.addSubPage(-1);
         });
         pagesView.removePageProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != -1) // I have to reset the index after editing to allow the property change to be trigger
-                              // again
+            if (newVal != -1) // I have to reset the index after editing to allow the property change to be trigger again
                 removePage(rootNode.getChildren(), newVal);
             pagesView.setRenamePage(-1);
         });
         pagesView.renamePageProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != -1) // I have to reset the index after editing to allow the property change to be trigger
-                              // again
+            if (newVal != -1) 
                 rename(rootNode.getChildren(), newVal);
             pagesView.setRenamePage(-1);
         });
-        
+
         pagesView.pageConfigutaionProperty().addListener((obs, oldVal, newVal) -> {
-            configureCorrespondingPage(newVal);
+            saveConfigurationCorrespondingPage(newVal);
+        });
+
+        pagesView.enablePopUpMenuBtnProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal.getKey() != -1)
+                enablePopUpMenuBtn(newVal);
+            pagesView.setEnablePopUpMenuBtn(new Pair<Integer, Boolean>(-1, null));
         });
     }
 
-    private void configureCorrespondingPage(Pair<Integer, Pair<String, ObservableList<ConfigurationData>>> newVal) {
+    private void enablePopUpMenuBtn(Pair<Integer,Boolean> pair) {
         for (TreeItem<String> page : rootNode.getChildren()) {
-            PageView pageView = (PageView)page.getGraphic();
-            if(pageView.getIndex() == newVal.getKey()){
+            PageView pageView = (PageView) page.getGraphic();
+            if (pageView.getIndex() == pair.getKey()) {
+                pageView.setDisablePopUpMenuBtn(pair.getValue());
+                break;
+            }
+        }
+    }
+
+    private void saveConfigurationCorrespondingPage(Pair<Integer, Pair<String, ObservableList<ConfigurationData>>> newVal) {
+        for (TreeItem<String> page : rootNode.getChildren()) {
+            PageView pageView = (PageView) page.getGraphic();
+            if (pageView.getIndex() == newVal.getKey()) {
                 pageView.setHtml(newVal.getValue().getKey());
                 pageView.setConfiguration(newVal.getValue().getValue());
+                pageView.setDisablePopUpMenuBtn(true);
                 break;
             }
         }
@@ -106,7 +121,7 @@ public class PagesController implements Initializable {
             }
         }
         if (isRootNode)
-            decrementPageIndex(items, indexRemovedPage,1);
+            decrementPageIndex(items, indexRemovedPage, 1);
         return;
     }
 
@@ -118,12 +133,12 @@ public class PagesController implements Initializable {
             else if (pageView.isRootNode()) {
                 pageView.setIndex(pageView.getIndex() - 1);
                 if (page.getChildren() != null && !page.getChildren().isEmpty()) {
-                    decrementPageIndex(page.getChildren(), indexRemovedPage,tiefe);
+                    decrementPageIndex(page.getChildren(), indexRemovedPage, tiefe);
                 }
             } else {
-                pageView.setIndex(pageView.getIndex() - 10*tiefe);
+                pageView.setIndex(pageView.getIndex() - 10 * tiefe);
                 if (page.getChildren() != null && !page.getChildren().isEmpty()) {
-                    decrementPageIndex(page.getChildren(), indexRemovedPage,tiefe*10);
+                    decrementPageIndex(page.getChildren(), indexRemovedPage, tiefe * 10);
                 }
             }
 

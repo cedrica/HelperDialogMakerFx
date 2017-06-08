@@ -50,7 +50,7 @@ public class PageController implements Initializable {
         lblName.textProperty().bind(pageView.nameProperty());
         btnOk.visibleProperty().bind(pageView.nameVisibleProperty());
         btnPopupMenu.visibleProperty().bind(tfName.visibleProperty().not());
-        btnPopupMenu.disableProperty().bind(pageView.btnInfoDisableProperty());
+        btnPopupMenu.disableProperty().bind(pageView.disablePopUpMenuBtnProperty());
     }
 
     public void onOk(ActionEvent evt) {

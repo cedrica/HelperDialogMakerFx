@@ -29,6 +29,7 @@ public class PagesView extends HBox {
 
     private ObjectProperty<Pair<Integer, Pair<String, ObservableList<ConfigurationData>>>> pageConfigutaion = new SimpleObjectProperty<>();
 
+    private ObjectProperty<Pair<Integer,Boolean>> enablePopUpMenuBtn = new SimpleObjectProperty<>();
     public PagesView() {
         FXMLService.INSTANCE.loadView(this);
     }
@@ -104,5 +105,24 @@ public class PagesView extends HBox {
     public final void setPageConfigutaion(final Pair<Integer, Pair<String, ObservableList<ConfigurationData>>> pageConfigutaion) {
         this.pageConfigutaionProperty().set(pageConfigutaion);
     }
+
+    
+    public final ObjectProperty<Pair<Integer,Boolean>> enablePopUpMenuBtnProperty() {
+        return this.enablePopUpMenuBtn;
+    }
+    
+
+    
+    public final Pair<Integer,Boolean> getEnablePopUpMenuBtn() {
+        return this.enablePopUpMenuBtnProperty().get();
+    }
+    
+
+    
+    public final void setEnablePopUpMenuBtn(final Pair<Integer,Boolean> enablePopUpMenuBtn) {
+        this.enablePopUpMenuBtnProperty().set(enablePopUpMenuBtn);
+    }
+    
+
 
 }

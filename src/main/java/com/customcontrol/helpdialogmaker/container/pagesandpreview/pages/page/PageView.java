@@ -33,7 +33,7 @@ public class PageView extends HBox {
 
     private BooleanProperty home = new SimpleBooleanProperty(true);
 
-    private BooleanProperty btnInfoDisable = new SimpleBooleanProperty();
+    private BooleanProperty disablePopUpMenuBtn = new SimpleBooleanProperty();
 
     private ListProperty<ConfigurationData> configuration = new SimpleListProperty<>();
 
@@ -89,17 +89,6 @@ public class PageView extends HBox {
         this.rootNodeProperty().set(rootNode);
     }
 
-    public final BooleanProperty btnInfoDisableProperty() {
-        return this.btnInfoDisable;
-    }
-
-    public final boolean isBtnInfoDisable() {
-        return this.btnInfoDisableProperty().get();
-    }
-
-    public final void setBtnInfoDisable(final boolean btnInfoDisable) {
-        this.btnInfoDisableProperty().set(btnInfoDisable);
-    }
 
     public final IntegerProperty indexProperty() {
         return this.index;
@@ -148,5 +137,23 @@ public class PageView extends HBox {
     public final void setConfiguration(final ObservableList<ConfigurationData> configuration) {
         this.configurationProperty().set(configuration);
     }
+
+    
+    public final BooleanProperty disablePopUpMenuBtnProperty() {
+        return this.disablePopUpMenuBtn;
+    }
+    
+
+    
+    public final boolean isDisablePopUpMenuBtn() {
+        return this.disablePopUpMenuBtnProperty().get();
+    }
+    
+
+    
+    public final void setDisablePopUpMenuBtn(final boolean disablePopUpMenuBtn) {
+        this.disablePopUpMenuBtnProperty().set(disablePopUpMenuBtn);
+    }
+    
 
 }

@@ -12,11 +12,14 @@ import org.apache.commons.io.FileUtils;
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.enums.Muster;
 import com.customcontrol.helpdialogmaker.event.PopOverEvent;
+import com.customcontrol.helpdialogmaker.helper.DialogHelper;
+import com.customcontrol.helpdialogmaker.helper.Helper;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -26,104 +29,149 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 
-public class TextImageMusterController  implements Initializable{
+public class TextImageMusterController implements Initializable {
 
-	@FXML Button btnRemoveRow;
-	@FXML Button btnSave;
-	@FXML Button btnEdit;
-	@FXML HBox hbViewer;
-	@FXML WebView webView;
-	@FXML HBox hbEditor;
-	@FXML HTMLEditor htmlEditor;
-	@FXML VBox vbLoadedImage;
-	@FXML ImageView ivLoadedImage;
-	@FXML Button btnChangeImage;
-	@FXML Button btnChooseImage;
-	private WebEngine					webEngine;
-    @FXML TextImageMusterView textImageMusterView;
+    @FXML
+    Button              btnRemoveRow;
 
+    @FXML
+    Button              btnSave;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		btnChooseImage.setOnAction(this::onFileChooserAction);
-		btnSave.setOnAction(this::onSave);
-		btnEdit.setOnAction(this::onEdit);
-		btnChangeImage.setOnAction(this::onChangeImage);
-		btnRemoveRow.setOnAction(this::onRemoveRow);
-		webEngine = webView.getEngine();
-		btnSave.setDisable(true);
-		btnEdit.setVisible(false);
-	}
+    @FXML
+    Button              btnEdit;
 
-	public void onChangeImage(ActionEvent evt) {
-		onFileChooserAction(evt);
-	}
-	
-	public void onFileChooserAction(ActionEvent evt) {
-		FileChooser chooser = new FileChooser();
-		chooser.setTitle("Bild auswählen");
-		File file = chooser.showOpenDialog(btnChooseImage.getScene().getWindow());
-		if (file != null) {
-			try {
-				textImageMusterView.setImageBytes(FileUtils.readFileToByteArray(file));
-				textImageMusterView.setImageName(file.getName());
-				InputStream is = FileUtils.openInputStream(file);
-				Image image = new Image(is);
-				ivLoadedImage.setImage(image);
-				vbLoadedImage.setVisible(true);
-				btnChooseImage.setVisible(false);
-				btnSave.setDisable(false);
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
-			btnSave.setDisable(true);
-		}
-	}
+    @FXML
+    HBox                hbViewer;
 
-	public void setImageInImageView(byte[] bytes) {
-		textImageMusterView.setImageBytes(bytes);
-		InputStream is =  new ByteArrayInputStream(bytes);
-		Image image = new Image(is);
-		ivLoadedImage.setImage(image);
-		vbLoadedImage.setVisible(true);
-		btnChooseImage.setVisible(false);
-		btnSave.setDisable(false);
-	}
-	
-	public void setHtmlEditorText(String text){
-		htmlEditor.setHtmlText(text);
-	}
+    @FXML
+    WebView             webView;
 
-	public void onRemoveRow(ActionEvent evt){
-	    textImageMusterView.fireEvent(new PopOverEvent(PopOverEvent.REMOVE_CONFIGURATION, textImageMusterView.getPosInVbMusterContainer(),false));
-	}
-	
-	public void onSave(ActionEvent evt) {
-		textImageMusterView.setHtmlText(htmlEditor.getHtmlText());
-		String totalContent = textImageMusterView.save(btnSave.getScene().getWindow());
-		ConfigurationData configurationData = new ConfigurationData();
-		configurationData.setHtmlText(textImageMusterView.getHtmlText());
-		configurationData.setImage(textImageMusterView.getImageBytes());
-		configurationData.setMuster(Muster.TEXT_IMAGE);
-		textImageMusterView.setOldConfigurationData(configurationData);
-		if (totalContent != null){
-			hbEditor.setVisible(false);
-			hbViewer.setVisible(true);
-			webEngine.loadContent(totalContent);
-			btnEdit.setVisible(true);
-			btnSave.setVisible(false);
-		}
-			
-	}
+    @FXML
+    HBox                hbEditor;
 
-	public void onEdit(ActionEvent evt) {
-		hbEditor.setVisible(true);
-		hbViewer.setVisible(false);
-		btnEdit.setVisible(false);
-		btnSave.setVisible(true);
-	}
+    @FXML
+    HTMLEditor          htmlEditor;
 
+    @FXML
+    VBox                vbLoadedImage;
+
+    @FXML
+    ImageView           ivLoadedImage;
+
+    @FXML
+    Button              btnChangeImage;
+
+    @FXML
+    Button              btnChooseImage;
+
+    private WebEngine   webEngine;
+
+    @FXML
+    TextImageMusterView textImageMusterView;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        btnChooseImage.setOnAction(this::onFileChooserAction);
+        btnSave.setOnAction(this::onSave);
+        btnEdit.setOnAction(this::onEdit);
+        btnChangeImage.setOnAction(this::onChangeImage);
+        btnRemoveRow.setOnAction(this::onRemoveRow);
+        webEngine = webView.getEngine();
+        btnSave.setDisable(true);
+        btnEdit.setVisible(false);
+        textImageMusterView.imageInImageViewProperty().addListener((obs, oldVal, newVal) -> {
+            setImageInImageView(newVal);
+        });
+        textImageMusterView.htmlTextProperty().addListener((obs, oldVal, newVal) -> {
+            htmlEditor.setHtmlText(textImageMusterView.getHtmlText());
+        });
+    }
+
+    public void onChangeImage(ActionEvent evt) {
+        onFileChooserAction(evt);
+    }
+
+    public void onFileChooserAction(ActionEvent evt) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Bild auswählen");
+        File file = chooser.showOpenDialog(btnChooseImage.getScene().getWindow());
+        if (file != null) {
+            try {
+                textImageMusterView.setImageBytes(FileUtils.readFileToByteArray(file));
+                textImageMusterView.setImageName(file.getName());
+                InputStream is = FileUtils.openInputStream(file);
+                Image image = new Image(is);
+                ivLoadedImage.setImage(image);
+                vbLoadedImage.setVisible(true);
+                btnChooseImage.setVisible(false);
+                btnSave.setDisable(false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            btnSave.setDisable(true);
+        }
+    }
+
+    public void setImageInImageView(byte[] bytes) {
+        textImageMusterView.setImageBytes(bytes);
+        InputStream is = new ByteArrayInputStream(bytes);
+        Image image = new Image(is);
+        ivLoadedImage.setImage(image);
+        vbLoadedImage.setVisible(true);
+        btnChooseImage.setVisible(false);
+        btnSave.setDisable(false);
+    }
+
+    public void setHtmlEditorText(String text) {
+        htmlEditor.setHtmlText(text);
+    }
+
+    public void onRemoveRow(ActionEvent evt) {
+        textImageMusterView.setConfigurationData(null);
+        textImageMusterView.fireEvent(new PopOverEvent(PopOverEvent.REMOVE_CONFIGURATION, textImageMusterView.getPosInVbMusterContainer(), false));
+    }
+
+    public void onSave(ActionEvent evt) {
+        if (textImageMusterView.getImageBytes() == null || textImageMusterView.getImageBytes().length == 0) {
+            DialogHelper.error("Error", "Bild ist zwingen", btnSave.getScene().getWindow(), ButtonType.OK);
+            return;
+        }
+        textImageMusterView.setHtmlText(htmlEditor.getHtmlText());
+        builtWholeContent();
+        ConfigurationData configurationData = new ConfigurationData();
+        configurationData.setHtmlText(textImageMusterView.getHtmlText());
+        configurationData.setImage(textImageMusterView.getImageBytes());
+        configurationData.setMuster(Muster.TEXT_IMAGE);
+        textImageMusterView.setConfigurationData(configurationData);
+        hbEditor.setVisible(false);
+        hbViewer.setVisible(true);
+        webEngine.loadContent(textImageMusterView.getWholeHtmlContent());
+        btnEdit.setVisible(true);
+        btnSave.setVisible(false);
+
+    }
+
+    public void builtWholeContent() {
+        Helper.saveImageLocaly(textImageMusterView.getImageBytes(), textImageMusterView.getImageName());
+        String path = System.getProperty("user.dir") + "/images/" + textImageMusterView.getImageName();
+        path = path.replace("\\", "/");
+        String innerHtml = textImageMusterView.getHtmlText().replace("<html dir=\"ltr\"><head></head><body contenteditable=\"true\">", "").replace("</body></html>", "");
+        textImageMusterView.setWholeHtmlContent("<div class=\"media\">"
+                + "<div style=\"float:left;margin-right:5px;\">"
+                + innerHtml
+                + "</div>"
+                + "<div class=\"media-left media-middle\">"
+                + "<img src='file:///" + path + "' class=\"media-object\">"
+                + "</div>"
+                + "</div>");
+    }
+
+    public void onEdit(ActionEvent evt) {
+        hbEditor.setVisible(true);
+        hbViewer.setVisible(false);
+        btnEdit.setVisible(false);
+        btnSave.setVisible(true);
+    }
 
 }

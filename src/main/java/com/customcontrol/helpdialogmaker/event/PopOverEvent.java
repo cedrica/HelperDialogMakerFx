@@ -11,19 +11,18 @@ public class PopOverEvent extends Event {
     private static final long serialVersionUID = 1L;
 
     public static final EventType<PopOverEvent> REMOVE_CONFIGURATION = new EventType<>(Event.ANY, "REMOVE_ROW");
+
     public static final EventType<PopOverEvent> REMOVE_PAGE = new EventType<>(Event.ANY, "REMOVE_PAGE");
 
-    public static final EventType<PopOverEvent>    ADD_SUB_PAGE       = new EventType<>(Event.ANY, "ADD_SUB_PAGE");
+    public static final EventType<PopOverEvent> ADD_SUB_PAGE = new EventType<>(Event.ANY, "ADD_SUB_PAGE");
 
-    public static final EventType<PopOverEvent>    EDIT_NAME          = new EventType<>(Event.ANY, "EDIT_NAME");
+    public static final EventType<PopOverEvent> EDIT_NAME = new EventType<>(Event.ANY, "EDIT_NAME");
 
-    public static final EventType<PopOverEvent> CLOSE              = new EventType<>(Event.ANY, "CLOSE");
+    public static final EventType<PopOverEvent> CLOSE = new EventType<>(Event.ANY, "CLOSE");
 
-    public static final EventType<PopOverEvent>    SHOW_CONFIGURATION = new EventType<>(Event.ANY, "CONFIGURATION");
+    public static final EventType<PopOverEvent> SHOW_CONFIGURATION = new EventType<>(Event.ANY, "SHOW_CONFIGURATION");
 
-    private ObservableList<ConfigurationData>             configurationDatas;
-
-    private String name;
+    private ObservableList<ConfigurationData> configuration;
 
     private int musterIndex;
 
@@ -31,13 +30,6 @@ public class PopOverEvent extends Event {
 
     public PopOverEvent(EventType<PopOverEvent> eventType) {
         super(eventType);
-    }
-
-    public PopOverEvent(EventType<PopOverEvent> eventType, String name,
-                        ObservableList<ConfigurationData> configurationDatas) {
-        super(eventType);
-        this.configurationDatas = configurationDatas;
-        this.name = name;
     }
 
     public PopOverEvent(EventType<PopOverEvent> eventType, int musterIndex, boolean isPage) {
@@ -50,6 +42,13 @@ public class PopOverEvent extends Event {
 
     }
 
+    public PopOverEvent(EventType<PopOverEvent> eventType, int pageIndex,
+                        ObservableList<ConfigurationData> configuration) {
+        super(eventType);
+        this.pageIndex = pageIndex;
+        this.configuration = configuration;
+    }
+
     public int getPageIndex() {
         return pageIndex;
     }
@@ -58,12 +57,8 @@ public class PopOverEvent extends Event {
         return musterIndex;
     }
 
-    public ObservableList<ConfigurationData> getConfigurationDatas() {
-        return configurationDatas;
-    }
-
-    public String getName() {
-        return name;
+    public ObservableList<ConfigurationData> getConfiguration() {
+        return configuration;
     }
 
 }

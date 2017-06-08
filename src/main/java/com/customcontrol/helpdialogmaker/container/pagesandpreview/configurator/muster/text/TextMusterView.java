@@ -3,115 +3,90 @@ package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.preag.core.ui.service.FXMLService;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.layout.VBox;
-import javafx.stage.Window;
 
-public class TextMusterView extends VBox{
-	private StringProperty htmlText = new SimpleStringProperty();
-	private int posInVbMusterContainer;
-	private String wholeHtmlContent;
-	private ConfigurationData configurationData;
-	
-	private StringProperty htmlEditorText =new SimpleStringProperty();
-	
-	public TextMusterView (){
-	    FXMLService.INSTANCE.loadView(this);
-	}
-	
-	public ConfigurationData getOldConfigurationData() {
-		return configurationData;
-	}
+public class TextMusterView extends VBox {
 
-	
-	public void setOldConfigurationData(ConfigurationData configurationData) {
-		this.configurationData = configurationData;
-	}
+    private StringProperty htmlText = new SimpleStringProperty();
 
+    private StringProperty imageName = new SimpleStringProperty();
 
+    private IntegerProperty posInVbMusterContainer = new SimpleIntegerProperty();
 
+    private StringProperty wholeHtmlContent = new SimpleStringProperty();
 
-	public int getPosInVbMusterContainer() {
-		return posInVbMusterContainer;
-	}
+    private ObjectProperty<ConfigurationData> configurationData = new SimpleObjectProperty<>();
 
-
-
-	
-	public void setPosInVbMusterContainer(int posInVbMusterContainer) {
-		this.posInVbMusterContainer = posInVbMusterContainer;
-	}
-
-
-
-	public final StringProperty htmlTextProperty() {
-		return this.htmlText;
-	}
-	
-
-	
-	public final String getHtmlText() {
-		return this.htmlTextProperty().get();
-	}
-	
-
-	
-	public final void setHtmlText(final String htmlText) {
-		this.htmlTextProperty().set(htmlText);
-	}
-
-
-	public String save(Window window) {
-		
-		String essential = htmlText.get().replace("<html dir=\"ltr\"><head></head><body contenteditable=\"true\">", "").replace("</body></html>", "");
-		wholeHtmlContent =  "<p>"+ essential + "</p>";
-		String view =   "<html dir=\"ltr\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
-						+ "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">"
-						+ "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js\"></script>"
-						+ "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>"
-						+ "</head>"
-						+ "<body contenteditable=\"false\">"
-						+ wholeHtmlContent
-						+ "</body>"
-						+ "</html>";
-		return view;
-	}
-
-
-
-
-	
-	public String getWholeHtmlContent() {
-		return wholeHtmlContent;
-	}
-
-
-
-
-	
-	public void setWholeHtmlContent(String wholeHtmlContent) {
-		this.wholeHtmlContent = wholeHtmlContent;
-	}
-
-    
-    public final StringProperty htmlEditorTextProperty() {
-        return this.htmlEditorText;
+    public TextMusterView() {
+        FXMLService.INSTANCE.loadView(this);
     }
-    
 
-    
-    public final String getHtmlEditorText() {
-        return this.htmlEditorTextProperty().get();
+    public final StringProperty htmlTextProperty() {
+        return this.htmlText;
     }
-    
 
-    
-    public final void setHtmlEditorText(final String htmlEditorText) {
-        this.htmlEditorTextProperty().set(htmlEditorText);
+    public final String getHtmlText() {
+        return this.htmlTextProperty().get();
     }
-    
 
+    public final void setHtmlText(final String htmlText) {
+        this.htmlTextProperty().set(htmlText);
+    }
+
+    public final IntegerProperty posInVbMusterContainerProperty() {
+        return this.posInVbMusterContainer;
+    }
+
+    public final int getPosInVbMusterContainer() {
+        return this.posInVbMusterContainerProperty().get();
+    }
+
+    public final void setPosInVbMusterContainer(final int posInVbMusterContainer) {
+        this.posInVbMusterContainerProperty().set(posInVbMusterContainer);
+    }
+
+    public final StringProperty imageNameProperty() {
+        return this.imageName;
+    }
+
+    public final String getImageName() {
+        return this.imageNameProperty().get();
+    }
+
+    public final void setImageName(final String imageName) {
+        this.imageNameProperty().set(imageName);
+    }
+
+
+    public final StringProperty wholeHtmlContentProperty() {
+        return this.wholeHtmlContent;
+    }
+
+    public final String getWholeHtmlContent() {
+        return this.wholeHtmlContentProperty().get();
+    }
+
+    public final void setWholeHtmlContent(final String wholeHtmlContent) {
+        this.wholeHtmlContentProperty().set(wholeHtmlContent);
+    }
+
+    public final ObjectProperty<ConfigurationData> configurationDataProperty() {
+        return this.configurationData;
+    }
+
+    public final ConfigurationData getConfigurationData() {
+        return this.configurationDataProperty().get();
+    }
+
+    public final void setConfigurationData(final ConfigurationData configurationData) {
+        this.configurationDataProperty().set(configurationData);
+    }
 
 
 }

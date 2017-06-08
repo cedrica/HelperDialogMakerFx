@@ -64,7 +64,7 @@ dynamic component ConfiguratorView controlledby ConfiguratorController styledwit
 						style : "-fx-border-width:1px;-fx-background-color:darkorange;",
 						alignment : "CENTER",
 						static hgrow : "ALWAYS",
-						Label id lblInfo {
+						Label  {
 							graphic : Glyph {
 								style : "-fx-text-fill:#fff",
 								icon : "INFO",
@@ -113,7 +113,7 @@ dynamic component ConfiguratorView controlledby ConfiguratorController styledwit
 		HBox {
 			spacing : 5,
 			alignment : "CENTER_RIGHT",
-			Button {
+			Button id btnSave {
 				text : "Seite speichern",
 				onAction : controllermethod onSavePage
 			},

@@ -37,7 +37,7 @@
 					<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 				</ComboBox>
 				<VBox fx:id="vbInfo" style="-fx-border-width:1px;-fx-background-color:darkorange;" alignment="CENTER" HBox.hgrow="ALWAYS"> 
-					<Label fx:id="lblInfo"> 
+					<Label> 
 						<graphic>
 							<Glyph style="-fx-text-fill:#fff" icon="INFO" fontFamily="FontAwesome" fontSize="15"/> 
 						</graphic>
@@ -65,7 +65,7 @@
 		</VBox>
 	</ScrollPane>
 	<HBox spacing="5" alignment="CENTER_RIGHT"> 
-		<Button text="Seite speichern" onAction="#onSavePage"/> 
+		<Button fx:id="btnSave" text="Seite speichern" onAction="#onSavePage"/> 
 		<Button text="Abbrechen" onAction="#onCancel"/> 
 	</HBox>
 	<stylesheets>
