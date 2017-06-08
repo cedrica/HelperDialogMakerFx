@@ -1,13 +1,16 @@
 package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.image.ImageMusterView;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.imagetext.ImageTextMusterView;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.text.TextMusterView;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.textimage.TextImageMusterView;
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.enums.Muster;
 import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.customcontrol.helpdialogmaker.helper.Helper;
@@ -20,8 +23,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class ConfiguratorController implements Initializable {
@@ -29,22 +30,13 @@ public class ConfiguratorController implements Initializable {
     private static boolean A_ROW_WAS_REMOVED = false;
 
     @FXML
-    TextArea taContent;
-
-    @FXML
     Label lblTitle;
-
-    @FXML
-    Label lblInfo;
 
     @FXML
     ComboBox<Muster> cbMuster;
 
     @FXML
     VBox vbInfo;
-
-    @FXML
-    HBox hbRow;
 
     @FXML
     VBox vbMusterContainer;
@@ -57,9 +49,6 @@ public class ConfiguratorController implements Initializable {
 
     @FXML
     Button btnAddNewRow;
-
-    @FXML
-    Button btnSavePage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,36 +63,31 @@ public class ConfiguratorController implements Initializable {
             removeRow(newVal.intValue());
         });
         btnAddNewRow.disableProperty().bind(cbMuster.getSelectionModel().selectedItemProperty().isNull());
-//        btnAddNewRow.getStyleClass().add("button-raised");
         lblTitle.textProperty().bind(configuratorView.titleProperty());
     }
 
     public void onSavePage(ActionEvent evt) {
         StringBuilder htmlContent = new StringBuilder();
+        List<ConfigurationData> configurationDatas = new ArrayList<>();
         for (Node row : vbMusterContainer.getChildren()) {
             if (row instanceof ImageTextMusterView) {
                 htmlContent.append(((ImageTextMusterView) row).getHtmlText());
-                configuratorView.getOldConfigurationDatas().add(((ImageTextMusterView) row).getOldConfigurationData());
+                configurationDatas.add(((ImageTextMusterView) row).getOldConfigurationData());
             } else if (row instanceof ImageMusterView) {
                 htmlContent.append(((ImageMusterView) row).getWholeHtmlContent());
-                configuratorView.getOldConfigurationDatas().add(((ImageMusterView) row).getOldConfigurationData());
+                configurationDatas.add(((ImageMusterView) row).getOldConfigurationData());
             } else if (row instanceof TextImageMusterView) {
                 htmlContent.append(((TextImageMusterView) row).getWholeHtmlContent());
-                configuratorView.getOldConfigurationDatas().add(((TextImageMusterView) row).getOldConfigurationData());
+                configurationDatas.add(((TextImageMusterView) row).getOldConfigurationData());
             } else if (row instanceof TextMusterView) {
                 htmlContent.append(((TextMusterView) row).getWholeHtmlContent());
-                configuratorView.getOldConfigurationDatas().add(((TextMusterView) row).getOldConfigurationData());
+                configurationDatas.add(((TextMusterView) row).getOldConfigurationData());
             }
         }
-
-        transferConfigurationToPage(htmlContent);
-        configuratorView.fireEvent(new PageEvent(PageEvent.UPDATE_PREVIEW));
+        configuratorView.fireEvent(new PageEvent(PageEvent.PAGE_CONFIGURATION,configuratorView.getPageIndex(),htmlContent.toString(), FXCollections.observableList(configurationDatas)));
         ROW_INDEX = 0;
         A_ROW_WAS_REMOVED = false;
 
-    }
-
-    private void transferConfigurationToPage(StringBuilder htmlContent) {
     }
 
     public void onAddNewRow(ActionEvent evt) {
@@ -115,7 +99,7 @@ public class ConfiguratorController implements Initializable {
     public void removeRow(int configurationNr) {
         if (vbMusterContainer.getChildren().size() == 1) {
             vbMusterContainer.getChildren().remove(0);
-            ROW_INDEX--;
+            ROW_INDEX = ROW_INDEX--%-1;
             return;
         }
         if (A_ROW_WAS_REMOVED) {
@@ -131,10 +115,12 @@ public class ConfiguratorController implements Initializable {
             vbMusterContainer.getChildren().remove(configurationNr);
             A_ROW_WAS_REMOVED = true;
         }
-        ROW_INDEX--;
+        ROW_INDEX = ROW_INDEX--%-1;
     }
 
 
-    @FXML public void onClose() {}
+   public void onCancel(ActionEvent evt) {
+       configuratorView.fireEvent(new PageEvent(PageEvent.UPDATE_PREVIEW));
+   }
 
 }

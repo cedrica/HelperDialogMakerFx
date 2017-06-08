@@ -1,21 +1,16 @@
 package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator;
 
-import java.util.ArrayList;
-
 import javax.inject.Singleton;
 
 import com.customcontrol.helpdialogmaker.enums.Muster;
-import com.customcontrol.helpdialogmaker.model.OldConfigurationData;
 import com.preag.core.ui.service.FXMLService;
 
-import javafx.beans.property.ListProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
@@ -25,8 +20,8 @@ public class ConfiguratorView extends VBox {
     private ObjectProperty<Muster> selectedMuster = new SimpleObjectProperty<>();
     private StringProperty title = new SimpleStringProperty();
     private ObjectProperty<Node> musterComponent = new SimpleObjectProperty<>();
-    private ListProperty<OldConfigurationData> oldConfigurationDatas = new SimpleListProperty<>(FXCollections.observableList(new ArrayList<>()));
     private ObjectProperty<Integer> musterIndex = new SimpleObjectProperty<>();
+    private IntegerProperty pageIndex = new SimpleIntegerProperty();
     
     public ConfiguratorView() {
         FXMLService.INSTANCE.loadView(this);
@@ -54,18 +49,6 @@ public class ConfiguratorView extends VBox {
 
     public final void setTitle(final String title) {
         this.titleProperty().set(title);
-    }
-
-    public final ListProperty<OldConfigurationData> oldConfigurationDatasProperty() {
-        return this.oldConfigurationDatas;
-    }
-
-    public final ObservableList<OldConfigurationData> getOldConfigurationDatas() {
-        return this.oldConfigurationDatasProperty().get();
-    }
-
-    public final void setOldConfigurationDatas(final ObservableList<OldConfigurationData> oldConfigurationDatas) {
-        this.oldConfigurationDatasProperty().set(oldConfigurationDatas);
     }
 
     
@@ -106,6 +89,24 @@ public class ConfiguratorView extends VBox {
     public final void setMusterIndex(final Integer musterIndex) {
         this.musterIndexProperty().set(musterIndex);
     }
+
+    
+    public final IntegerProperty pageIndexProperty() {
+        return this.pageIndex;
+    }
+    
+
+    
+    public final int getPageIndex() {
+        return this.pageIndexProperty().get();
+    }
+    
+
+    
+    public final void setPageIndex(final int pageIndex) {
+        this.pageIndexProperty().set(pageIndex);
+    }
+    
     
 
     

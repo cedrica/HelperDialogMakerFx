@@ -3,10 +3,11 @@ package com.customcontrol.helpdialogmaker.container.pagesandpreview;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.PagesView;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
-import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.PagesView;
 
 public class PagesAndPreviewController implements Initializable {
 
@@ -26,6 +27,7 @@ public class PagesAndPreviewController implements Initializable {
             hbPlaceHolder.getChildren().clear();
             hbPlaceHolder.getChildren().add(newVal);
         });
+
         pagesAndPreview.setPagesView(pagesView);
     }
 

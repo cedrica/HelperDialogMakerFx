@@ -1,6 +1,6 @@
 package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.text;
 
-import com.customcontrol.helpdialogmaker.model.OldConfigurationData;
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.preag.core.ui.service.FXMLService;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -12,7 +12,7 @@ public class TextMusterView extends VBox{
 	private StringProperty htmlText = new SimpleStringProperty();
 	private int posInVbMusterContainer;
 	private String wholeHtmlContent;
-	private OldConfigurationData oldConfigurationData;
+	private ConfigurationData configurationData;
 	
 	private StringProperty htmlEditorText =new SimpleStringProperty();
 	
@@ -20,13 +20,13 @@ public class TextMusterView extends VBox{
 	    FXMLService.INSTANCE.loadView(this);
 	}
 	
-	public OldConfigurationData getOldConfigurationData() {
-		return oldConfigurationData;
+	public ConfigurationData getOldConfigurationData() {
+		return configurationData;
 	}
 
 	
-	public void setOldConfigurationData(OldConfigurationData oldConfigurationData) {
-		this.oldConfigurationData = oldConfigurationData;
+	public void setOldConfigurationData(ConfigurationData configurationData) {
+		this.configurationData = configurationData;
 	}
 
 

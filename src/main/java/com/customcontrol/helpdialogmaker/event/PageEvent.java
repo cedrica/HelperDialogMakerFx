@@ -1,44 +1,34 @@
 package com.customcontrol.helpdialogmaker.event;
 
-import java.util.List;
-
-import com.customcontrol.helpdialogmaker.model.OldConfigurationData;
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.preag.core.ui.event.ApplicationEvent;
 
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventType;
 
 public class PageEvent extends ApplicationEvent {
 
-    private static final long                serialVersionUID        = 1L;
-
-    public static final EventType<PageEvent> REMOVE_PAGE             = new EventType<>(Event.ANY, "REMOVE_PAGE");
-
-    public static final EventType<PageEvent> ADD_SUB_PAGE            = new EventType<>(Event.ANY, "ADD_SUB_PAGE");
-
-    public static final EventType<PageEvent> CONFIGURATION           = new EventType<>(Event.ANY, "CONFIGURATION");
-
-    public static final EventType<PageEvent> REMOVE_CONFIGURATION    = new EventType<>(Event.ANY, "REMOVE_ROW");
+    private static final long serialVersionUID = 1L;
 
     public static final EventType<PageEvent> TRANSFER_CONFIG_TO_PAGE = new EventType<>(Event.ANY, "TRANSFER_CONFIG_TO_PAGE");
 
-    public static final EventType<PageEvent> TRANSFER_OLD_CONFIG     = new EventType<>(Event.ANY, "TRANSFER_OLD_CONFIG");
+    public static final EventType<PageEvent> TRANSFER_OLD_CONFIG = new EventType<>(Event.ANY, "TRANSFER_OLD_CONFIG");
 
-    public static final EventType<PageEvent> HANDE_BUTTON_ENABLING   = new EventType<>(Event.ANY, "HANDE_BUTTON_ENABLING");
+    public static final EventType<PageEvent> ADD_MENU_POINT = new EventType<>(Event.ANY, "ADD_MENU_POINT");
 
-    public static final EventType<PageEvent> ADD_MENU_POINT          = new EventType<>(Event.ANY, "ADD_MENU_POINT");
+    public static final EventType<PageEvent> SHOW_POPOVERMENU = new EventType<>(Event.ANY, "CREATE_POPUPMENU");
 
-    public static final EventType<PageEvent> EDIT_NAME               = new EventType<>(Event.ANY, "EDIT_NAME");
+    public static final EventType<PageEvent> UPDATE_PREVIEW = new EventType<>(Event.ANY, "UPDATE_PREVIEW");
 
-    public static final EventType<PageEvent> SHOW_POPOVERMENU        = new EventType<>(Event.ANY, "CREATE_POPUPMENU");
+    public static final EventType<PageEvent> PAGE_CONFIGURATION = new EventType<>(Event.ANY, "PAGE_CONFIGURATION");;
 
-    public static final EventType<PageEvent> UPDATE_PREVIEW          = new EventType<>(Event.ANY, "UPDATE_PREVIEW");
+    private boolean disabled;
 
-    private boolean                    disabled;
 
-    private int                        musterIndex;
+    private String pageHTML;
 
-    private List<OldConfigurationData> oldConfigurationDatas;
+    private ObservableList<ConfigurationData> configurationDatas;
 
     private int pageIndex;
 
@@ -51,37 +41,41 @@ public class PageEvent extends ApplicationEvent {
         this.disabled = disabled;
     }
 
-    public PageEvent(EventType<PageEvent> eventType, int musterIndex, boolean isPage) {
+    public PageEvent(EventType<PageEvent> eventType, int pageIndex, String html,ObservableList<ConfigurationData> configurationDatas) {
         super(eventType);
-        if (!isPage)
-            this.musterIndex = musterIndex;
-        else{
-            this.pageIndex = musterIndex;
-        }
-            
+        this.pageHTML = html;
+        this.pageIndex = pageIndex;
+        this.configurationDatas = configurationDatas;
     }
 
-    public PageEvent(EventType<PageEvent> eventType, List<OldConfigurationData> oldConfigurationDatas) {
+    public PageEvent(EventType<PageEvent> eventType, ObservableList<ConfigurationData> configurationDatas) {
         super(eventType);
-        this.oldConfigurationDatas = oldConfigurationDatas;
+        this.configurationDatas = configurationDatas;
     }
+    
+    public PageEvent(EventType<PageEvent> eventType, int pageIndex, ObservableList<ConfigurationData> configurationDatas) {
+        super(eventType);
+        this.configurationDatas = configurationDatas;
+        this.pageIndex = pageIndex;
+    }
+
+    public String getPageHTML() {
+        return pageHTML;
+    }
+
 
     public boolean isDisabled() {
         return disabled;
     }
 
-    public int getMusterIndex() {
-        return musterIndex;
-    }
 
-    
-    
+
     public int getPageIndex() {
         return pageIndex;
     }
 
-    public List<OldConfigurationData> getOldConfigurationData() {
-        return oldConfigurationDatas;
+    public ObservableList<ConfigurationData> getConfigurationDatas() {
+        return configurationDatas;
     }
 
 }

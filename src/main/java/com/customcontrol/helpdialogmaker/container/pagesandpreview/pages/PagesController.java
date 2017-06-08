@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.customcontrol.helpdialogmaker.container.ContainerService;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageView;
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.WindowEvent;
+import javafx.util.Pair;
 
 public class PagesController implements Initializable {
 
@@ -25,8 +27,6 @@ public class PagesController implements Initializable {
     TreeView<String> tvBaum;
 
     private TreeItem<String> rootNode;
-
-    private String htmlContent;
 
     @FXML
     PagesView pagesView;
@@ -57,6 +57,21 @@ public class PagesController implements Initializable {
                 rename(rootNode.getChildren(), newVal);
             pagesView.setRenamePage(-1);
         });
+        
+        pagesView.pageConfigutaionProperty().addListener((obs, oldVal, newVal) -> {
+            configureCorrespondingPage(newVal);
+        });
+    }
+
+    private void configureCorrespondingPage(Pair<Integer, Pair<String, ObservableList<ConfigurationData>>> newVal) {
+        for (TreeItem<String> page : rootNode.getChildren()) {
+            PageView pageView = (PageView)page.getGraphic();
+            if(pageView.getIndex() == newVal.getKey()){
+                pageView.setHtml(newVal.getValue().getKey());
+                pageView.setConfiguration(newVal.getValue().getValue());
+                break;
+            }
+        }
     }
 
     private void rename(ObservableList<TreeItem<String>> items, Integer indexOfPageToBeRemove) {
@@ -132,10 +147,6 @@ public class PagesController implements Initializable {
                 addSubPage(page.getChildren(), parentIndex);
             }
         }
-    }
-
-    public String getHtmlContent() {
-        return htmlContent;
     }
 
     public void onClose(ActionEvent evt) {

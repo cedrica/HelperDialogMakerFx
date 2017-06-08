@@ -1,15 +1,19 @@
 package com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page;
 
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.preag.core.ui.service.FXMLService;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
@@ -30,6 +34,8 @@ public class PageView extends HBox {
     private BooleanProperty home = new SimpleBooleanProperty(true);
 
     private BooleanProperty btnInfoDisable = new SimpleBooleanProperty();
+
+    private ListProperty<ConfigurationData> configuration = new SimpleListProperty<>();
 
     public PageView() {
         FXMLService.INSTANCE.loadView(this);
@@ -129,6 +135,18 @@ public class PageView extends HBox {
 
     public final void setHtml(final String html) {
         this.htmlProperty().set(html);
+    }
+
+    public final ListProperty<ConfigurationData> configurationProperty() {
+        return this.configuration;
+    }
+
+    public final ObservableList<ConfigurationData> getConfiguration() {
+        return this.configurationProperty().get();
+    }
+
+    public final void setConfiguration(final ObservableList<ConfigurationData> configuration) {
+        this.configurationProperty().set(configuration);
     }
 
 }

@@ -65,8 +65,8 @@
 		</VBox>
 	</ScrollPane>
 	<HBox spacing="5" alignment="CENTER_RIGHT"> 
-		<Button fx:id="btnSavePage" text="Seite speichern" onAction="#onSavePage"/> 
-		<Button text="Abbrechen" onAction="#onClose"/> 
+		<Button text="Seite speichern" onAction="#onSavePage"/> 
+		<Button text="Abbrechen" onAction="#onCancel"/> 
 	</HBox>
 	<stylesheets>
 		<String fx:value="/com/customcontrol/helpdialogmaker/container/pagesandpreview/configurator/Configurator.css" />

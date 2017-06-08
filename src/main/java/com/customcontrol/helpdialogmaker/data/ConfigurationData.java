@@ -1,8 +1,8 @@
-package com.customcontrol.helpdialogmaker.model;
+package com.customcontrol.helpdialogmaker.data;
 
 import com.customcontrol.helpdialogmaker.enums.Muster;
 
-public class OldConfigurationData {
+public class ConfigurationData {
 	private byte[] image;
 	private String htmlText;
 	private Muster muster;

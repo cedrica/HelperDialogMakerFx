@@ -1,7 +1,5 @@
 package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -10,10 +8,11 @@ import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.imagetext.ImageTextMusterView;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.text.TextMusterView;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.textimage.TextImageMusterView;
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.enums.Muster;
-import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.customcontrol.helpdialogmaker.event.PopOverEvent;
-import com.customcontrol.helpdialogmaker.model.OldConfigurationData;
+
+import javafx.collections.ObservableList;
 
 @Singleton
 public class ConfiguratorManager {
@@ -22,41 +21,40 @@ public class ConfiguratorManager {
     private ConfiguratorView configuratorView;
 
     public void handleAddedEvents() {
-        configuratorView.addEventHandler(PopOverEvent.INIT_MUSTER_CONTAINER, evt -> {
-            evt.consume();assignOldConfiguration(evt);
-        });
 
         configuratorView.addEventHandler(ConfiguratorEvent.ADD_NEW_ROW, evt -> {
-            evt.consume(); addNewRow(evt.getMuster());
+            evt.consume();
+            addNewRow(evt.getMuster());
         });
-        
-        configuratorView.addEventHandler(PageEvent.REMOVE_CONFIGURATION, evt -> {
+
+        configuratorView.addEventHandler(PopOverEvent.REMOVE_CONFIGURATION, evt -> {
             evt.consume();
             configuratorView.removeMuster(evt.getMusterIndex());
         });
     }
 
-    public void assignOldConfiguration(PopOverEvent evt) {
-        List<OldConfigurationData> oldConfigurationDatas = evt.getOldConfigurationDatas();
-        for (OldConfigurationData oldConfigurationData : oldConfigurationDatas) {
-            Muster muster = oldConfigurationData.getMuster();
+    public void assignConfiguration(ObservableList<ConfigurationData> configurationDatas) {
+        if(configurationDatas == null)
+            return;
+        for (ConfigurationData configurationData : configurationDatas) {
+            Muster muster = configurationData.getMuster();
             if (muster == Muster.IMAGE) {
                 ImageMusterView imageMusterView = new ImageMusterView();
-                imageMusterView.setImageInImageView(oldConfigurationData.getImage());
+                imageMusterView.setImageInImageView(configurationData.getImage());
                 configuratorView.setMusterComponent(imageMusterView);
             } else if (muster == Muster.TEXT) {
                 TextMusterView textMusterView = new TextMusterView();
-                textMusterView.setHtmlEditorText(oldConfigurationData.getHtmlText());
+                textMusterView.setHtmlEditorText(configurationData.getHtmlText());
                 configuratorView.setMusterComponent(textMusterView);
             } else if (muster == Muster.TEXT_IMAGE) {
                 TextImageMusterView textImageMusterView = new TextImageMusterView();
-                textImageMusterView.setImageInImageView(oldConfigurationData.getImage());
-                textImageMusterView.setHtmlEditorText(oldConfigurationData.getHtmlText());
+                textImageMusterView.setImageInImageView(configurationData.getImage());
+                textImageMusterView.setHtmlEditorText(configurationData.getHtmlText());
                 configuratorView.setMusterComponent(textImageMusterView);
             } else if (muster == Muster.IMAGE_TEXT) {
                 ImageTextMusterView imageTextMusterView = new ImageTextMusterView();
-                imageTextMusterView.setImageBytes(oldConfigurationData.getImage());
-                imageTextMusterView.setHtmlText(oldConfigurationData.getHtmlText());
+                imageTextMusterView.setImageBytes(configurationData.getImage());
+                imageTextMusterView.setHtmlText(configurationData.getHtmlText());
                 configuratorView.setMusterComponent(imageTextMusterView);
             }
         }
@@ -78,9 +76,10 @@ public class ConfiguratorManager {
         }
     }
 
-    public void showConfigurator(PagesAndPreview pagesAndPreview) {
+    public void showConfigurator(PagesAndPreview pagesAndPreview, int pageIndex,ObservableList<ConfigurationData> configurationDatas) {
+        assignConfiguration(configurationDatas);
+        configuratorView.setPageIndex(pageIndex);
         pagesAndPreview.setPlaceHolder(configuratorView);
     }
-
 
 }

@@ -3,9 +3,9 @@ package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.enums.Muster;
-import com.customcontrol.helpdialogmaker.event.PageEvent;
-import com.customcontrol.helpdialogmaker.model.OldConfigurationData;
+import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.web.HTMLEditor;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
 public class TextMusterController  implements Initializable{
 
@@ -28,7 +27,6 @@ public class TextMusterController  implements Initializable{
 	@FXML HTMLEditor htmlEditor;
 
 	private WebEngine					webEngine;
-	private Stage stage;
     @FXML TextMusterView textMusterView;
 
 
@@ -53,16 +51,16 @@ public class TextMusterController  implements Initializable{
 	}
 
 	public void onRemoveRow(ActionEvent evt){
-		stage.fireEvent(new PageEvent(PageEvent.REMOVE_CONFIGURATION,textMusterView.getPosInVbMusterContainer(),false));
+	    textMusterView.fireEvent(new PopOverEvent(PopOverEvent.REMOVE_CONFIGURATION,textMusterView.getPosInVbMusterContainer(),false));
 	}
 	
 	public void onSave(ActionEvent evt) {
 		textMusterView.setHtmlText(htmlEditor.getHtmlText());
 		String totalContent = textMusterView.save(btnSave.getScene().getWindow());
-		OldConfigurationData oldConfigurationData = new OldConfigurationData();
-		oldConfigurationData.setHtmlText(textMusterView.getHtmlText());
-		oldConfigurationData.setMuster(Muster.TEXT);
-		textMusterView.setOldConfigurationData(oldConfigurationData);
+		ConfigurationData configurationData = new ConfigurationData();
+		configurationData.setHtmlText(textMusterView.getHtmlText());
+		configurationData.setMuster(Muster.TEXT);
+		textMusterView.setOldConfigurationData(configurationData);
 		if (totalContent != null){
 			hbEditor.setVisible(false);
 			hbViewer.setVisible(true);
@@ -79,32 +77,5 @@ public class TextMusterController  implements Initializable{
 		btnEdit.setVisible(false);
 		btnSave.setVisible(true);
 	}
-
-	
-	
-	public Stage getStage() {
-		return stage;
-	}
-
-	
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
-
-
-
-	
-	public TextMusterView getTextMusterViewModel() {
-		return textMusterView;
-	}
-
-
-
-	
-	public void setTextMusterViewModel(TextMusterView textMusterView) {
-		this.textMusterView = textMusterView;
-	}
-
-	
 
 }

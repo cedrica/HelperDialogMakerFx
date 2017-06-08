@@ -4,8 +4,11 @@ import javax.inject.Inject;
 
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageManager;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.previews.PreviewView;
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.event.PageEvent;
-import com.customcontrol.helpdialogmaker.event.PopOverEvent;
+
+import javafx.collections.ObservableList;
+import javafx.util.Pair;
 
 public class ContainerManager {
 
@@ -18,6 +21,16 @@ public class ContainerManager {
     public void handleAddedEvents(ContainerView containerView) {
 
         pageManager.handleAddedEvents(containerView, previewView);
+        
+        containerView.addEventHandler(PageEvent.PAGE_CONFIGURATION, evt ->{
+            int pageIndex = evt.getPageIndex();
+            String html = evt.getPageHTML();
+            Pair<Integer, Pair<String,ObservableList<ConfigurationData>>> pair = new Pair<>(pageIndex, new Pair<>(html,evt.getConfigurationDatas()));
+            containerView.getPagesAndPreview().getPagesView().setPageConfigutaion(pair);
+            containerView.getPagesAndPreview().setPlaceHolder(previewView);
+            previewView.setHtmlContent(ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getRootNode()));
+        });
+        
         containerView.getPagesAndPreview().setPlaceHolder(previewView);
 
         containerView.addEventHandler(PageEvent.UPDATE_PREVIEW, evt -> {
@@ -30,22 +43,5 @@ public class ContainerManager {
             evt.consume();
             previewView.setHtmlContent(ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getRootNode()));
         });
-
-        containerView.addEventHandler(PopOverEvent.INIT_MUSTER_CONTAINER, evt -> {
-            evt.consume();
-            containerView.addEventFilter(PopOverEvent.CLOSE, e -> {
-                containerView.setClearPlaceHolder(true);
-            });
-        });
-
-        containerView.addEventFilter(PageEvent.HANDE_BUTTON_ENABLING, e -> {
-            e.consume();
-        });
-
-//        containerView.addEventFilter(PageEvent.ADD_MENU_POINT, evt -> {
-//            evt.consume();
-//            previewView.setHtmlContent(ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getRootNode()));
-//        });
-
     }
 }

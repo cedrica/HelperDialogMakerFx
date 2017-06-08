@@ -2,14 +2,17 @@ package com.customcontrol.helpdialogmaker.container.pagesandpreview.pages;
 
 import javax.inject.Singleton;
 
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.preag.core.ui.service.FXMLService;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.HBox;
+import javafx.util.Pair;
 
 @Singleton
 public class PagesView extends HBox {
@@ -23,6 +26,8 @@ public class PagesView extends HBox {
     private ObjectProperty<Integer> removePage = new SimpleObjectProperty<>();
 
     private ObjectProperty<TreeItem<String>> rootNode = new SimpleObjectProperty<>();
+
+    private ObjectProperty<Pair<Integer, Pair<String, ObservableList<ConfigurationData>>>> pageConfigutaion = new SimpleObjectProperty<>();
 
     public PagesView() {
         FXMLService.INSTANCE.loadView(this);
@@ -86,6 +91,18 @@ public class PagesView extends HBox {
 
     public final void setRootNode(final TreeItem<String> rootNode) {
         this.rootNodeProperty().set(rootNode);
+    }
+
+    public final ObjectProperty<Pair<Integer, Pair<String, ObservableList<ConfigurationData>>>> pageConfigutaionProperty() {
+        return this.pageConfigutaion;
+    }
+
+    public final Pair<Integer, Pair<String, ObservableList<ConfigurationData>>> getPageConfigutaion() {
+        return this.pageConfigutaionProperty().get();
+    }
+
+    public final void setPageConfigutaion(final Pair<Integer, Pair<String, ObservableList<ConfigurationData>>> pageConfigutaion) {
+        this.pageConfigutaionProperty().set(pageConfigutaion);
     }
 
 }

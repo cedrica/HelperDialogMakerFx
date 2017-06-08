@@ -1,6 +1,6 @@
 package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.imagetext;
 
-import com.customcontrol.helpdialogmaker.model.OldConfigurationData;
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.preag.core.ui.service.FXMLService;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -13,19 +13,19 @@ public class ImageTextMusterView extends VBox{
 	private byte[] imageBytes;
 	private String imageName;
 	private int posInVbMusterContainer;
-	private OldConfigurationData oldConfigurationData;
+	private ConfigurationData configurationData;
 	
 	public  ImageTextMusterView(){
 	   FXMLService.INSTANCE.loadView(this);
 	}
 	
-	public OldConfigurationData getOldConfigurationData() {
-		return oldConfigurationData;
+	public ConfigurationData getOldConfigurationData() {
+		return configurationData;
 	}
 
 	
-	public void setOldConfigurationData(OldConfigurationData oldConfigurationData) {
-		this.oldConfigurationData = oldConfigurationData;
+	public void setOldConfigurationData(ConfigurationData configurationData) {
+		this.configurationData = configurationData;
 	}
 
 

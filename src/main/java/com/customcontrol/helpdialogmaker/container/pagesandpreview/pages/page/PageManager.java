@@ -21,37 +21,43 @@ public class PageManager {
 
     @Inject
     private PopOverMenuView popOverMenuView;
+
     @Inject
     private ConfiguratorManager configuratorManager;
-    public void handleAddedEvents(ContainerView containerView,PreviewView previewView) {
+
+    public void handleAddedEvents(ContainerView containerView, PreviewView previewView) {
         configuratorManager.handleAddedEvents();
-        popOverMenuView.addEventFilter(PageEvent.ADD_SUB_PAGE, evt -> {
+
+        popOverMenuView.addEventFilter(PopOverEvent.ADD_SUB_PAGE, evt -> {
             evt.consume();
             containerView.getPagesAndPreview().getPagesView().addSubPage(evt.getPageIndex());
         });
-        popOverMenuView.addEventFilter(PageEvent.CONFIGURATION, evt -> {
+        popOverMenuView.addEventFilter(PopOverEvent.SHOW_CONFIGURATION, evt -> {
             evt.consume();
-            configuratorManager.showConfigurator(containerView.getPagesAndPreview());
+            int pageIndex = evt.getPageIndex();
+            configuratorManager.showConfigurator(containerView.getPagesAndPreview(), pageIndex, evt.getConfigurationDatas());
         });
-        popOverMenuView.addEventHandler(PageEvent.REMOVE_PAGE, evt -> {
+        popOverMenuView.addEventHandler(PopOverEvent.REMOVE_PAGE, evt -> {
             evt.consume();
             int pageIndex = evt.getPageIndex();
             containerView.getPagesAndPreview().getPagesView().setRemovePage(pageIndex);
         });
-        popOverMenuView.addEventFilter(PageEvent.EDIT_NAME, e -> {
+        popOverMenuView.addEventFilter(PopOverEvent.EDIT_NAME, e -> {
             e.consume();
             int pageIndex = e.getPageIndex();
             containerView.getPagesAndPreview().getPagesView().setRenamePage(pageIndex);
         });
 
-        popOverMenuView.addEventFilter(PageEvent.CONFIGURATION, evt -> {
+        popOverMenuView.addEventFilter(PopOverEvent.SHOW_CONFIGURATION, evt -> {
             evt.consume();
-            containerView.fireEvent(new PageEvent(PageEvent.CONFIGURATION));
+            containerView.fireEvent(new PopOverEvent(PopOverEvent.SHOW_CONFIGURATION));
         });
+
         containerView.addEventFilter(PageEvent.SHOW_POPOVERMENU, evt -> {
             evt.consume();
             PopOver popOver = new PopOver();
             popOverMenuView.setPageIndex(evt.getPageIndex());
+            popOverMenuView.setConfiguration(evt.getConfigurationDatas());
             popOver.setArrowLocation(ArrowLocation.LEFT_TOP);
             popOver.setContentNode(popOverMenuView);
             popOver.setDetachable(false);

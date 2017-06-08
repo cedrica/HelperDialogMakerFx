@@ -9,9 +9,9 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
 
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.enums.Muster;
-import com.customcontrol.helpdialogmaker.event.PageEvent;
-import com.customcontrol.helpdialogmaker.model.OldConfigurationData;
+import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,8 +37,6 @@ public class ImageMusterController implements Initializable {
 	@FXML ImageView ivLoadedImage;
 	@FXML Button btnChangeImage;
 	@FXML Button btnChooseImage;
-
-	private ImageMusterView	ImageMusterView;
 	private WebEngine					webEngine;
     @FXML ImageMusterView imageMusterView;
 
@@ -70,8 +68,8 @@ public class ImageMusterController implements Initializable {
 		File file = chooser.showOpenDialog(btnChooseImage.getScene().getWindow());
 		if (file != null) {
 			try {
-				ImageMusterView.setImageBytes(FileUtils.readFileToByteArray(file));
-				ImageMusterView.setImageName(file.getName());
+				imageMusterView.setImageBytes(FileUtils.readFileToByteArray(file));
+				imageMusterView.setImageName(file.getName());
 				InputStream is = FileUtils.openInputStream(file);
 				Image image = new Image(is);
 				ivLoadedImage.setImage(image);
@@ -88,7 +86,7 @@ public class ImageMusterController implements Initializable {
 	}
 
 	public void setImageInImageView(byte[] bytes) {
-		ImageMusterView.setImageBytes(bytes);
+		imageMusterView.setImageBytes(bytes);
 		InputStream is =  new ByteArrayInputStream(bytes);
 		Image image = new Image(is);
 		ivLoadedImage.setImage(image);
@@ -99,16 +97,16 @@ public class ImageMusterController implements Initializable {
 	
 
 	public void onRemoveRow(ActionEvent evt){
-	    imageMusterView.fireEvent(new PageEvent(PageEvent.REMOVE_CONFIGURATION, ImageMusterView.getPosInVbMusterContainer(),false));
+	    imageMusterView.fireEvent(new PopOverEvent(PopOverEvent.REMOVE_CONFIGURATION, imageMusterView.getPosInVbMusterContainer(),false));
 	}
 	
 	public void onSave(ActionEvent evt) {
-		String totalContent = ImageMusterView.save(btnSave.getScene().getWindow());
-		OldConfigurationData oldConfigurationData = new OldConfigurationData();
-		oldConfigurationData.setHtmlText(ImageMusterView.getHtmlText());
-		oldConfigurationData.setImage(ImageMusterView.getImageBytes());
-		oldConfigurationData.setMuster(Muster.IMAGE);
-		ImageMusterView.setOldConfigurationData(oldConfigurationData);
+		String totalContent = imageMusterView.save(btnSave.getScene().getWindow());
+		ConfigurationData configurationData = new ConfigurationData();
+		configurationData.setHtmlText(imageMusterView.getHtmlText());
+		configurationData.setImage(imageMusterView.getImageBytes());
+		configurationData.setMuster(Muster.IMAGE);
+		imageMusterView.setOldConfigurationData(configurationData);
 		if (totalContent != null){
 			hbEditor.setVisible(false);
 			hbViewer.setVisible(true);

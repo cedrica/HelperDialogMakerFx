@@ -113,13 +113,13 @@ dynamic component ConfiguratorView controlledby ConfiguratorController styledwit
 		HBox {
 			spacing : 5,
 			alignment : "CENTER_RIGHT",
-			Button id btnSavePage {
+			Button {
 				text : "Seite speichern",
 				onAction : controllermethod onSavePage
 			},
 			Button {
 				text : "Abbrechen",
-				onAction : controllermethod onClose
+				onAction : controllermethod onCancel
 			}
 		}
 

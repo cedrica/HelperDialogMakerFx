@@ -10,10 +10,10 @@ import java.util.ResourceBundle;
 import org.apache.commons.io.FileUtils;
 
 import com.customcontrol.helpdialogmaker.consts.HtmlPart;
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.enums.Muster;
-import com.customcontrol.helpdialogmaker.event.PageEvent;
+import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 import com.customcontrol.helpdialogmaker.helper.Helper;
-import com.customcontrol.helpdialogmaker.model.OldConfigurationData;
 import com.preag.core.ui.utils.dialog.Dialogs;
 
 import javafx.event.ActionEvent;
@@ -107,17 +107,17 @@ public class ImageTextMusterController implements Initializable {
 	
 
 	public void onRemoveRow(ActionEvent evt){
-	    imageTextMusterView.fireEvent(new PageEvent(PageEvent.REMOVE_CONFIGURATION,imageTextMusterView.getPosInVbMusterContainer(),false));
+	    imageTextMusterView.fireEvent(new PopOverEvent(PopOverEvent.REMOVE_CONFIGURATION,imageTextMusterView.getPosInVbMusterContainer(),false));
 	}
 	
 	public void onSave(ActionEvent evt) {
 		imageTextMusterView.setHtmlText(htmlEditor.getHtmlText());
 		String totalContent = saveAndRetrieveHtml();
-		OldConfigurationData oldConfigurationData = new OldConfigurationData();
-		oldConfigurationData.setHtmlText(imageTextMusterView.getHtmlText());
-		oldConfigurationData.setImage(imageTextMusterView.getImageBytes());
-		oldConfigurationData.setMuster(Muster.IMAGE_TEXT);
-		imageTextMusterView.setOldConfigurationData(oldConfigurationData);
+		ConfigurationData configurationData = new ConfigurationData();
+		configurationData.setHtmlText(imageTextMusterView.getHtmlText());
+		configurationData.setImage(imageTextMusterView.getImageBytes());
+		configurationData.setMuster(Muster.IMAGE_TEXT);
+		imageTextMusterView.setOldConfigurationData(configurationData);
 		if (totalContent != null){
 			hbEditor.setVisible(false);
 			hbViewer.setVisible(true);
