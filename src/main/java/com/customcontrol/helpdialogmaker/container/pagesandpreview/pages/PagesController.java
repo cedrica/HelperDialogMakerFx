@@ -57,34 +57,38 @@ public class PagesController implements Initializable {
         });
 
         pagesView.pageConfigutaionProperty().addListener((obs, oldVal, newVal) -> {
-            saveConfigurationCorrespondingPage(newVal);
+            saveConfigurationCorrespondingPage(newVal,rootNode.getChildren());
         });
 
         pagesView.enablePopUpMenuBtnProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal.getKey() != -1)
-                enablePopUpMenuBtn(newVal);
+                enablePopUpMenuBtn(newVal,rootNode.getChildren());
             pagesView.setEnablePopUpMenuBtn(new Pair<Integer, Boolean>(-1, null));
         });
     }
 
-    private void enablePopUpMenuBtn(Pair<Integer,Boolean> pair) {
-        for (TreeItem<String> page : rootNode.getChildren()) {
+    private void enablePopUpMenuBtn(Pair<Integer,Boolean> pair, ObservableList<TreeItem<String>> items) {
+        for (TreeItem<String> page : items) {
             PageView pageView = (PageView) page.getGraphic();
             if (pageView.getIndex() == pair.getKey()) {
                 pageView.setDisablePopUpMenuBtn(pair.getValue());
-                break;
+                return;
+            }else{
+                enablePopUpMenuBtn(pair,page.getChildren());
             }
         }
     }
 
-    private void saveConfigurationCorrespondingPage(Pair<Integer, Pair<String, ObservableList<ConfigurationData>>> newVal) {
-        for (TreeItem<String> page : rootNode.getChildren()) {
+    private void saveConfigurationCorrespondingPage(Pair<Integer, Pair<String, ObservableList<ConfigurationData>>> newVal, ObservableList<TreeItem<String>> items) {
+        for (TreeItem<String> page : items) {
             PageView pageView = (PageView) page.getGraphic();
             if (pageView.getIndex() == newVal.getKey()) {
                 pageView.setHtml(newVal.getValue().getKey());
                 pageView.setConfiguration(newVal.getValue().getValue());
                 pageView.setDisablePopUpMenuBtn(true);
-                break;
+                return;
+            }else if(page.getChildren() != null && page.getChildren().size() > 0){
+                saveConfigurationCorrespondingPage(newVal, page.getChildren());
             }
         }
     }

@@ -134,7 +134,7 @@ public class ConfiguratorController implements Initializable {
     }
 
     public void onCancel(ActionEvent evt) {
-        configuratorView.fireEvent(new PageEvent(PageEvent.UPDATE_PREVIEW));
+        configuratorView.fireEvent(new PageEvent(PageEvent.UPDATE_PREVIEW,configuratorView.getPageIndex(),null,null));
         ROW_INDEX = 0;
         vbMusterContainer.getChildren().clear();
     }

@@ -7,7 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
 public class ContainerService {
-    public static String builtHtmlPage(TreeItem<String> treeItem ) {
+
+    public static String builtHtmlPage(TreeItem<String> treeItem) {
         String htmlPage = HtmlPart.MENU
                 + "<div style=\"background-color: #444; width:100%;height:30px;padding-left: 5px; padding-right: 5px; padding-top: 5px;position:fixed;top:0\">"
                 + "<div class=\"col-lg-12\">" + "<div id=\"message\" style=\"color:white\"></div>"
@@ -16,33 +17,45 @@ public class ContainerService {
                 + "<i class=\"fa fa-bars\" style=\"color: #fff; font-size: 20px;\"></i></button></div></div>"
                 + "<div id=\"menu\" style=\"position:fixed;top:0;width:100%;overflow:hidden;margin-top: 30px; "
                 + "background-color: #000; opacity: 0.8; filter: alpha(opacity = 50);z-index:200;\"><ul>";
-        htmlPage += repeatProcess(treeItem.getChildren(), 0);
+        htmlPage += builtMenu(treeItem.getChildren());
         htmlPage += "</ul></div>";
-        htmlPage = builtHtmlPageRec(treeItem.getChildren(), htmlPage);
+        htmlPage = builtHtmlContaint(treeItem.getChildren(), htmlPage);
         return htmlPage += "</body>" + "</html>";
     }
-    private static String repeatProcess(ObservableList<TreeItem<String>> observableList, int wasOpenForChildren) {
+
+    private static String builtMenu(ObservableList<TreeItem<String>> observableList) {
         String apres = "";
-        for (TreeItem<String> item : observableList) {
-            PageView pageView = (PageView)item.getGraphic();
+        for (TreeItem<String> root : observableList) {
+            PageView pageView = (PageView) root.getGraphic();
             apres += "<li><h4><a href=\"#section"
-                    + pageView.getIndex() + "\">" + pageView.getIndex() + " " + pageView.getName() + "</a></h4>";
-            if (item.getChildren()!= null && item.getChildren().size() > 0) {
-                apres += "<ul>";
-                apres += repeatProcess(item.getChildren(), ++wasOpenForChildren);
-            } else if (wasOpenForChildren > 0) {
-                for (int i = 0; i < wasOpenForChildren; i++) {
-                    apres += "</li></ul>";
-                }
-                apres += "</li>";
+                    + pageView.getIndex() + "\">" + makePageIndex(pageView.getIndex() + "") + " " + pageView.getName()
+                    + "</a></h4>";
+            if (root.getChildren() != null && root.getChildren().size() > 0) {
+                apres += builtMenuRec(root);
+            }
+            apres += "</li>";
+        }
+        return apres;
+    }
+
+    public static String builtMenuRec(TreeItem<String> root) {
+        String apres = "<ul>";
+        for (TreeItem<String> page : root.getChildren()) {
+            PageView pageViewItem = (PageView) page.getGraphic();
+            apres += "<li><h4><a href=\"#section"
+                    + pageViewItem.getIndex() + "\">" + makePageIndex(pageViewItem.getIndex() + "") + " "
+                    + pageViewItem.getName() + "</a></h4>";
+            if (page.getChildren() != null && page.getChildren().size() > 0) {
+                apres+=builtMenuRec(page);
             } else {
                 apres += "</li>";
             }
         }
-
+        apres += "</ul>";
         return apres;
     }
-    public static String builtHtmlPageRec(ObservableList<TreeItem<String>> treeItems, String htmlPage) {
+
+    public static String builtHtmlContaint(ObservableList<TreeItem<String>> treeItems, String htmlPage) {
         for (TreeItem<String> item : treeItems) {
             PageView pageView = (PageView) item.getGraphic();
             String pageIndex = pageView.getIndex() + "";
@@ -50,20 +63,14 @@ public class ContainerService {
                 pageIndex = makePageIndex(pageIndex);
             }
             String title = pageView.getName() + "";
-//            if (configurationData == null) {
-//                htmlPage += "<h2><b>" + pageIndex + "</b>   " + title + "</h2><br/>";
-//                continue;
-//            }
-
             htmlPage += "<h2><b>" + pageIndex + "</b>   " + title + "</h2><br/>"
-                    +pageView.getHtml();
+                    + pageView.getHtml();
             if (item.getChildren().size() > 0) {
-                htmlPage = builtHtmlPageRec(item.getChildren(), htmlPage);
+                htmlPage = builtHtmlContaint(item.getChildren(), htmlPage);
             }
         }
         return htmlPage;
     }
-    
 
     private static String makePageIndex(String pageIndex) {
         String res = "";
@@ -72,11 +79,11 @@ public class ContainerService {
         }
         return res;
     }
-    
+
     public static int calculIndex(TreeItem<String> page) {
         int res = 0;
-        PageView pageView = (PageView)page.getGraphic();
-        if (page.getChildren() != null &&  !page.getChildren().isEmpty()) {
+        PageView pageView = (PageView) page.getGraphic();
+        if (page.getChildren() != null && !page.getChildren().isEmpty()) {
             res = pageView.getIndex() * 10 + page.getChildren().size() + 1;
         } else {
             res = pageView.getIndex() * 10 + 1;

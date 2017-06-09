@@ -38,6 +38,7 @@ public class ContainerManager {
             evt.consume();
             containerView.getPagesAndPreview().setPlaceHolder(previewView);
             previewView.setHtmlContent(ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getRootNode()));
+            containerView.getPagesAndPreview().getPagesView().setEnablePopUpMenuBtn(new Pair<Integer, Boolean>(evt.getPageIndex(), false));
         });
 
         containerView.addEventFilter(PageEvent.ADD_MENU_POINT, evt -> {
