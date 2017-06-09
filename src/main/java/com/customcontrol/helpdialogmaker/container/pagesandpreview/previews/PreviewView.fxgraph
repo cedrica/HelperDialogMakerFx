@@ -8,12 +8,6 @@ import javafx.scene.web.WebView
 
 dynamic component PreviewView controlledby PreviewController {
 	PreviewView id previewView {
-//		padding : Insets {
-//			bottom : 10,
-//			left : 10,
-//			right : 10,
-//			top : 10
-//		},
 		call HBox#hgrow : "ALWAYS",
 		fillHeight : true,
 		WebView id webView {

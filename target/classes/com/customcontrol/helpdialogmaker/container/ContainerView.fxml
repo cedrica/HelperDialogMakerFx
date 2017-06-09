@@ -18,7 +18,7 @@
 			<String fx:value="my-font" />
 		</styleClass>
 	</HBox>
-	<PagesAndPreview fx:id="pagesAndPreview"/> 
+	<PagesAndPreview fx:id="pagesAndPreview" dividerPosition="0.1" ContainerView.vgrow="ALWAYS"/> 
 	<stylesheets>
 		<String fx:value="/com/customcontrol/helpdialogmaker/container/Container.css" />
 	</stylesheets>

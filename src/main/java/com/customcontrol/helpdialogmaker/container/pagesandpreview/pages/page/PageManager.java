@@ -37,7 +37,7 @@ public class PageManager {
             evt.consume();
             int pageIndex = evt.getPageIndex();
             containerView.getPagesAndPreview().getPagesView().setEnablePopUpMenuBtn(new Pair<Integer, Boolean>(pageIndex,true));
-            configuratorManager.showConfigurator(containerView.getPagesAndPreview(), pageIndex, evt.getConfiguration());
+            configuratorManager.showConfigurator(containerView.getPagesAndPreview(), pageIndex,evt.getPageName(), evt.getConfiguration());
         });
         
         popOverMenuView.addEventHandler(PopOverEvent.REMOVE_PAGE, evt -> {
@@ -55,6 +55,7 @@ public class PageManager {
             evt.consume();
             PopOver popOver = new PopOver();
             popOverMenuView.setPageIndex(evt.getPageIndex());
+            popOverMenuView.setPageName(evt.getPageName());
             popOverMenuView.setConfiguration(evt.getConfigurationDatas());
             popOver.setArrowLocation(ArrowLocation.LEFT_TOP);
             popOver.setContentNode(popOverMenuView);

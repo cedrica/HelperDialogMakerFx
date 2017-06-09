@@ -19,6 +19,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -76,15 +78,15 @@ public class ImageTextMusterController implements Initializable {
         btnChangeImage.setOnAction(this::onChangeImage);
         btnRemoveRow.setOnAction(this::onRemoveRow);
         webEngine = webView.getEngine();
-        btnSave.setDisable(true);
         btnEdit.setVisible(false);
         imageTextMusterView.imageInImageViewProperty().addListener((obs, oldVal, newVal) -> {
             setImageInImageView(newVal);
         });
-        
+
         imageTextMusterView.htmlTextProperty().addListener((obs, oldVal, newVal) -> {
             htmlEditor.setHtmlText(imageTextMusterView.getHtmlText());
         });
+        imageTextMusterView.saveDisableProperty().bind(btnSave.disableProperty());
     }
 
     public void onChangeImage(ActionEvent evt) {
@@ -130,7 +132,8 @@ public class ImageTextMusterController implements Initializable {
 
     public void onSave(ActionEvent evt) {
         if (imageTextMusterView.getImageBytes() == null || imageTextMusterView.getImageBytes().length == 0) {
-            Dialogs.error("Bild ist zwingen", imageTextMusterView.getScene().getWindow());
+            Dialog<ButtonType> error = Dialogs.error("Bild ist erforderlich", imageTextMusterView.getScene().getWindow());
+            error.showAndWait();
             return;
         }
         imageTextMusterView.setHtmlText(htmlEditor.getHtmlText());

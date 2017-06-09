@@ -42,11 +42,12 @@ dynamic component ConfiguratorView controlledby ConfiguratorController styledwit
 				],
 				text :"Configurtaion der Seite "
 			},
-			Label id lblTitle {
+			Label  {
 				styleClass : [
 					"h1"
 				],
-				style : "-fx-text-fill:#3399ff"
+				style : "-fx-text-fill:#3399ff",
+				text : bind configuratorView#pageName
 			}
 		},
 		HBox {
@@ -59,22 +60,8 @@ dynamic component ConfiguratorView controlledby ConfiguratorController styledwit
 						maxWidth : const Double#MAX_VALUE,
 						minHeight : 30,
 						promptText: "Muster wählen"
-					},
-					VBox id vbInfo {
-						style : "-fx-border-width:1px;-fx-background-color:darkorange;",
-						alignment : "CENTER",
-						static hgrow : "ALWAYS",
-						Label  {
-							graphic : Glyph {
-								style : "-fx-text-fill:#fff",
-								icon : "INFO",
-								fontFamily : "FontAwesome",
-								fontSize : 15
-							}
-						}
 					}
 				}
-
 			}
 		},
 		HBox {

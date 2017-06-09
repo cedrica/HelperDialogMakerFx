@@ -12,14 +12,15 @@ import org.apache.commons.io.FileUtils;
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.enums.Muster;
 import com.customcontrol.helpdialogmaker.event.PopOverEvent;
-import com.customcontrol.helpdialogmaker.helper.DialogHelper;
 import com.customcontrol.helpdialogmaker.helper.Helper;
+import com.preag.core.ui.utils.dialog.Dialogs;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -74,11 +75,11 @@ public class ImageMusterController implements Initializable {
         btnChangeImage.setOnAction(this::onChangeImage);
         btnRemoveRow.setOnAction(this::onRemoveRow);
         webEngine = webView.getEngine();
-        btnSave.setDisable(true);
         btnEdit.setVisible(false);
         imageMusterView.imageInImageViewProperty().addListener((obs, oldVal, newVal) -> {
             setImageInImageView(newVal);
         });
+        imageMusterView.saveDisableProperty().bind(btnSave.disableProperty());
 
     }
 
@@ -125,7 +126,8 @@ public class ImageMusterController implements Initializable {
 
     public void onSave(ActionEvent evt) {
         if (imageMusterView.getImageBytes() == null || imageMusterView.getImageBytes().length == 0) {
-            DialogHelper.error("Error", "Bild ist zwingen", imageMusterView.getScene().getWindow(), ButtonType.OK);
+            Dialog<ButtonType> error = Dialogs.error("Bild ist erforderlich", imageMusterView.getScene().getWindow());
+            error.showAndWait();
             return;
         }
         builtWholeContent();

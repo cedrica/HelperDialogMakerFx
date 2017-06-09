@@ -61,7 +61,7 @@ public class PageController implements Initializable {
 
     public void onBtnPopupMenu(ActionEvent evt) {
         evt.consume();
-        btnPopupMenu.fireEvent(new PageEvent(PageEvent.SHOW_POPOVERMENU, pageView.getIndex(), pageView.getConfiguration()));
+        btnPopupMenu.fireEvent(new PageEvent(PageEvent.SHOW_POPOVERMENU, pageView.getIndex(),pageView.getName(), pageView.getConfiguration()));
     }
 
     public void setHomeIconVisible(boolean b) {

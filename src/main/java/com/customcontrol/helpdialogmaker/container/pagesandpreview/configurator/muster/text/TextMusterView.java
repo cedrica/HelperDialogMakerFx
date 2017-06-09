@@ -3,8 +3,10 @@ package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.preag.core.ui.service.FXMLService;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,7 +24,7 @@ public class TextMusterView extends VBox {
     private StringProperty wholeHtmlContent = new SimpleStringProperty();
 
     private ObjectProperty<ConfigurationData> configurationData = new SimpleObjectProperty<>();
-
+    private BooleanProperty saveDisable = new SimpleBooleanProperty();
     public TextMusterView() {
         FXMLService.INSTANCE.loadView(this);
     }
@@ -87,6 +89,24 @@ public class TextMusterView extends VBox {
     public final void setConfigurationData(final ConfigurationData configurationData) {
         this.configurationDataProperty().set(configurationData);
     }
+
+    
+    public final BooleanProperty saveDisableProperty() {
+        return this.saveDisable;
+    }
+    
+
+    
+    public final boolean isSaveDisable() {
+        return this.saveDisableProperty().get();
+    }
+    
+
+    
+    public final void setSaveDisable(final boolean saveDisable) {
+        this.saveDisableProperty().set(saveDisable);
+    }
+    
 
 
 }

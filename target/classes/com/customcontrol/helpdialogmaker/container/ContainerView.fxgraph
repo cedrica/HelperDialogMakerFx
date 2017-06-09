@@ -27,6 +27,9 @@ dynamic component ContainerView controlledby ContainerController styledwith [
 				text : "Exportieren"
 			}
 		},
-		PagesAndPreview id pagesAndPreview
+		PagesAndPreview id pagesAndPreview{
+			dividerPosition : 0.1,
+			static vgrow : "ALWAYS"
+		}
 	}
 }

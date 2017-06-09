@@ -39,7 +39,7 @@
 			</padding>
 		</HBox>
 		<VBox VBox.vgrow="ALWAYS"> 
-			<TreeView fx:id="tvBaum" minWidth="400" VBox.vgrow="ALWAYS"> 
+			<TreeView fx:id="tvBaum" VBox.vgrow="ALWAYS"> 
 				<padding>
 					<Insets top="10" bottom="10" left="10" right="10"/> 
 				</padding>

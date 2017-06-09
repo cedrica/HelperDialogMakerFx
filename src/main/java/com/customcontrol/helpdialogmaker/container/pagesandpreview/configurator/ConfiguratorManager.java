@@ -20,6 +20,8 @@ public class ConfiguratorManager {
     @Inject
     private ConfiguratorView configuratorView;
 
+   
+
     public void handleAddedEvents() {
 
         configuratorView.addEventHandler(ConfiguratorEvent.ADD_NEW_ROW, evt -> {
@@ -34,11 +36,11 @@ public class ConfiguratorManager {
     }
 
     public void assignConfiguration(ObservableList<ConfigurationData> configurationDatas) {
-        if(configurationDatas == null){
+        if (configurationDatas == null) {
             configuratorView.setMusterComponent(null);
             return;
         }
-            
+
         for (ConfigurationData configurationData : configurationDatas) {
             Muster muster = configurationData.getMuster();
             if (muster == Muster.IMAGE) {
@@ -62,12 +64,12 @@ public class ConfiguratorManager {
                 imageTextMusterView.setImageBytes(configurationData.getImage());
                 imageTextMusterView.setHtmlText(configurationData.getHtmlText());
                 configuratorView.setMusterComponent(imageTextMusterView);
+               
             }
         }
+     
     }
 
-
-    
     public void addNewRow(Muster muster) {
         if (muster == Muster.IMAGE) {
             ImageMusterView imageMusterView = new ImageMusterView();
@@ -82,11 +84,14 @@ public class ConfiguratorManager {
             ImageTextMusterView imageTextMusterView = new ImageTextMusterView();
             configuratorView.setMusterComponent(imageTextMusterView);
         }
+        
     }
 
-    public void showConfigurator(PagesAndPreview pagesAndPreview, int pageIndex,ObservableList<ConfigurationData> configurationDatas) {
+    public void showConfigurator(PagesAndPreview pagesAndPreview, int pageIndex,String pageName,
+                                 ObservableList<ConfigurationData> configurationDatas) {
         assignConfiguration(configurationDatas);
         configuratorView.setPageIndex(pageIndex);
+        configuratorView.setPageName(pageName);
         pagesAndPreview.setPlaceHolder(configuratorView);
     }
 

@@ -24,9 +24,11 @@ public class PopOverEvent extends Event {
 
     private ObservableList<ConfigurationData> configuration;
 
-    private int musterIndex;
+    private int    musterIndex;
 
-    private int pageIndex;
+    private String pageName;
+
+    private int    pageIndex;
 
     public PopOverEvent(EventType<PopOverEvent> eventType) {
         super(eventType);
@@ -42,10 +44,11 @@ public class PopOverEvent extends Event {
 
     }
 
-    public PopOverEvent(EventType<PopOverEvent> eventType, int pageIndex,
+    public PopOverEvent(EventType<PopOverEvent> eventType, int pageIndex, String pageName,
                         ObservableList<ConfigurationData> configuration) {
         super(eventType);
         this.pageIndex = pageIndex;
+        this.pageName = pageName;
         this.configuration = configuration;
     }
 
@@ -55,6 +58,10 @@ public class PopOverEvent extends Event {
 
     public int getMusterIndex() {
         return musterIndex;
+    }
+
+    public String getPageName() {
+        return pageName;
     }
 
     public ObservableList<ConfigurationData> getConfiguration() {

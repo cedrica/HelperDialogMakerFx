@@ -25,12 +25,13 @@ public class PageEvent extends ApplicationEvent {
 
     private boolean disabled;
 
-
     private String pageHTML;
 
     private ObservableList<ConfigurationData> configurationDatas;
 
     private int pageIndex;
+
+    private String pageName;
 
     public PageEvent(EventType<PageEvent> eventType) {
         super(eventType);
@@ -41,9 +42,11 @@ public class PageEvent extends ApplicationEvent {
         this.disabled = disabled;
     }
 
-    public PageEvent(EventType<PageEvent> eventType, int pageIndex, String html,ObservableList<ConfigurationData> configurationDatas) {
+    public PageEvent(EventType<PageEvent> eventType, int pageIndex, String html,
+                     ObservableList<ConfigurationData> configurationDatas) {
         super(eventType);
         this.pageHTML = html;
+        this.pageName = html;
         this.pageIndex = pageIndex;
         this.configurationDatas = configurationDatas;
     }
@@ -52,8 +55,9 @@ public class PageEvent extends ApplicationEvent {
         super(eventType);
         this.configurationDatas = configurationDatas;
     }
-    
-    public PageEvent(EventType<PageEvent> eventType, int pageIndex, ObservableList<ConfigurationData> configurationDatas) {
+
+    public PageEvent(EventType<PageEvent> eventType, int pageIndex,
+                     ObservableList<ConfigurationData> configurationDatas) {
         super(eventType);
         this.configurationDatas = configurationDatas;
         this.pageIndex = pageIndex;
@@ -63,12 +67,13 @@ public class PageEvent extends ApplicationEvent {
         return pageHTML;
     }
 
-
     public boolean isDisabled() {
         return disabled;
     }
 
-
+    public String getPageName() {
+        return pageName;
+    }
 
     public int getPageIndex() {
         return pageIndex;

@@ -56,6 +56,7 @@ public class TextMusterController implements Initializable {
         textMusterView.htmlTextProperty().addListener((obs, oldVal, newVal) -> {
             setHtmlEditorText(newVal);
         });
+        textMusterView.saveDisableProperty().bind(btnSave.disableProperty());
     }
 
     public void setHtmlEditorText(String text) {

@@ -24,7 +24,7 @@
 				<String fx:value="h1" />
 			</styleClass>
 		</Label>
-		<Label fx:id="lblTitle" style="-fx-text-fill:#3399ff"> 
+		<Label style="-fx-text-fill:#3399ff" text="${configuratorView.pageName}"> 
 			<styleClass>
 				<String fx:value="h1" />
 			</styleClass>
@@ -36,13 +36,6 @@
 				<ComboBox fx:id="cbMuster" minHeight="30" promptText="Muster wählen" HBox.hgrow="ALWAYS"> 
 					<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 				</ComboBox>
-				<VBox fx:id="vbInfo" style="-fx-border-width:1px;-fx-background-color:darkorange;" alignment="CENTER" HBox.hgrow="ALWAYS"> 
-					<Label> 
-						<graphic>
-							<Glyph style="-fx-text-fill:#fff" icon="INFO" fontFamily="FontAwesome" fontSize="15"/> 
-						</graphic>
-					</Label>
-				</VBox>
 			</HBox>
 		</VBox>
 	</HBox>

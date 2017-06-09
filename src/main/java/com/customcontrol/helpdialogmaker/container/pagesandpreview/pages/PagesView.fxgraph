@@ -55,7 +55,6 @@ dynamic component PagesView controlledby PagesController styledwith [ "/com/cust
 			VBox {
 				static vgrow : "ALWAYS",
 				TreeView < ? > id tvBaum {
-					minWidth : 400,
 					static vgrow : "ALWAYS",
 					padding : Insets {
 						top : 10,

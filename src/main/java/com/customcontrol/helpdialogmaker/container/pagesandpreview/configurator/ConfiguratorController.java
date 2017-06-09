@@ -13,8 +13,11 @@ import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.enums.Muster;
 import com.customcontrol.helpdialogmaker.event.PageEvent;
-import com.customcontrol.helpdialogmaker.helper.Helper;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,19 +25,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class ConfiguratorController implements Initializable {
 
     @FXML
-    Label lblTitle;
-
-    @FXML
     ComboBox<Muster> cbMuster;
-
-    @FXML
-    VBox vbInfo;
 
     @FXML
     VBox vbMusterContainer;
@@ -48,10 +44,16 @@ public class ConfiguratorController implements Initializable {
     Button btnAddNewRow;
 
     @FXML Button btnSave;
-
+    private BooleanBinding   booleanBinding = Bindings.createBooleanBinding(() -> {
+        return false;
+    }, null);
+    
+    private BooleanProperty vbMusterContainerEmptyProperty = new SimpleBooleanProperty(false);
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Helper.roundVBox(vbInfo, 30);
+       
+        btnSave.disableProperty().bind(vbMusterContainerEmptyProperty.not());
         cbMuster.setItems(FXCollections.observableList(Arrays.asList(Muster.values())));
         configuratorView.selectedMusterProperty().bind(cbMuster.getSelectionModel().selectedItemProperty());
         configuratorView.musterComponentProperty().addListener((obs, oldVal, newVal) -> {
@@ -63,15 +65,20 @@ public class ConfiguratorController implements Initializable {
             }
             if (newVal instanceof ImageTextMusterView) {
                 ((ImageTextMusterView) newVal).setPosInVbMusterContainer(ROW_INDEX);
+                booleanBinding = booleanBinding.or(((ImageTextMusterView) newVal).saveDisableProperty());
             } else if (newVal instanceof ImageMusterView) {
                 ((ImageMusterView) newVal).setPosInVbMusterContainer(ROW_INDEX);
+                booleanBinding = booleanBinding.or(((ImageMusterView) newVal).saveDisableProperty());
             } else if (newVal instanceof TextImageMusterView) {
                 ((TextImageMusterView) newVal).setPosInVbMusterContainer(ROW_INDEX);
+                booleanBinding = booleanBinding.or(((TextImageMusterView) newVal).saveDisableProperty());
             } else if (newVal instanceof TextMusterView) {
                 ((TextMusterView) newVal).setPosInVbMusterContainer(ROW_INDEX);
+                booleanBinding = booleanBinding.or(((TextMusterView) newVal).saveDisableProperty());
             }
             vbMusterContainer.getChildren().add(newVal);
             ROW_INDEX++;
+            
         });
         configuratorView.musterIndexProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != -1)
@@ -79,7 +86,6 @@ public class ConfiguratorController implements Initializable {
             configuratorView.setMusterIndex(-1);
         });
         btnAddNewRow.disableProperty().bind(cbMuster.getSelectionModel().selectedItemProperty().isNull());
-        lblTitle.textProperty().bind(configuratorView.titleProperty());
     }
 
     public void onSavePage(ActionEvent evt) {
@@ -129,6 +135,7 @@ public class ConfiguratorController implements Initializable {
                 }
             }
             --ROW_INDEX;
+            vbMusterContainerEmptyProperty.set(vbMusterContainer.getChildren().isEmpty());
             return;
         }
     }
