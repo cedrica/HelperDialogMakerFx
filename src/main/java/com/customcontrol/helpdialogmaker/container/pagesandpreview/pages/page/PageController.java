@@ -3,7 +3,6 @@ package com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.customcontrol.helpdialogmaker.event.PageEvent;
 import com.preag.core.ui.utils.dialog.Dialogs;
 
 import javafx.event.ActionEvent;

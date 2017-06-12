@@ -161,7 +161,7 @@ public class TextImageMusterController implements Initializable {
         path = path.replace("\\", "/");
         String innerHtml = textImageMusterView.getHtmlText().replace("<html dir=\"ltr\"><head></head><body contenteditable=\"true\">", "").replace("</body></html>", "");
         textImageMusterView.setWholeHtmlContent("<div class=\"media\">"
-                + "<div style=\"float:left;margin-right:5px;\">"
+                + "<div style=\"float:left;margin-right:5px;text-align:justify;\">"
                 + innerHtml
                 + "</div>"
                 + "<div class=\"media-left media-middle\">"

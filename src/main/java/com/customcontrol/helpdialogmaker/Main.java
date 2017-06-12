@@ -24,6 +24,7 @@ public class Main extends DesktopApp {
         ContainerManager containerManager = BeanProvider.getContextualReference(ContainerManager.class, false);
         containerManager.handleAddedEvents(containerView);
         getPrimaryStage().getIcons().add(new Image(getClass().getResource("/images/stage_icon.png").toString()));
+        setStageIcon("/images/stage_icon.png");
         getPrimaryStage().setMaximized(true);
         closePreloader();
         showPrimaryStage(containerView);

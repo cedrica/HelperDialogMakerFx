@@ -6,13 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.customcontrol.helpdialogmaker.container.ContainerService;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.image.ImageMusterView;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.imagetext.ImageTextMusterView;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.text.TextMusterView;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.textimage.TextImageMusterView;
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageEvent;
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.enums.Muster;
-import com.customcontrol.helpdialogmaker.event.PageEvent;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -39,16 +40,16 @@ public class ConfiguratorController implements Initializable {
     @FXML
     Button btnAddNewRow;
 
-    @FXML Button btnSave;
+    @FXML
+    Button btnSave;
 
-    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       
+
         cbMuster.setItems(FXCollections.observableList(Arrays.asList(Muster.values())));
         configuratorView.selectedMusterProperty().bind(cbMuster.getSelectionModel().selectedItemProperty());
         configuratorView.musterComponentProperty().addListener((obs, oldVal, newVal) -> {
-            if(newVal == null){
+            if (newVal == null) {
                 cbMuster.getSelectionModel().clearSelection();
                 vbMusterContainer.getChildren().clear();
                 configuratorView.setMusterCount(vbMusterContainer.getChildren().size());
@@ -90,6 +91,7 @@ public class ConfiguratorController implements Initializable {
         ROW_INDEX = 0;
         configuratorView.fireEvent(new PageEvent(PageEvent.PAGE_CONFIGURATION, configuratorView.getPageIndex(), htmlContent.toString(), FXCollections.observableList(configurationDatas)));
         vbMusterContainer.getChildren().clear();
+        ContainerService.CONFIGURATOR_SHOWABLE = true;
         configuratorView.setMusterCount(vbMusterContainer.getChildren().size());
     }
 
@@ -123,10 +125,11 @@ public class ConfiguratorController implements Initializable {
     }
 
     public void onCancel(ActionEvent evt) {
-        configuratorView.fireEvent(new PageEvent(PageEvent.UPDATE_PREVIEW,configuratorView.getPageIndex(),null,null));
+        configuratorView.fireEvent(new PageEvent(PageEvent.UPDATE_PREVIEW, configuratorView.getPageIndex(), null, null));
         ROW_INDEX = 0;
         vbMusterContainer.getChildren().clear();
         configuratorView.setMusterCount(vbMusterContainer.getChildren().size());
+        ContainerService.CONFIGURATOR_SHOWABLE = true;
     }
 
 }

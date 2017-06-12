@@ -9,10 +9,9 @@ import org.controlsfx.control.PopOver.ArrowLocation;
 import com.customcontrol.helpdialogmaker.container.ContainerService;
 import com.customcontrol.helpdialogmaker.container.ContainerView;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.ConfiguratorManager;
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.popovermenu.PopOverMenuEvent;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.popovermenu.PopOverMenuView;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.previews.PreviewView;
-import com.customcontrol.helpdialogmaker.event.PageEvent;
-import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 
 import javafx.scene.Node;
 import javafx.util.Pair;
@@ -27,25 +26,23 @@ public class PageManager {
     private ConfiguratorManager configuratorManager;
 
     public void handleAddedEvents(ContainerView containerView, PreviewView previewView) {
-        configuratorManager.handleAddedEvents();
-
-        popOverMenuView.addEventFilter(PopOverEvent.ADD_SUB_PAGE, evt -> {
+        popOverMenuView.addEventFilter(PopOverMenuEvent.ADD_SUB_PAGE, evt -> {
             evt.consume();
             containerView.getPagesAndPreview().getPagesView().addSubPage(evt.getPageIndex());
         });
-        popOverMenuView.addEventFilter(PopOverEvent.SHOW_CONFIGURATION, evt -> {
+        popOverMenuView.addEventFilter(PopOverMenuEvent.SHOW_CONFIGURATION, evt -> {
             evt.consume();
             int pageIndex = evt.getPageIndex();
-            containerView.getPagesAndPreview().getPagesView().setEnablePopUpMenuBtn(new Pair<Integer, Boolean>(pageIndex,true));
-            configuratorManager.showConfigurator(containerView.getPagesAndPreview(), pageIndex,evt.getPageName(), evt.getConfiguration());
+            containerView.getPagesAndPreview().getPagesView().setEnablePopUpMenuBtn(new Pair<Integer, Boolean>(pageIndex, true));
+            configuratorManager.showConfigurator(containerView.getPagesAndPreview(), pageIndex, evt.getPageName(), evt.getConfiguration());
         });
-        
-        popOverMenuView.addEventHandler(PopOverEvent.REMOVE_PAGE, evt -> {
+
+        popOverMenuView.addEventHandler(PopOverMenuEvent.REMOVE_PAGE, evt -> {
             evt.consume();
             int pageIndex = evt.getPageIndex();
             containerView.getPagesAndPreview().getPagesView().setRemovePage(pageIndex);
         });
-        popOverMenuView.addEventFilter(PopOverEvent.EDIT_NAME, e -> {
+        popOverMenuView.addEventFilter(PopOverMenuEvent.EDIT_NAME, e -> {
             e.consume();
             int pageIndex = e.getPageIndex();
             containerView.getPagesAndPreview().getPagesView().setRenamePage(pageIndex);
@@ -61,7 +58,7 @@ public class PageManager {
             popOver.setContentNode(popOverMenuView);
             popOver.setDetachable(false);
             popOver.show((Node) evt.getTarget());
-            popOverMenuView.addEventFilter(PopOverEvent.CLOSE, e -> {
+            popOverMenuView.addEventFilter(PopOverMenuEvent.CLOSE, e -> {
                 e.consume();
                 previewView.setHtmlContent(ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getRootNode()));
                 popOver.hide();

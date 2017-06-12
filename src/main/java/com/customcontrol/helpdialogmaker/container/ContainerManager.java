@@ -2,10 +2,10 @@ package com.customcontrol.helpdialogmaker.container;
 
 import javax.inject.Inject;
 
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageEvent;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageManager;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.previews.PreviewView;
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
-import com.customcontrol.helpdialogmaker.event.PageEvent;
 
 import javafx.collections.ObservableList;
 import javafx.util.Pair;

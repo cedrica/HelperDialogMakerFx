@@ -1,7 +1,5 @@
 package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator;
 
-import javax.inject.Singleton;
-
 import com.customcontrol.helpdialogmaker.enums.Muster;
 import com.preag.core.ui.service.FXMLService;
 
@@ -16,9 +14,8 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
-@Singleton
 public class ConfiguratorView extends VBox {
-
+    public  int counterSave;
     private ObjectProperty<Muster> selectedMuster = new SimpleObjectProperty<>();
 
     private StringProperty pageName = new SimpleStringProperty();
@@ -135,6 +132,18 @@ public class ConfiguratorView extends VBox {
     public final void setMusterCount(final int musterCount) {
         this.musterCountProperty().set(musterCount);
     }
+
+    
+    public int getCounterSave() {
+        return counterSave;
+    }
+
+    
+    public void setCounterSave(int counter) {
+        this.counterSave = counter;
+    }
+    
+    
     
 
 

@@ -1,4 +1,4 @@
-package com.customcontrol.helpdialogmaker.event;
+package com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page;
 
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.preag.core.ui.event.ApplicationEvent;

@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
 public class ContainerService {
-
+    public static boolean CONFIGURATOR_SHOWABLE = true;
     public static String builtHtmlPage(TreeItem<String> treeItem) {
         String htmlPage = HtmlPart.MENU
                 + "<div style=\"background-color: #444; width:100%;height:30px;padding-left: 5px; padding-right: 5px; padding-top: 5px;position:fixed;top:0\">"
@@ -19,6 +19,7 @@ public class ContainerService {
                 + "background-color: #000; opacity: 0.8; filter: alpha(opacity = 50);z-index:200;\"><ul>";
         htmlPage += builtMenu(treeItem.getChildren());
         htmlPage += "</ul></div>";
+        htmlPage += "<div id='space' style=\"height:40px;\"></div>";
         htmlPage = builtHtmlContaint(treeItem.getChildren(), htmlPage);
         return htmlPage += "</body>" + "</html>";
     }

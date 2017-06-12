@@ -1,6 +1,5 @@
 package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.PagesAndPreview;
@@ -16,14 +15,21 @@ import javafx.collections.ObservableList;
 @Singleton
 public class ConfiguratorManager {
 
-    private static int COUNTER_SAVE = 0;
-    
-    @Inject
     private ConfiguratorView configuratorView;
 
-    public void handleAddedEvents() {
+    public void showConfigurator(PagesAndPreview pagesAndPreview, int pageIndex, String pageName,
+                                 ObservableList<ConfigurationData> configurationDatas) {
+        configuratorView = new ConfiguratorView();
+        registerEventHandler();
+        assignConfiguration(configurationDatas);
+        configuratorView.setPageIndex(pageIndex);
+        configuratorView.setPageName(pageName);
+        pagesAndPreview.setPlaceHolder(configuratorView);
+    }
+
+    public void registerEventHandler() {
         configuratorView.setSaveDisable(true);
-        configuratorView.addEventFilter(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, evt->{
+        configuratorView.addEventHandler(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, evt -> {
             evt.consume();
             handleDisabling(evt);
         });
@@ -40,10 +46,12 @@ public class ConfiguratorManager {
     }
 
     public void handleDisabling(ConfiguratorEvent evt) {
-        COUNTER_SAVE = (COUNTER_SAVE < 0)? 0:COUNTER_SAVE+evt.getIncOrDec();
-        if(COUNTER_SAVE == configuratorView.getMusterCount() && configuratorView.getMusterCount() > 0){
+        configuratorView.setCounterSave((configuratorView.getCounterSave() < 0) ? 0
+                : configuratorView.getCounterSave() + evt.getIncOrDec());
+        if (configuratorView.getCounterSave() == configuratorView.getMusterCount()
+                && configuratorView.getMusterCount() > 0) {
             configuratorView.setSaveDisable(false);
-        }else {
+        } else {
             configuratorView.setSaveDisable(true);
         }
     }
@@ -98,14 +106,6 @@ public class ConfiguratorManager {
             configuratorView.setMusterComponent(imageTextMusterView);
         }
 
-    }
-
-    public void showConfigurator(PagesAndPreview pagesAndPreview, int pageIndex, String pageName,
-                                 ObservableList<ConfigurationData> configurationDatas) {
-        assignConfiguration(configurationDatas);
-        configuratorView.setPageIndex(pageIndex);
-        configuratorView.setPageName(pageName);
-        pagesAndPreview.setPlaceHolder(configuratorView);
     }
 
 }
