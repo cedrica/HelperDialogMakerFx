@@ -29,8 +29,10 @@ public class ConfiguratorView extends VBox {
 
     private IntegerProperty pageIndex = new SimpleIntegerProperty();
 
-    private BooleanProperty saveDisable = new SimpleBooleanProperty();
+    private BooleanProperty saveDisable = new SimpleBooleanProperty(true);
 
+    private IntegerProperty musterCount = new SimpleIntegerProperty();
+    
     public ConfiguratorView() {
         FXMLService.INSTANCE.loadView(this);
     }
@@ -116,6 +118,24 @@ public class ConfiguratorView extends VBox {
     public final void setPageName(final String pageName) {
         this.pageNameProperty().set(pageName);
     }
+
     
+    public final IntegerProperty musterCountProperty() {
+        return this.musterCount;
+    }
+    
+
+    
+    public final int getMusterCount() {
+        return this.musterCountProperty().get();
+    }
+    
+
+    
+    public final void setMusterCount(final int musterCount) {
+        this.musterCountProperty().set(musterCount);
+    }
+    
+
 
 }

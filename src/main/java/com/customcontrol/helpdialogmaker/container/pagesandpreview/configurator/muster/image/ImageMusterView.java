@@ -29,7 +29,7 @@ public class ImageMusterView extends VBox {
 
     private ObjectProperty<byte[]> imageInImageView = new SimpleObjectProperty<>();
 
-    private BooleanProperty saveDisable = new SimpleBooleanProperty(false);
+    private BooleanProperty saveDisable = new SimpleBooleanProperty();
     
     public ImageMusterView() {
         FXMLService.INSTANCE.loadView(this);

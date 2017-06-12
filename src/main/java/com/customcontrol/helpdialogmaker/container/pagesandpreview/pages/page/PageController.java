@@ -4,11 +4,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.customcontrol.helpdialogmaker.event.PageEvent;
+import com.preag.core.ui.utils.dialog.Dialogs;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -55,8 +58,13 @@ public class PageController implements Initializable {
 
     public void onOk(ActionEvent evt) {
         evt.consume();
-        pageView.setNameVisible(false);
-        btnOk.fireEvent(new PageEvent(PageEvent.ADD_MENU_POINT));
+        if(!pageView.getName().trim().isEmpty()){
+            pageView.setNameVisible(false);
+            btnOk.fireEvent(new PageEvent(PageEvent.ADD_MENU_POINT));
+        }else{
+            Dialog<ButtonType> error = Dialogs.error("Name ist erforderlich", pageView.getScene().getWindow());
+            error.showAndWait();
+        }
     }
 
     public void onBtnPopupMenu(ActionEvent evt) {

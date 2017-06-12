@@ -10,7 +10,7 @@ public class PopOverEvent extends Event {
 
     private static final long serialVersionUID = 1L;
 
-    public static final EventType<PopOverEvent> REMOVE_CONFIGURATION = new EventType<>(Event.ANY, "REMOVE_ROW");
+   
 
     public static final EventType<PopOverEvent> REMOVE_PAGE = new EventType<>(Event.ANY, "REMOVE_PAGE");
 

@@ -9,13 +9,24 @@ import javafx.event.EventType;
 public class ConfiguratorEvent extends ApplicationEvent {
 
     private static final long serialVersionUID = 1L;
+    public static final EventType<ConfiguratorEvent> REMOVE_MUSTER = new EventType<>(Event.ANY, "REMOVE_ROW");
+    public static final EventType<ConfiguratorEvent> ADD_NEW_ROW        = new EventType<ConfiguratorEvent>(ANY, "ADD_NEW_ROW");
 
-    public static final EventType<ConfiguratorEvent> ADD_NEW_ROW = new EventType<ConfiguratorEvent>(ANY, "ADD_NEW_ROW");
+    public static final EventType<ConfiguratorEvent> DIS_OR_ENABLE_SAVE = new EventType<ConfiguratorEvent>(ANY, "DIS_OR_ENABLE_SAVE");
 
-    private Muster                muster;
+    private Muster muster;
 
+    private int    incOrDec;
+
+    private int    musterIndex;
+    
     public ConfiguratorEvent(EventType<? extends Event> eventType) {
         super(eventType);
+    }
+
+    public ConfiguratorEvent(EventType<? extends Event> eventType, int incOrDec) {
+        super(eventType);
+        this.incOrDec = incOrDec;
     }
 
     public ConfiguratorEvent(EventType<ConfiguratorEvent> eventType, Muster muster) {
@@ -23,8 +34,22 @@ public class ConfiguratorEvent extends ApplicationEvent {
         this.muster = muster;
     }
 
+    public ConfiguratorEvent(EventType<ConfiguratorEvent> eventType, int posInVbMusterContainer, int incOrDec) {
+        super(eventType);
+        musterIndex = posInVbMusterContainer;
+        this.incOrDec = incOrDec;
+    }
+
     public Muster getMuster() {
         return muster;
+    }
+
+    public int getIncOrDec() {
+        return incOrDec;
+    }
+
+    public int getMusterIndex() {
+        return musterIndex;
     }
 
 }

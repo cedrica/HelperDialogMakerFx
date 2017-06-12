@@ -3,9 +3,9 @@ package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.ConfiguratorEvent;
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.enums.Muster;
-import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -65,10 +65,11 @@ public class TextMusterController implements Initializable {
 
     public void onRemoveRow(ActionEvent evt) {
         textMusterView.setConfigurationData(null);
-        textMusterView.fireEvent(new PopOverEvent(PopOverEvent.REMOVE_CONFIGURATION, textMusterView.getPosInVbMusterContainer(), false));
+        textMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.REMOVE_MUSTER, textMusterView.getPosInVbMusterContainer(), -1));
     }
 
     public void onSave(ActionEvent evt) {
+        textMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, 1));
         textMusterView.setHtmlText(htmlEditor.getHtmlText());
         builtWholeContent();
         ConfigurationData configurationData = new ConfigurationData();
@@ -88,6 +89,7 @@ public class TextMusterController implements Initializable {
     }
 
     public void onEdit(ActionEvent evt) {
+        textMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, -1));
         hbEditor.setVisible(true);
         hbViewer.setVisible(false);
         btnEdit.setVisible(false);

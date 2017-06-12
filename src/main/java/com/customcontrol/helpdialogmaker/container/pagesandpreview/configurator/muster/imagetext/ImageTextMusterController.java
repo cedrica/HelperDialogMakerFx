@@ -9,9 +9,9 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
 
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.ConfiguratorEvent;
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.enums.Muster;
-import com.customcontrol.helpdialogmaker.event.PopOverEvent;
 import com.customcontrol.helpdialogmaker.helper.Helper;
 import com.preag.core.ui.utils.dialog.Dialogs;
 
@@ -127,7 +127,7 @@ public class ImageTextMusterController implements Initializable {
 
     public void onRemoveRow(ActionEvent evt) {
         imageTextMusterView.setConfigurationData(null);
-        imageTextMusterView.fireEvent(new PopOverEvent(PopOverEvent.REMOVE_CONFIGURATION, imageTextMusterView.getPosInVbMusterContainer(), false));
+        imageTextMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.REMOVE_MUSTER, imageTextMusterView.getPosInVbMusterContainer(), -1));
     }
 
     public void onSave(ActionEvent evt) {
@@ -136,6 +136,7 @@ public class ImageTextMusterController implements Initializable {
             error.showAndWait();
             return;
         }
+        imageTextMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, 1));
         imageTextMusterView.setHtmlText(htmlEditor.getHtmlText());
         builtWholeContent();
         hbEditor.setVisible(false);
@@ -166,6 +167,7 @@ public class ImageTextMusterController implements Initializable {
     }
 
     public void onEdit(ActionEvent evt) {
+        imageTextMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, -1));
         hbEditor.setVisible(true);
         hbViewer.setVisible(false);
         btnEdit.setVisible(false);
