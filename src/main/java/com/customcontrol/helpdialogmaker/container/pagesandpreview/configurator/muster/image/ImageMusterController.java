@@ -66,6 +66,12 @@ public class ImageMusterController implements Initializable {
     @FXML
     ImageMusterView imageMusterView;
 
+    @FXML
+    Button btnMoveUp;
+
+    @FXML
+    Button btnMoveDown;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -130,7 +136,7 @@ public class ImageMusterController implements Initializable {
             error.showAndWait();
             return;
         }
-        imageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, 1));
+        imageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE,imageMusterView.getPosInVbMusterContainer(), 1));
         builtWholeContent();
         ConfigurationData configurationData = new ConfigurationData();
         configurationData.setHtmlText(imageMusterView.getHtmlText());
@@ -157,11 +163,22 @@ public class ImageMusterController implements Initializable {
     }
 
     public void onEdit(ActionEvent evt) {
-        imageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, -1));
+        imageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE,-1, -1));
         hbEditor.setVisible(true);
         hbViewer.setVisible(false);
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
+    }
+
+    @FXML
+    public void onMoveUp() {
+        imageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.MOVE_UP, imageMusterView.getPosInVbMusterContainer()));
+
+    }
+
+    @FXML
+    public void onMoveDown() {
+        imageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.MOVE_DOWN, imageMusterView.getPosInVbMusterContainer()));
     }
 
 }

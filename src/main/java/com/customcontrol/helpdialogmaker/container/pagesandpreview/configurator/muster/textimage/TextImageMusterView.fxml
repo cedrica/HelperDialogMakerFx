@@ -6,6 +6,7 @@
 <?import java.lang.*?>
 <?import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.textimage.TextImageMusterView?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -16,7 +17,7 @@
 
 <fx:root xmlns:fx="http://javafx.com/fxml" type="TextImageMusterView" fx:id="textImageMusterView" fx:controller="com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.textimage.TextImageMusterController" spacing="5">
 
-	<HBox spacing="5" maxHeight="30" alignment="CENTER_RIGHT" visible="true"> 
+	<HBox spacing="5" maxHeight="30" alignment="CENTER_RIGHT"> 
 		<Button fx:id="btnRemoveRow" text="Zeile entfernen"> 
 			<graphic>
 				<Glyph style="-fx-text-fill:red" icon="REMOVE" fontFamily="FontAwesome" fontSize="15"/> 
@@ -34,6 +35,28 @@
 				</graphic>
 			</Button>
 		</StackPane>
+		<Button onAction="#onMoveUp"> 
+			<styleClass>
+				<String fx:value="button-raised" />
+			</styleClass>
+			<graphic>
+				<Glyph icon="ARROW_UP" fontFamily="FontAwesome" fontSize="15"/> 
+			</graphic>
+			<tooltip>
+				<Tooltip text="Nach oben schieben"/> 
+			</tooltip>
+		</Button>
+		<Button onAction="#onMoveDown"> 
+			<styleClass>
+				<String fx:value="button-raised" />
+			</styleClass>
+			<graphic>
+				<Glyph icon="ARROW_DOWN" fontFamily="FontAwesome" fontSize="15"/> 
+			</graphic>
+			<tooltip>
+				<Tooltip text="Nach unten schieben"/> 
+			</tooltip>
+		</Button>
 	</HBox>
 	<StackPane> 
 		<HBox fx:id="hbViewer" maxHeight="150" visible="false"> 

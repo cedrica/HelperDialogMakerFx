@@ -69,7 +69,7 @@ public class TextMusterController implements Initializable {
     }
 
     public void onSave(ActionEvent evt) {
-        textMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, 1));
+        textMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE,textMusterView.getPosInVbMusterContainer(), 1));
         textMusterView.setHtmlText(htmlEditor.getHtmlText());
         builtWholeContent();
         ConfigurationData configurationData = new ConfigurationData();
@@ -89,11 +89,22 @@ public class TextMusterController implements Initializable {
     }
 
     public void onEdit(ActionEvent evt) {
-        textMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, -1));
+        textMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE,textMusterView.getPosInVbMusterContainer(), -1));
         hbEditor.setVisible(true);
         hbViewer.setVisible(false);
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
+    }
+
+    @FXML
+    public void onMoveUp() {
+        textMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.MOVE_UP, textMusterView.getPosInVbMusterContainer()));
+
+    }
+
+    @FXML
+    public void onMoveDown() {
+        textMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.MOVE_DOWN, textMusterView.getPosInVbMusterContainer()));
     }
 
 }

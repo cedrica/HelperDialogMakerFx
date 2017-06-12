@@ -15,7 +15,12 @@ import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
 public class ConfiguratorView extends VBox {
-    public  int counterSave;
+
+    public int                     counterSave;
+
+    private ObjectProperty<Integer>        moveUp         = new SimpleObjectProperty<>();
+    private ObjectProperty<Integer>        moveDown         = new SimpleObjectProperty<>();
+
     private ObjectProperty<Muster> selectedMuster = new SimpleObjectProperty<>();
 
     private StringProperty pageName = new SimpleStringProperty();
@@ -29,7 +34,9 @@ public class ConfiguratorView extends VBox {
     private BooleanProperty saveDisable = new SimpleBooleanProperty(true);
 
     private IntegerProperty musterCount = new SimpleIntegerProperty();
-    
+
+    private int lastMusterIndex;
+
     public ConfiguratorView() {
         FXMLService.INSTANCE.loadView(this);
     }
@@ -45,7 +52,6 @@ public class ConfiguratorView extends VBox {
     public final void setSelectedMuster(final Muster selectedMuster) {
         this.selectedMusterProperty().set(selectedMuster);
     }
-
 
     public final ObjectProperty<Node> musterComponentProperty() {
         return this.musterComponent;
@@ -99,52 +105,84 @@ public class ConfiguratorView extends VBox {
         this.saveDisableProperty().set(saveDisable);
     }
 
-    
     public final StringProperty pageNameProperty() {
         return this.pageName;
     }
-    
 
-    
     public final String getPageName() {
         return this.pageNameProperty().get();
     }
-    
 
-    
     public final void setPageName(final String pageName) {
         this.pageNameProperty().set(pageName);
     }
 
-    
     public final IntegerProperty musterCountProperty() {
         return this.musterCount;
     }
-    
 
-    
     public final int getMusterCount() {
         return this.musterCountProperty().get();
     }
-    
 
-    
     public final void setMusterCount(final int musterCount) {
         this.musterCountProperty().set(musterCount);
     }
 
-    
     public int getCounterSave() {
         return counterSave;
     }
 
-    
     public void setCounterSave(int counter) {
         this.counterSave = counter;
+    }
+
+
+    
+    public void setLastMusterIndex(int lastMusterIndex) {
+        this.lastMusterIndex = lastMusterIndex;
+    }
+
+    public int getLastMusterIndex() {
+        return this.lastMusterIndex;
+    }
+
+    
+    public final ObjectProperty<Integer> moveUpProperty() {
+        return this.moveUp;
+    }
+    
+
+    
+    public final Integer getMoveUp() {
+        return this.moveUpProperty().get();
+    }
+    
+
+    
+    public final void setMoveUp(final Integer moveUp) {
+        this.moveUpProperty().set(moveUp);
+    }
+    
+
+    
+    public final ObjectProperty<Integer> moveDownProperty() {
+        return this.moveDown;
+    }
+    
+
+    
+    public final Integer getMoveDown() {
+        return this.moveDownProperty().get();
+    }
+    
+
+    
+    public final void setMoveDown(final Integer moveDown) {
+        this.moveDownProperty().set(moveDown);
     }
     
     
     
-
 
 }

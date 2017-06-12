@@ -33,39 +33,39 @@ import javafx.stage.FileChooser;
 public class TextImageMusterController implements Initializable {
 
     @FXML
-    Button              btnRemoveRow;
+    Button btnRemoveRow;
 
     @FXML
-    Button              btnSave;
+    Button btnSave;
 
     @FXML
-    Button              btnEdit;
+    Button btnEdit;
 
     @FXML
-    HBox                hbViewer;
+    HBox hbViewer;
 
     @FXML
-    WebView             webView;
+    WebView webView;
 
     @FXML
-    HBox                hbEditor;
+    HBox hbEditor;
 
     @FXML
-    HTMLEditor          htmlEditor;
+    HTMLEditor htmlEditor;
 
     @FXML
-    VBox                vbLoadedImage;
+    VBox vbLoadedImage;
 
     @FXML
-    ImageView           ivLoadedImage;
+    ImageView ivLoadedImage;
 
     @FXML
-    Button              btnChangeImage;
+    Button btnChangeImage;
 
     @FXML
-    Button              btnChooseImage;
+    Button btnChooseImage;
 
-    private WebEngine   webEngine;
+    private WebEngine webEngine;
 
     @FXML
     TextImageMusterView textImageMusterView;
@@ -139,7 +139,7 @@ public class TextImageMusterController implements Initializable {
             error.showAndWait();
             return;
         }
-        textImageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, 1));
+        textImageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE,textImageMusterView.getPosInVbMusterContainer(), 1));
         textImageMusterView.setHtmlText(htmlEditor.getHtmlText());
         builtWholeContent();
         ConfigurationData configurationData = new ConfigurationData();
@@ -171,11 +171,22 @@ public class TextImageMusterController implements Initializable {
     }
 
     public void onEdit(ActionEvent evt) {
-        textImageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, -1));
+        textImageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE,textImageMusterView.getPosInVbMusterContainer(), -1));
         hbEditor.setVisible(true);
         hbViewer.setVisible(false);
         btnEdit.setVisible(false);
         btnSave.setVisible(true);
+    }
+
+    @FXML
+    public void onMoveUp() {
+        textImageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.MOVE_UP, textImageMusterView.getPosInVbMusterContainer()));
+
+    }
+
+    @FXML
+    public void onMoveDown() {
+        textImageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.MOVE_DOWN, textImageMusterView.getPosInVbMusterContainer()));
     }
 
 }

@@ -10,6 +10,7 @@ import javafx.scene.web.WebView
 import java.lang.Double
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.text.TextMusterController
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.text.TextMusterView
+import javafx.scene.control.Tooltip
 
 dynamic component TextMusterView controlledby TextMusterController{
 	TextMusterView id textMusterView{
@@ -50,7 +51,34 @@ dynamic component TextMusterView controlledby TextMusterController{
 					visible : false
 				}
 			},
-			visible : true
+			Button {
+				styleClass : [
+					"button-raised"
+				],
+				graphic : Glyph {
+					icon : "ARROW_UP",
+					fontFamily : "FontAwesome",
+					fontSize : 15
+				},
+				tooltip : Tooltip {
+					text : "Nach oben schieben"
+				},
+				onAction : controllermethod onMoveUp
+			},
+			Button {
+				styleClass : [
+					"button-raised"
+				],
+				graphic : Glyph {
+					icon : "ARROW_DOWN",
+					fontFamily : "FontAwesome",
+					fontSize : 15
+				},
+				tooltip : Tooltip {
+					text : "Nach unten schieben"
+				},
+				onAction : controllermethod onMoveDown
+			}
 		},
 		StackPane {
 			HBox id hbViewer {

@@ -43,6 +43,13 @@ public class ConfiguratorManager {
             configuratorView.removeMuster(evt.getMusterIndex());
             handleDisabling(evt);
         });
+        configuratorView.addEventHandler(ConfiguratorEvent.MOVE_DOWN, evt -> {
+            evt.consume();
+        });
+        configuratorView.addEventHandler(ConfiguratorEvent.MOVE_UP, evt -> {
+            evt.consume();
+            configuratorView.setMoveUp(evt.getMoveUpDown());
+        });
     }
 
     public void handleDisabling(ConfiguratorEvent evt) {
@@ -68,22 +75,26 @@ public class ConfiguratorManager {
                 ImageMusterView imageMusterView = new ImageMusterView();
                 imageMusterView.setImageInImageView(configurationData.getImage());
                 imageMusterView.setImageBytes(configurationData.getImage());
+                imageMusterView.setPosInVbMusterContainer(configuratorView.getLastMusterIndex());
                 configuratorView.setMusterComponent(imageMusterView);
             } else if (muster == Muster.TEXT) {
                 TextMusterView textMusterView = new TextMusterView();
                 textMusterView.setHtmlText(configurationData.getHtmlText());
+                textMusterView.setPosInVbMusterContainer(configuratorView.getLastMusterIndex());
                 configuratorView.setMusterComponent(textMusterView);
             } else if (muster == Muster.TEXT_IMAGE) {
                 TextImageMusterView textImageMusterView = new TextImageMusterView();
                 textImageMusterView.setImageInImageView(configurationData.getImage());
                 textImageMusterView.setImageBytes(configurationData.getImage());
                 textImageMusterView.setHtmlText(configurationData.getHtmlText());
+                textImageMusterView.setPosInVbMusterContainer(configuratorView.getLastMusterIndex());
                 configuratorView.setMusterComponent(textImageMusterView);
             } else if (muster == Muster.IMAGE_TEXT) {
                 ImageTextMusterView imageTextMusterView = new ImageTextMusterView();
                 imageTextMusterView.setImageInImageView(configurationData.getImage());
                 imageTextMusterView.setImageBytes(configurationData.getImage());
                 imageTextMusterView.setHtmlText(configurationData.getHtmlText());
+                imageTextMusterView.setPosInVbMusterContainer(configuratorView.getLastMusterIndex());
                 configuratorView.setMusterComponent(imageTextMusterView);
 
             }
@@ -94,16 +105,21 @@ public class ConfiguratorManager {
     public void addNewRow(Muster muster) {
         if (muster == Muster.IMAGE) {
             ImageMusterView imageMusterView = new ImageMusterView();
+            imageMusterView.setPosInVbMusterContainer(configuratorView.getLastMusterIndex());
             configuratorView.setMusterComponent(imageMusterView);
         } else if (muster == Muster.TEXT) {
             TextMusterView textMusterView = new TextMusterView();
+            textMusterView.setPosInVbMusterContainer(configuratorView.getLastMusterIndex());
             configuratorView.setMusterComponent(textMusterView);
         } else if (muster == Muster.TEXT_IMAGE) {
             TextImageMusterView textImageMusterView = new TextImageMusterView();
+            textImageMusterView.setPosInVbMusterContainer(configuratorView.getLastMusterIndex());
             configuratorView.setMusterComponent(textImageMusterView);
         } else if (muster == Muster.IMAGE_TEXT) {
             ImageTextMusterView imageTextMusterView = new ImageTextMusterView();
+            imageTextMusterView.setPosInVbMusterContainer(configuratorView.getLastMusterIndex());
             configuratorView.setMusterComponent(imageTextMusterView);
+
         }
 
     }

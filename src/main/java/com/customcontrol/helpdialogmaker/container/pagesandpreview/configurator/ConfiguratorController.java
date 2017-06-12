@@ -3,6 +3,7 @@ package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,7 +33,7 @@ public class ConfiguratorController implements Initializable {
     @FXML
     VBox vbMusterContainer;
 
-    private static int ROW_INDEX = 0;
+//    private static int ROW_INDEX = 0;
 
     @FXML
     ConfiguratorView configuratorView;
@@ -45,27 +46,61 @@ public class ConfiguratorController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         cbMuster.setItems(FXCollections.observableList(Arrays.asList(Muster.values())));
-        configuratorView.selectedMusterProperty().bind(cbMuster.getSelectionModel().selectedItemProperty());
+        registerListener();
+        registerBinding();
+    }
+
+    public void registerListener() {
+        configuratorView.moveUpProperty().addListener((obs, oldVal, newVal) -> {
+            for ( Iterator<?> it = vbMusterContainer.getChildren().iterator(); it.hasNext(); )
+            {
+              Object node = it.next();
+              if (node instanceof ImageTextMusterView) {
+                  if(((ImageTextMusterView) node).getPosInVbMusterContainer() == newVal.intValue()){
+                      int pos = ((ImageTextMusterView) node).getPosInVbMusterContainer();
+                      vbMusterContainer.getChildren().remove(pos);
+                      pos = (pos-1<0)?0:pos-1;
+                      ((ImageTextMusterView) node).setPosInVbMusterContainer(pos);
+                      vbMusterContainer.getChildren().add(pos, (ImageTextMusterView)  node); break;
+                  }
+              } else if (node instanceof ImageMusterView) {
+                  if(((ImageMusterView) node).getPosInVbMusterContainer() == newVal.intValue()){
+                      int pos = ((ImageMusterView) node).getPosInVbMusterContainer();
+                      vbMusterContainer.getChildren().remove(pos);
+                      pos = (pos-1<0)?0:pos-1;
+                      ((ImageMusterView) node).setPosInVbMusterContainer(pos);
+                      vbMusterContainer.getChildren().add(pos, (ImageMusterView)  node);
+                      break;
+                  }
+              } else if (node instanceof TextImageMusterView) {
+              } else if (node instanceof TextMusterView) {
+              }
+            }
+        });
         configuratorView.musterComponentProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal == null) {
                 cbMuster.getSelectionModel().clearSelection();
                 vbMusterContainer.getChildren().clear();
                 configuratorView.setMusterCount(vbMusterContainer.getChildren().size());
-                ROW_INDEX = 0;
+//                ROW_INDEX = 0;
                 return;
             }
             vbMusterContainer.getChildren().add(newVal);
+            configuratorView.setLastMusterIndex(vbMusterContainer.getChildren().size());
             configuratorView.setMusterCount(vbMusterContainer.getChildren().size());
-            ROW_INDEX++;
-            configuratorView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, 0));
+//            ROW_INDEX++;
+            configuratorView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.DIS_OR_ENABLE_SAVE, -1,0));
         });
         configuratorView.musterIndexProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != -1)
                 removeRow(newVal.intValue());
             configuratorView.setMusterIndex(-1);
         });
+    }
+
+    public void registerBinding() {
+        configuratorView.selectedMusterProperty().bind(cbMuster.getSelectionModel().selectedItemProperty());
         btnAddNewRow.disableProperty().bind(cbMuster.getSelectionModel().selectedItemProperty().isNull());
         btnSave.disableProperty().bind(configuratorView.saveDisableProperty());
     }
@@ -73,22 +108,22 @@ public class ConfiguratorController implements Initializable {
     public void onSavePage(ActionEvent evt) {
         StringBuilder htmlContent = new StringBuilder();
         List<ConfigurationData> configurationDatas = new ArrayList<>();
-        for (Node row : vbMusterContainer.getChildren()) {
-            if (row instanceof ImageTextMusterView) {
-                htmlContent.append(((ImageTextMusterView) row).getWholeHtmlContent());
-                configurationDatas.add(((ImageTextMusterView) row).getConfigurationData());
-            } else if (row instanceof ImageMusterView) {
-                htmlContent.append(((ImageMusterView) row).getWholeHtmlContent());
-                configurationDatas.add(((ImageMusterView) row).getConfigurationData());
-            } else if (row instanceof TextImageMusterView) {
-                htmlContent.append(((TextImageMusterView) row).getWholeHtmlContent());
-                configurationDatas.add(((TextImageMusterView) row).getConfigurationData());
-            } else if (row instanceof TextMusterView) {
-                htmlContent.append(((TextMusterView) row).getWholeHtmlContent());
-                configurationDatas.add(((TextMusterView) row).getConfigurationData());
+        for (Node node : vbMusterContainer.getChildren()) {
+            if (node instanceof ImageTextMusterView) {
+                htmlContent.append(((ImageTextMusterView) node).getWholeHtmlContent());
+                configurationDatas.add(((ImageTextMusterView) node).getConfigurationData());
+            } else if (node instanceof ImageMusterView) {
+                htmlContent.append(((ImageMusterView) node).getWholeHtmlContent());
+                configurationDatas.add(((ImageMusterView) node).getConfigurationData());
+            } else if (node instanceof TextImageMusterView) {
+                htmlContent.append(((TextImageMusterView) node).getWholeHtmlContent());
+                configurationDatas.add(((TextImageMusterView) node).getConfigurationData());
+            } else if (node instanceof TextMusterView) {
+                htmlContent.append(((TextMusterView) node).getWholeHtmlContent());
+                configurationDatas.add(((TextMusterView) node).getConfigurationData());
             }
         }
-        ROW_INDEX = 0;
+//        ROW_INDEX = 0;
         configuratorView.fireEvent(new PageEvent(PageEvent.PAGE_CONFIGURATION, configuratorView.getPageIndex(), htmlContent.toString(), FXCollections.observableList(configurationDatas)));
         vbMusterContainer.getChildren().clear();
         ContainerService.CONFIGURATOR_SHOWABLE = true;
@@ -118,7 +153,7 @@ public class ConfiguratorController implements Initializable {
                     ((TextMusterView) row).setPosInVbMusterContainer(index = (index < 0) ? 0 : index);
                 }
             }
-            --ROW_INDEX;
+//            --ROW_INDEX;
             configuratorView.setMusterCount(vbMusterContainer.getChildren().size());
             return;
         }
@@ -126,7 +161,7 @@ public class ConfiguratorController implements Initializable {
 
     public void onCancel(ActionEvent evt) {
         configuratorView.fireEvent(new PageEvent(PageEvent.UPDATE_PREVIEW, configuratorView.getPageIndex(), null, null));
-        ROW_INDEX = 0;
+//        ROW_INDEX = 0;
         vbMusterContainer.getChildren().clear();
         configuratorView.setMusterCount(vbMusterContainer.getChildren().size());
         ContainerService.CONFIGURATOR_SHOWABLE = true;
