@@ -45,6 +45,7 @@ public class ConfiguratorManager {
         });
         configuratorView.addEventHandler(ConfiguratorEvent.MOVE_DOWN, evt -> {
             evt.consume();
+            configuratorView.setMoveDown(evt.getMoveUpDown());
         });
         configuratorView.addEventHandler(ConfiguratorEvent.MOVE_UP, evt -> {
             evt.consume();
