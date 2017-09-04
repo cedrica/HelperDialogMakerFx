@@ -9,9 +9,10 @@ import javafx.geometry.Insets
 import com.customcontrol.helpdialogmaker.container.ContainerController
 import com.customcontrol.helpdialogmaker.container.ContainerView
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.PagesAndPreview
+import org.controlsfx.glyphfont.Glyph
 dynamic component ContainerView controlledby ContainerController styledwith [
 	"/com/customcontrol/helpdialogmaker/container/Container.css" ] {
-	ContainerView id containerView {
+	ContainerView id rootNode {
 		stylesheets : [
 			"/com/customcontrol/helpdialogmaker/container/Container.css"
 		],
@@ -24,7 +25,26 @@ dynamic component ContainerView controlledby ContainerController styledwith [
 				"my-font"
 			],
 			Button{
-				text : "Exportieren"
+				text : "Exportieren",
+				graphic : Glyph{
+					fontFamily : "FontAwesome",
+					icon : "DOWNLOAD"
+				},
+				onAction :  controllermethod onExport
+			},
+			Button{
+				text : "Als Vorlage Speichern",
+				graphic : Glyph{
+					fontFamily : "FontAwesome",
+					icon : "SAVE"
+				}
+			},
+			Button{
+				text : "Vorlage hochladen",
+				graphic : Glyph{
+					fontFamily : "FontAwesome",
+					icon : "UPLOAD"
+				}
 			}
 		},
 		PagesAndPreview id pagesAndPreview{

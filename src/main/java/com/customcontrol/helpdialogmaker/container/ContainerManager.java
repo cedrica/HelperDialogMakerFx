@@ -2,12 +2,16 @@ package com.customcontrol.helpdialogmaker.container;
 
 import javax.inject.Inject;
 
+import com.customcontrol.helpdialogmaker.container.events.ContainerViewEvent;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageEvent;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageManager;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.previews.PreviewView;
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
+import com.preag.core.ui.utils.dialog.Dialogs;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.util.Pair;
 
 public class ContainerManager {
@@ -21,7 +25,10 @@ public class ContainerManager {
     public void handleAddedEvents(ContainerView containerView) {
 
         pageManager.handleAddedEvents(containerView, previewView);
-        
+        containerView.addEventHandler(ContainerViewEvent.FILE_SUCESSFULLY_EXPORTED, event->{
+        	Dialog<ButtonType> success = Dialogs.success("Vorlage wurde exportiert. Schieben sie die gewünschte Datei in der gewünschten Ordner.", containerView.getScene().getWindow());
+        	success.showAndWait();
+        });
         containerView.addEventHandler(PageEvent.PAGE_CONFIGURATION, evt ->{
             int pageIndex = evt.getPageIndex();
             String html = evt.getPageHTML();

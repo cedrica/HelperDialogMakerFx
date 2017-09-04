@@ -1,5 +1,6 @@
 package com.customcontrol.helpdialogmaker.helper;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,6 +11,9 @@ import java.util.stream.Collectors;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.Glyph;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
+
+import com.google.common.io.Files;
+import com.preag.core.ui.utils.FileUtil;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -26,9 +30,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.web.WebEngine;
 import netscape.javascript.JSObject;
-
 public class Helper {
 
+	public static void saveHtmlFileInTempdir(String html){
+		File createTempDir = Files.createTempDir();
+		try {
+			File dir = new File(System.getProperty("user.dir") +  "/images");
+			for (File f : dir.listFiles()) {
+				String name = f.getName();
+				File fileOrCreate = FileUtil.getFileOrCreate(createTempDir.getAbsolutePath(), name);
+				byte[] readBytesFromFile = FileUtil.readBytesFromFile(f);
+				FileUtil.writeBytesToFile(fileOrCreate, readBytesFromFile);
+			}
+			FileUtil.writeStringToFile(html, createTempDir.getAbsolutePath()+ File.separatorChar + "help.html");
+			Desktop.getDesktop().open(createTempDir);
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
+	}
+
+	
 	public static void saveImageLocaly(byte[] image, String imageName) {
 		try {
 			File file = new File(System.getProperty("user.dir") +  "/images");

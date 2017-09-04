@@ -176,9 +176,7 @@ public class ImageMusterController implements Initializable {
 
     }
 
-    @FXML
-    public void onMoveDown() {
-        imageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.MOVE_DOWN, imageMusterView.getPosInVbMusterContainer()));
-    }
+
+	@FXML public void onMoveDown(ActionEvent event) {  imageMusterView.fireEvent(new ConfiguratorEvent(ConfiguratorEvent.MOVE_DOWN, imageMusterView.getPosInVbMusterContainer()));}
 
 }
