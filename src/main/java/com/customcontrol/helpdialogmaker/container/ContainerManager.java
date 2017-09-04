@@ -1,8 +1,11 @@
 package com.customcontrol.helpdialogmaker.container;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
+
+import org.apache.commons.codec.binary.Base64;
 
 import com.customcontrol.helpdialogmaker.container.events.ContainerViewEvent;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageEvent;
@@ -12,14 +15,13 @@ import com.customcontrol.helpdialogmaker.container.pagesandpreview.previews.Prev
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.enums.Muster;
 import com.customcontrol.helpdialogmaker.helper.Helper;
-import com.google.common.io.Files;
-import com.preag.core.ui.utils.FileUtil;
 import com.preag.core.ui.utils.dialog.Dialogs;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TreeItem;
+import javafx.stage.FileChooser;
 import javafx.util.Pair;
 
 public class ContainerManager {
@@ -40,18 +42,40 @@ public class ContainerManager {
 			success.showAndWait();
 		});
 		containerView.addEventHandler(ContainerViewEvent.SAVE_AS_TEMPLATE, event -> {
-			String help = "<help>\n";
-			for (TreeItem<String> root : containerView.getPagesAndPreview().getPagesView().getRootNode()
+			String helpXmlContent = "<data>\n";
+			for (TreeItem<String> root : containerView.getPagesAndPreview().getPagesView().getParentTree()
 					.getChildren()) {
 				PageView pageView = (PageView) root.getGraphic();
-				String saveConfigurationOfPage = saveConfigurationOfPage(pageView);
-				help += saveConfigurationOfPage+"\n";
+				String xml = "";
+				String saveConfigurationOfPage = saveConfigurationOfPage(pageView,root, xml);
+				helpXmlContent += saveConfigurationOfPage + "\n";
 			}
-			help += "</help>";
-			Helper.saveFileInTempdirAndOpen(help, "HELP"+System.currentTimeMillis()+".xml");
-			
-		});
+			helpXmlContent += "</data>";
+			Helper.saveFileInTempdirAndOpen(helpXmlContent, "HELP" + System.currentTimeMillis() + ".xml");
 
+		});
+		containerView.addEventHandler(ContainerViewEvent.IMPORT_XML_TEMPLATE, event -> {
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Template wählen");
+			File template = fileChooser.showOpenDialog(containerView.getScene().getWindow());
+			if (template != null) {
+				List<PageView> pageViews = Helper.readHelperDialogTemplate(template);
+				if(pageViews == null)
+					return;
+				for (PageView pageView : pageViews) {
+					Pair<Integer, Pair<String, ObservableList<ConfigurationData>>> pair = new Pair<>(pageView.getIndex(),
+							new Pair<>(pageView.getHtml(), pageView.getConfiguration()));
+					containerView.getPagesAndPreview().getPagesView().setPageConfigutaion(pair);
+					containerView.getPagesAndPreview().setPlaceHolder(previewView);
+					previewView.setHtmlContent(
+							ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getParentTree()));
+					containerView.getPagesAndPreview().getPagesView()
+							.setEnablePopUpMenuBtn(new Pair<Integer, Boolean>(pageView.getIndex(), false));
+					containerView.getPagesAndPreview().getPagesView().addNewPage(pageView);
+				}
+
+			}
+		});
 		containerView.addEventHandler(PageEvent.PAGE_CONFIGURATION, evt -> {
 			int pageIndex = evt.getPageIndex();
 			String html = evt.getPageHTML();
@@ -60,7 +84,7 @@ public class ContainerManager {
 			containerView.getPagesAndPreview().getPagesView().setPageConfigutaion(pair);
 			containerView.getPagesAndPreview().setPlaceHolder(previewView);
 			previewView.setHtmlContent(
-					ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getRootNode()));
+					ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getParentTree()));
 			containerView.getPagesAndPreview().getPagesView()
 					.setEnablePopUpMenuBtn(new Pair<Integer, Boolean>(pageIndex, false));
 		});
@@ -71,7 +95,7 @@ public class ContainerManager {
 			evt.consume();
 			containerView.getPagesAndPreview().setPlaceHolder(previewView);
 			previewView.setHtmlContent(
-					ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getRootNode()));
+					ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getParentTree()));
 			containerView.getPagesAndPreview().getPagesView()
 					.setEnablePopUpMenuBtn(new Pair<Integer, Boolean>(evt.getPageIndex(), false));
 		});
@@ -79,40 +103,48 @@ public class ContainerManager {
 		containerView.addEventFilter(PageEvent.ADD_MENU_POINT, evt -> {
 			evt.consume();
 			previewView.setHtmlContent(
-					ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getRootNode()));
+					ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getParentTree()));
 		});
 	}
 
-	public String saveConfigurationOfPage(PageView pageView) {
-		String xml = "<page>"
-				+ "<name>" + pageView.getName() + "<name>"
-				+ "<index>" + pageView.getIndex() + "</index>"
-				+ "<html>"+ pageView.getHtml() + "</html>"
-				+ "<rootNode>" + pageView.isRootNode() + "</rootNode>"
-				+ "<nameVisible>"+ pageView.isNameVisible() + "</nameVisible>"
-				+ "<home>" + pageView.isHome() + "</home>"
-				+ "<disablePopUpMenuBtn>"+ pageView.isDisablePopUpMenuBtn() + "</disablePopUpMenuBtn>";
-		if (pageView.getConfiguration() == null) {
-			return xml+"</page>";
+	public String saveConfigurationOfPage(PageView pageView,TreeItem<String> root, String xml) {
+		xml += "<page>" + "<name>" + pageView.getName() + "</name>" + "<index>" + pageView.getIndex() + "</index>"
+				+ "<html>" + new String(Base64.encodeBase64(pageView.getHtml().getBytes()))
+				+ "</html>" + "<rootNode>" + pageView.isRootNode() + "</rootNode>" + "<nameVisible>"
+				+ pageView.isNameVisible() + "</nameVisible>" + "<home>" + pageView.isHome() + "</home>"
+				+ "<disablePopUpMenuBtn>" + pageView.isDisablePopUpMenuBtn() + "</disablePopUpMenuBtn>";
+
+		if(root.getChildren() != null && !root.getChildren().isEmpty()){
+			ObservableList<TreeItem<String>> subPages = root.getChildren();
+			for (TreeItem<String> treeItem : subPages) {
+				PageView subPage = (PageView) treeItem.getGraphic();
+				xml = saveConfigurationOfPage(subPage, treeItem,xml);
+			}
+			
 		}
-		
-		xml+= "<configurationData>";
-		for (ConfigurationData configurationData : pageView.getConfiguration()) {
-			Muster muster = configurationData.getMuster();
-			if (muster == Muster.IMAGE) {
-				xml += "<image>" + configurationData.getImage() + "</image>" 
-						+ "<htmlText>"+ configurationData.getHtmlText() + "</htmlText>" 
-						+ "<muster>" + configurationData.getMuster()+ "</muster>";
-			} else if (muster == Muster.TEXT) {
-				xml += "<htmlText>" + configurationData.getHtmlText() + "</htmlText>"
-						+ "<muster>"+ configurationData.getMuster() + "</muster>";
-			} else if (muster == Muster.TEXT_IMAGE || muster == Muster.IMAGE_TEXT) {
-				xml += "<image>" + configurationData.getImage() + "</image>" 
-						+ "<htmlText>"+ configurationData.getHtmlText() + "</htmlText>" 
-						+ "<muster>" + configurationData.getMuster()+ "</muster>";
+		if (pageView.getConfiguration() == null) {
+			return xml + "</page>";
+		}else{
+			xml += "<configurationData>";
+			for (ConfigurationData configurationData : pageView.getConfiguration()) {
+				Muster muster = configurationData.getMuster();
+				if (muster == Muster.IMAGE) {
+					xml += "<image>" + Helper.convertByteArrayToStr(configurationData.getImage()) + "</image>"
+							+ "<htmlText>" + new String(Base64.encodeBase64((configurationData.getHtmlText()!=null)? configurationData.getHtmlText().getBytes():"".getBytes())) + "</htmlText>" + "<muster>"
+							+ configurationData.getMuster() + "</muster>";
+				} else if (muster == Muster.TEXT) {
+					xml += "<htmlText>" +  new String(Base64.encodeBase64((configurationData.getHtmlText()!=null)? configurationData.getHtmlText().getBytes():"".getBytes())) + "</htmlText>" + "<muster>"
+							+ configurationData.getMuster() + "</muster>";
+				} else if (muster == Muster.TEXT_IMAGE || muster == Muster.IMAGE_TEXT) {
+					xml += "<image>" + Helper.convertByteArrayToStr(configurationData.getImage()) + "</image>"
+							+ "<htmlText>"
+							+ new String(Base64.encodeBase64((configurationData.getHtmlText()!=null)? configurationData.getHtmlText().getBytes():"".getBytes()))
+							+ "</htmlText>" + "<muster>" + configurationData.getMuster() + "</muster>";
+				}
 			}
 		}
 		xml += "</configurationData></page>";
 		return xml;
 	}
+
 }

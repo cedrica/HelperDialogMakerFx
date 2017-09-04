@@ -25,12 +25,20 @@ dynamic component ContainerView controlledby ContainerController styledwith [
 				"my-font"
 			],
 			Button{
-				text : "Exportieren",
+				text : "Als HTML exportieren",
+				graphic : Glyph{
+					fontFamily : "FontAwesome",
+					icon : "UPLOAD"
+				},
+				onAction :  controllermethod onExport
+			},
+			Button{
+				text : "XML Vorlage importieren",
 				graphic : Glyph{
 					fontFamily : "FontAwesome",
 					icon : "DOWNLOAD"
 				},
-				onAction :  controllermethod onExport
+				onAction : controllermethod onImportXmlTemplate
 			},
 			Button{
 				text : "Als Vorlage Speichern",
@@ -39,13 +47,6 @@ dynamic component ContainerView controlledby ContainerController styledwith [
 					icon : "SAVE"
 				},
 				onAction : controllermethod onSaveAsTemplate
-			},
-			Button{
-				text : "Vorlage hochladen",
-				graphic : Glyph{
-					fontFamily : "FontAwesome",
-					icon : "UPLOAD"
-				}
 			}
 		},
 		PagesAndPreview id pagesAndPreview{

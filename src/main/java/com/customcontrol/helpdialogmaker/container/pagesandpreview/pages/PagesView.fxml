@@ -14,7 +14,7 @@
 <?import org.controlsfx.glyphfont.Glyph?>
 <?scenebuilder-stylesheet /com/customcontrol/helpdialogmaker/container/pagesandpreview/pages/PagesView.css?>
 
-<fx:root xmlns:fx="http://javafx.com/fxml" type="PagesView" fx:id="pagesView" fx:controller="com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.PagesController" spacing="10">
+<fx:root xmlns:fx="http://javafx.com/fxml" type="PagesView" fx:id="rootNode" fx:controller="com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.PagesController" spacing="10">
 
 	<VBox style="-fx-background-color:#fff" PagesView.hgrow="ALWAYS"> 
 		<HBox minHeight="50"> 

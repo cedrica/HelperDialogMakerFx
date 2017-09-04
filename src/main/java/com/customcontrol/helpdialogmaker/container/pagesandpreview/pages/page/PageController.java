@@ -46,7 +46,7 @@ public class PageController implements Initializable {
     }
 
     public void binding() {
-        pageView.nameProperty().bind(tfName.textProperty());
+        pageView.nameProperty().bindBidirectional(tfName.textProperty());
         tfName.visibleProperty().bind(pageView.nameVisibleProperty());
         lblName.visibleProperty().bind(tfName.visibleProperty().not());
         lblName.textProperty().bind(pageView.nameProperty());

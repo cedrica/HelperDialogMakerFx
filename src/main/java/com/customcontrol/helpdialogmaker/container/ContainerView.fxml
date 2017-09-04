@@ -14,7 +14,12 @@
 <fx:root xmlns:fx="http://javafx.com/fxml" type="ContainerView" fx:id="rootNode" fx:controller="com.customcontrol.helpdialogmaker.container.ContainerController" spacing="10">
 
 	<HBox spacing="20" minHeight="30" alignment="CENTER"> 
-		<Button text="Exportieren" onAction="#onExport"> 
+		<Button text="Als HTML exportieren" onAction="#onExport"> 
+			<graphic>
+				<Glyph fontFamily="FontAwesome" icon="UPLOAD"/> 
+			</graphic>
+		</Button>
+		<Button text="XML Vorlage importieren" onAction="#onImportXmlTemplate"> 
 			<graphic>
 				<Glyph fontFamily="FontAwesome" icon="DOWNLOAD"/> 
 			</graphic>
@@ -22,11 +27,6 @@
 		<Button text="Als Vorlage Speichern" onAction="#onSaveAsTemplate"> 
 			<graphic>
 				<Glyph fontFamily="FontAwesome" icon="SAVE"/> 
-			</graphic>
-		</Button>
-		<Button text="Vorlage hochladen"> 
-			<graphic>
-				<Glyph fontFamily="FontAwesome" icon="UPLOAD"/> 
 			</graphic>
 		</Button>
 		<styleClass>

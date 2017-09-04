@@ -11,7 +11,7 @@ import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.PagesCo
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.PagesView
 
 dynamic component PagesView controlledby PagesController styledwith [ "/com/customcontrol/helpdialogmaker/container/pagesandpreview/pages/PagesView.css" ] {
-	PagesView id pagesView{
+	PagesView id rootNode{
 		stylesheets : [
 			"/com/customcontrol/helpdialogmaker/container/pagesandpreview/pages/PagesView.css"
 		],

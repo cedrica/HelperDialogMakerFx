@@ -2,6 +2,7 @@ package com.customcontrol.helpdialogmaker.container.pagesandpreview.pages;
 
 import javax.inject.Singleton;
 
+import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageView;
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.preag.core.ui.service.FXMLService;
 
@@ -19,17 +20,20 @@ public class PagesView extends HBox {
 
     private BooleanProperty btnPagesDisabled = new SimpleBooleanProperty(true);
 
-    private ObjectProperty<Integer> subPage = new SimpleObjectProperty<>();
-
+    private ObjectProperty<Integer> subPageIndex = new SimpleObjectProperty<>();
+    
     private ObjectProperty<Integer> renamePage = new SimpleObjectProperty<>();
 
     private ObjectProperty<Integer> removePage = new SimpleObjectProperty<>();
 
-    private ObjectProperty<TreeItem<String>> rootNode = new SimpleObjectProperty<>();
+    private ObjectProperty<PageView> newPage = new SimpleObjectProperty<>();
+    
+    private ObjectProperty<TreeItem<String>> parentTree = new SimpleObjectProperty<>();
 
     private ObjectProperty<Pair<Integer, Pair<String, ObservableList<ConfigurationData>>>> pageConfigutaion = new SimpleObjectProperty<>();
 
     private ObjectProperty<Pair<Integer,Boolean>> enablePopUpMenuBtn = new SimpleObjectProperty<>();
+    
     public PagesView() {
         FXMLService.INSTANCE.loadView(this);
     }
@@ -46,16 +50,16 @@ public class PagesView extends HBox {
         this.btnPagesDisabledProperty().set(btnPagesDisabled);
     }
 
-    public final ObjectProperty<Integer> subPageProperty() {
-        return this.subPage;
+    public final ObjectProperty<Integer> subPageIndexProperty() {
+        return this.subPageIndex;
     }
 
-    public final Integer getSubPage() {
-        return this.subPageProperty().get();
+    public final Integer getSubPageIndex() {
+        return this.subPageIndexProperty().get();
     }
 
-    public final void addSubPage(final Integer parentIndex) {
-        this.subPageProperty().set(parentIndex);
+    public final void addSubPageIndex(final Integer parentIndex) {
+        this.subPageIndexProperty().set(parentIndex);
     }
 
     public final ObjectProperty<Integer> renamePageProperty() {
@@ -82,16 +86,16 @@ public class PagesView extends HBox {
         this.removePageProperty().set(removePage);
     }
 
-    public final ObjectProperty<TreeItem<String>> rootNodeProperty() {
-        return this.rootNode;
+    public final ObjectProperty<TreeItem<String>> parentTreeProperty() {
+        return this.parentTree;
     }
 
-    public final TreeItem<String> getRootNode() {
-        return this.rootNodeProperty().get();
+    public final TreeItem<String> getParentTree() {
+        return this.parentTreeProperty().get();
     }
 
-    public final void setRootNode(final TreeItem<String> rootNode) {
-        this.rootNodeProperty().set(rootNode);
+    public final void setParentTree(final TreeItem<String> rootNode) {
+        this.parentTreeProperty().set(rootNode);
     }
 
     public final ObjectProperty<Pair<Integer, Pair<String, ObservableList<ConfigurationData>>>> pageConfigutaionProperty() {
@@ -122,7 +126,19 @@ public class PagesView extends HBox {
     public final void setEnablePopUpMenuBtn(final Pair<Integer,Boolean> enablePopUpMenuBtn) {
         this.enablePopUpMenuBtnProperty().set(enablePopUpMenuBtn);
     }
-    
 
+	public final ObjectProperty<PageView> newPageProperty() {
+		return this.newPage;
+	}
+	
+
+	public final PageView getNewPage() {
+		return this.newPageProperty().get();
+	}
+	
+
+	public final void addNewPage(final PageView newPage) {
+		this.newPageProperty().set(newPage);
+	}
 
 }

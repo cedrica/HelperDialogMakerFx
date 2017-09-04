@@ -8,6 +8,7 @@ public class ContainerViewEvent extends Event{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static EventType<ContainerViewEvent> IMPORT_XML_TEMPLATE = new EventType<>("IMPORT_XML_TEMPLATE");
 	public static EventType<ContainerViewEvent> FILE_SUCESSFULLY_EXPORTED = new EventType<>("FILE_SUCESSFULLY_EXPORTED");
 	public static EventType<ContainerViewEvent> SAVE_AS_TEMPLATE = new EventType<>("SAVE_AS_TEMPLATE");
 	

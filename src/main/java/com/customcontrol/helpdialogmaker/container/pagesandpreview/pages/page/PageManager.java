@@ -28,7 +28,7 @@ public class PageManager {
     public void handleAddedEvents(ContainerView containerView, PreviewView previewView) {
         popOverMenuView.addEventFilter(PopOverMenuEvent.ADD_SUB_PAGE, evt -> {
             evt.consume();
-            containerView.getPagesAndPreview().getPagesView().addSubPage(evt.getPageIndex());
+            containerView.getPagesAndPreview().getPagesView().addSubPageIndex(evt.getPageIndex());
         });
         popOverMenuView.addEventFilter(PopOverMenuEvent.SHOW_CONFIGURATION, evt -> {
             evt.consume();
@@ -60,7 +60,7 @@ public class PageManager {
             popOver.show((Node) evt.getTarget());
             popOverMenuView.addEventFilter(PopOverMenuEvent.CLOSE, e -> {
                 e.consume();
-                previewView.setHtmlContent(ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getRootNode()));
+                previewView.setHtmlContent(ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getParentTree()));
                 popOver.hide();
             });
         });
