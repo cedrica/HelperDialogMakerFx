@@ -32,7 +32,7 @@ import javafx.scene.web.WebEngine;
 import netscape.javascript.JSObject;
 public class Helper {
 
-	public static void saveHtmlFileInTempdir(String html){
+	public static void saveFileInTempdirAndOpen(String content, String nameSavedFile){
 		File createTempDir = Files.createTempDir();
 		try {
 			File dir = new File(System.getProperty("user.dir") +  "/images");
@@ -42,7 +42,7 @@ public class Helper {
 				byte[] readBytesFromFile = FileUtil.readBytesFromFile(f);
 				FileUtil.writeBytesToFile(fileOrCreate, readBytesFromFile);
 			}
-			FileUtil.writeStringToFile(html, createTempDir.getAbsolutePath()+ File.separatorChar + "help.html");
+			FileUtil.writeStringToFile(content, createTempDir.getAbsolutePath()+ File.separatorChar + nameSavedFile);
 			Desktop.getDesktop().open(createTempDir);
 		} catch (IOException e2) {
 			e2.printStackTrace();

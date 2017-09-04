@@ -64,14 +64,18 @@ public class ContainerController implements Initializable {
 				&& rootNode.getPagesAndPreview().getPagesView().getPageConfigutaion().getValue().getValue() != null
 				&& rootNode.getPagesAndPreview().getPagesView().getPageConfigutaion().getValue().getValue()
 						.size() > 0) {
-			Helper.saveHtmlFileInTempdir(
-					ContainerService.builtHtmlPage(rootNode.getPagesAndPreview().getPagesView().getRootNode()));
+			Helper.saveFileInTempdirAndOpen(
+					ContainerService.builtHtmlPage(rootNode.getPagesAndPreview().getPagesView().getRootNode()),"help.html");
 			rootNode.fireEvent(new ContainerViewEvent(ContainerViewEvent.FILE_SUCESSFULLY_EXPORTED));
 		}else{
 			Dialog<ButtonType> info = Dialogs.info("Keine Konfiguration registriert. Erzeugen Sie eine Seite um diesen Vorgang durchführen zu können.", rootNode.getScene().getWindow());
 			info.showAndWait();
 		}
 
+	}
+
+	public void onSaveAsTemplate() {
+		rootNode.fireEvent(new ContainerViewEvent(ContainerViewEvent.SAVE_AS_TEMPLATE));
 	}
 
 }

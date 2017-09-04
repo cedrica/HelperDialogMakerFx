@@ -37,7 +37,8 @@ dynamic component ContainerView controlledby ContainerController styledwith [
 				graphic : Glyph{
 					fontFamily : "FontAwesome",
 					icon : "SAVE"
-				}
+				},
+				onAction : controllermethod onSaveAsTemplate
 			},
 			Button{
 				text : "Vorlage hochladen",

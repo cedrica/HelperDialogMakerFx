@@ -19,7 +19,7 @@
 				<Glyph fontFamily="FontAwesome" icon="DOWNLOAD"/> 
 			</graphic>
 		</Button>
-		<Button text="Als Vorlage Speichern"> 
+		<Button text="Als Vorlage Speichern" onAction="#onSaveAsTemplate"> 
 			<graphic>
 				<Glyph fontFamily="FontAwesome" icon="SAVE"/> 
 			</graphic>
