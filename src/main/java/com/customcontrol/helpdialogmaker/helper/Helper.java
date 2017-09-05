@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -18,11 +19,14 @@ import org.controlsfx.glyphfont.Glyph;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
 
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageView;
+import com.customcontrol.helpdialogmaker.data.ConfigurationData;
 import com.customcontrol.helpdialogmaker.data.Data;
 import com.customcontrol.helpdialogmaker.data.Page;
+import com.customcontrol.helpdialogmaker.enums.Muster;
 import com.google.common.io.Files;
 import com.google.common.primitives.Bytes;
 import com.preag.core.ui.utils.FileUtil;
+import com.preag.core.ui.utils.dialog.Dialogs;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -32,7 +36,10 @@ import javafx.concurrent.Worker.State;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -191,10 +198,10 @@ public class Helper {
 			Data data = (Data) jaxbUnmarshaller.unmarshal(template);
 			List<Page> pages = data.getPages();
 			List<PageView> pageViews = mapToPageViews(pages);
-			System.out.println(pageViews.toString());
 			return pageViews;
 		} catch (JAXBException e) {
-			e.printStackTrace();
+			Dialog<ButtonType> error = Dialogs.error("Das Template kann nicht importiert werden. Die Datei wurde geschädigt", null);
+			error.showAndWait();
 		}
 		return null;
 	}
@@ -204,6 +211,46 @@ public class Helper {
 		return pageViews;
 	}
 
+	public static String createXmlTemplate(PageView pageView,TreeItem<String> root, String xml) {
+		xml += "<page>" + "<name>" + pageView.getName() + "</name>" + "<index>" + pageView.getIndex() + "</index>"
+				+ "<html>" + new String(Base64.encodeBase64(pageView.getHtml().getBytes()))
+				+ "</html>" + "<rootNode>" + pageView.isRootNode() + "</rootNode>" + "<nameVisible>"
+				+ pageView.isNameVisible() + "</nameVisible>" + "<home>" + pageView.isHome() + "</home>"
+				+ "<disablePopUpMenuBtn>" + pageView.isDisablePopUpMenuBtn() + "</disablePopUpMenuBtn>";
+
+		if(root.getChildren() != null && !root.getChildren().isEmpty()){
+			ObservableList<TreeItem<String>> subPages = root.getChildren();
+			for (TreeItem<String> treeItem : subPages) {
+				PageView subPage = (PageView) treeItem.getGraphic();
+				xml = createXmlTemplate(subPage, treeItem,xml);
+			}
+			
+		}
+		if (pageView.getConfiguration() == null) {
+			return xml + "</page>";
+		}else{
+			xml += "<configurationData>";
+			for (ConfigurationData configurationData : pageView.getConfiguration()) {
+				Muster muster = configurationData.getMuster();
+				if (muster == Muster.IMAGE) {
+					xml += "<image>" + Helper.convertByteArrayToStr(configurationData.getImage()) + "</image>"
+							+ "<htmlText>" + new String(Base64.encodeBase64((configurationData.getHtmlText()!=null)? configurationData.getHtmlText().getBytes():"".getBytes())) + "</htmlText>" + "<muster>"
+							+ configurationData.getMuster() + "</muster>";
+				} else if (muster == Muster.TEXT) {
+					xml += "<htmlText>" +  new String(Base64.encodeBase64((configurationData.getHtmlText()!=null)? configurationData.getHtmlText().getBytes():"".getBytes())) + "</htmlText>" + "<muster>"
+							+ configurationData.getMuster() + "</muster>";
+				} else if (muster == Muster.TEXT_IMAGE || muster == Muster.IMAGE_TEXT) {
+					xml += "<image>" + Helper.convertByteArrayToStr(configurationData.getImage()) + "</image>"
+							+ "<htmlText>"
+							+ new String(Base64.encodeBase64((configurationData.getHtmlText()!=null)? configurationData.getHtmlText().getBytes():"".getBytes()))
+							+ "</htmlText>" + "<muster>" + configurationData.getMuster() + "</muster>";
+				}
+			}
+		}
+		xml += "</configurationData></page>";
+		return xml;
+	}
+	
 	public static PageView mapToPageView(Page page) {
 		PageView pageView = new PageView();
 		pageView.setName(page.getName());
@@ -212,10 +259,17 @@ public class Helper {
 		pageView.setIndex(page.getIndex());
 		pageView.setNameVisible(page.isNameVisible());
 		pageView.setHome(page.isHome());
-		pageView.setHtml(page.getHtml());
-		pageView.setConfiguration(FXCollections.observableList(page.getConfiguration()));
+		pageView.setHtml(decode(page.getHtml()));
+		pageView.setConfiguration(FXCollections.observableList(new ArrayList<ConfigurationData>()));
+		for (ConfigurationData configurationData : page.getConfiguration()) {
+			configurationData.setHtmlText(decode(configurationData.getHtmlText()));
+			pageView.getConfiguration().add(configurationData);
+		}
 		if (page.getSubPages() != null && page.getSubPages().size() > 0)
 			pageView.setSubPages(FXCollections.observableList(mapToPageViews(page.getSubPages())));
 		return pageView;
+	}
+	public static String decode(String s) {
+	    return new String(Base64.decodeBase64(s.getBytes()));
 	}
 }

@@ -5,15 +5,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.commons.codec.binary.Base64;
-
 import com.customcontrol.helpdialogmaker.container.events.ContainerViewEvent;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageEvent;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageManager;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageView;
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.previews.PreviewView;
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
-import com.customcontrol.helpdialogmaker.enums.Muster;
 import com.customcontrol.helpdialogmaker.helper.Helper;
 import com.preag.core.ui.utils.dialog.Dialogs;
 
@@ -47,12 +44,13 @@ public class ContainerManager {
 					.getChildren()) {
 				PageView pageView = (PageView) root.getGraphic();
 				String xml = "";
-				String saveConfigurationOfPage = saveConfigurationOfPage(pageView,root, xml);
-				helpXmlContent += saveConfigurationOfPage + "\n";
+				String xmlTemplate = Helper.createXmlTemplate(pageView,root, xml);
+				helpXmlContent += xmlTemplate + "\n";
 			}
 			helpXmlContent += "</data>";
 			Helper.saveFileInTempdirAndOpen(helpXmlContent, "HELP" + System.currentTimeMillis() + ".xml");
-
+			Dialog<ButtonType> info = Dialogs.info("Das generierte Template darf nicht geändert werden sonst kann die Datei später nicht mehr importiert werden", containerView.getScene().getWindow());
+			info.showAndWait();
 		});
 		containerView.addEventHandler(ContainerViewEvent.IMPORT_XML_TEMPLATE, event -> {
 			FileChooser fileChooser = new FileChooser();
@@ -107,44 +105,5 @@ public class ContainerManager {
 		});
 	}
 
-	public String saveConfigurationOfPage(PageView pageView,TreeItem<String> root, String xml) {
-		xml += "<page>" + "<name>" + pageView.getName() + "</name>" + "<index>" + pageView.getIndex() + "</index>"
-				+ "<html>" + new String(Base64.encodeBase64(pageView.getHtml().getBytes()))
-				+ "</html>" + "<rootNode>" + pageView.isRootNode() + "</rootNode>" + "<nameVisible>"
-				+ pageView.isNameVisible() + "</nameVisible>" + "<home>" + pageView.isHome() + "</home>"
-				+ "<disablePopUpMenuBtn>" + pageView.isDisablePopUpMenuBtn() + "</disablePopUpMenuBtn>";
-
-		if(root.getChildren() != null && !root.getChildren().isEmpty()){
-			ObservableList<TreeItem<String>> subPages = root.getChildren();
-			for (TreeItem<String> treeItem : subPages) {
-				PageView subPage = (PageView) treeItem.getGraphic();
-				xml = saveConfigurationOfPage(subPage, treeItem,xml);
-			}
-			
-		}
-		if (pageView.getConfiguration() == null) {
-			return xml + "</page>";
-		}else{
-			xml += "<configurationData>";
-			for (ConfigurationData configurationData : pageView.getConfiguration()) {
-				Muster muster = configurationData.getMuster();
-				if (muster == Muster.IMAGE) {
-					xml += "<image>" + Helper.convertByteArrayToStr(configurationData.getImage()) + "</image>"
-							+ "<htmlText>" + new String(Base64.encodeBase64((configurationData.getHtmlText()!=null)? configurationData.getHtmlText().getBytes():"".getBytes())) + "</htmlText>" + "<muster>"
-							+ configurationData.getMuster() + "</muster>";
-				} else if (muster == Muster.TEXT) {
-					xml += "<htmlText>" +  new String(Base64.encodeBase64((configurationData.getHtmlText()!=null)? configurationData.getHtmlText().getBytes():"".getBytes())) + "</htmlText>" + "<muster>"
-							+ configurationData.getMuster() + "</muster>";
-				} else if (muster == Muster.TEXT_IMAGE || muster == Muster.IMAGE_TEXT) {
-					xml += "<image>" + Helper.convertByteArrayToStr(configurationData.getImage()) + "</image>"
-							+ "<htmlText>"
-							+ new String(Base64.encodeBase64((configurationData.getHtmlText()!=null)? configurationData.getHtmlText().getBytes():"".getBytes()))
-							+ "</htmlText>" + "<muster>" + configurationData.getMuster() + "</muster>";
-				}
-			}
-		}
-		xml += "</configurationData></page>";
-		return xml;
-	}
 
 }
