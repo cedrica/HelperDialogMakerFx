@@ -40,9 +40,14 @@ public class PagesController implements Initializable {
 		tvBaum.setRoot(parentTree);
 		tvBaum.setShowRoot(false);
 		rootNode.setParentTree(parentTree);
+		rootNode.clearParentTreeProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal)
+				createParentTree();
+			rootNode.clearParentTree(false);
+		});
 		rootNode.newPageProperty().addListener((obs, oldVal, newVal) -> {
 			if (newVal != null)
-				addNewPage(newVal,parentTree);
+				addNewPage(newVal, parentTree);
 		});
 		rootNode.subPageIndexProperty().addListener((obs, oldVal, newVal) -> {
 			if (newVal != -1)
@@ -70,6 +75,10 @@ public class PagesController implements Initializable {
 				enablePopUpMenuBtn(newVal, parentTree.getChildren());
 			rootNode.setEnablePopUpMenuBtn(new Pair<Integer, Boolean>(-1, null));
 		});
+	}
+
+	private void createParentTree() {
+		parentTree.getChildren().clear();
 	}
 
 	private void enablePopUpMenuBtn(Pair<Integer, Boolean> pair, ObservableList<TreeItem<String>> items) {
@@ -199,10 +208,10 @@ public class PagesController implements Initializable {
 	public void addNewPage(PageView pageView, TreeItem<String> parent) {
 		TreeItem<String> page = new TreeItem<String>("", pageView);
 		parent.getChildren().add(page);
-		if(pageView.getSubPages() != null && !pageView.getSubPages().isEmpty()){
-			 ObservableList<PageView> subPages = pageView.getSubPages();
+		if (pageView.getSubPages() != null && !pageView.getSubPages().isEmpty()) {
+			ObservableList<PageView> subPages = pageView.getSubPages();
 			for (PageView subPage : subPages) {
-				addNewPage(subPage,page);
+				addNewPage(subPage, page);
 			}
 		}
 	}

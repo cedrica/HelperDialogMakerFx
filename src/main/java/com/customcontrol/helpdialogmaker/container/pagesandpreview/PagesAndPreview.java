@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import org.controlsfx.control.MasterDetailPane;
 
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.PagesView;
+import com.customcontrol.helpdialogmaker.localization.Localization;
 import com.preag.core.ui.service.FXMLService;
 
 import javafx.beans.property.BooleanProperty;
@@ -22,7 +23,7 @@ public class PagesAndPreview extends MasterDetailPane{
 	private ObjectProperty<PagesView> pagesView = new SimpleObjectProperty<>();
 	
 	public  PagesAndPreview(){
-	    FXMLService.INSTANCE.loadView(this);
+	    FXMLService.INSTANCE.loadView(this,Localization.getDefault());
 	}
 	
 	public final BooleanProperty btnPagesDisabledProperty() {

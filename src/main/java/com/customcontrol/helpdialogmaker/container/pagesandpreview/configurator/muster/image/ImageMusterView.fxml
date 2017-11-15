@@ -13,11 +13,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 <?import org.controlsfx.glyphfont.Glyph?>
+<?scenebuilder-preview-i18n-resource /bundle/language_de_DE.properties?>
 
 <fx:root xmlns:fx="http://javafx.com/fxml" type="ImageMusterView" fx:id="imageMusterView" fx:controller="com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.image.ImageMusterController" spacing="5">
 
 	<HBox spacing="5" maxHeight="30" alignment="CENTER_RIGHT"> 
-		<Button fx:id="btnRemoveRow" text="Zeile entfernen"> 
+		<Button fx:id="btnRemoveRow" text="%musterView.common.removeRow"> 
 			<styleClass>
 				<String fx:value="button-raised" />
 			</styleClass>
@@ -26,7 +27,7 @@
 			</graphic>
 		</Button>
 		<StackPane> 
-			<Button fx:id="btnSave" text="Speichern" visible="true"> 
+			<Button fx:id="btnSave" text="%save" visible="true"> 
 				<styleClass>
 					<String fx:value="button-raised" />
 				</styleClass>
@@ -34,7 +35,7 @@
 					<Glyph style="-fx-text-fill:gray" icon="CHECK" fontFamily="FontAwesome" fontSize="15"/> 
 				</graphic>
 			</Button>
-			<Button fx:id="btnEdit" text="Editieren" visible="false"> 
+			<Button fx:id="btnEdit" text="%musterView.common.edit" visible="false"> 
 				<styleClass>
 					<String fx:value="button-raised" />
 				</styleClass>
@@ -51,7 +52,7 @@
 				<Glyph icon="ARROW_UP" fontFamily="FontAwesome" fontSize="15"/> 
 			</graphic>
 			<tooltip>
-				<Tooltip text="Nach oben schieben"/> 
+				<Tooltip text="%musterView.common.moveUp"/> 
 			</tooltip>
 		</Button>
 		<Button onAction="#onMoveDown"> 
@@ -62,7 +63,7 @@
 				<Glyph icon="ARROW_DOWN" fontFamily="FontAwesome" fontSize="15"/> 
 			</graphic>
 			<tooltip>
-				<Tooltip text="Nach unten schieben"/> 
+				<Tooltip text="%musterView.common.moveDown"/> 
 			</tooltip>
 		</Button>
 	</HBox>
@@ -74,7 +75,7 @@
 			<StackPane> 
 				<VBox fx:id="vbLoadedImage" spacing="5" visible="false"> 
 					<ImageView fx:id="ivLoadedImage" fitHeight="220" fitWidth="200"/> 
-					<Button fx:id="btnChangeImage" text="Bild ändern" minWidth="200"> 
+					<Button fx:id="btnChangeImage" text="%musterView.common.changeImage" minWidth="200"> 
 						<styleClass>
 							<String fx:value="button-raised" />
 						</styleClass>

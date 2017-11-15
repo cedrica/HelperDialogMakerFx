@@ -97,7 +97,6 @@ public class ConfiguratorManager {
                 imageTextMusterView.setHtmlText(configurationData.getHtmlText());
                 imageTextMusterView.setPosInVbMusterContainer(configuratorView.getLastMusterIndex());
                 configuratorView.setMusterComponent(imageTextMusterView);
-
             }
         }
 

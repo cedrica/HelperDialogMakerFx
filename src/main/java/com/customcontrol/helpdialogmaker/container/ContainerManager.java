@@ -39,17 +39,26 @@ public class ContainerManager {
 			success.showAndWait();
 		});
 		containerView.addEventHandler(ContainerViewEvent.SAVE_AS_TEMPLATE, event -> {
+			ObservableList<TreeItem<String>> children = containerView.getPagesAndPreview().getPagesView()
+					.getParentTree().getChildren();
+			if (children.size() <= 0) {
+				Dialog<ButtonType> info = Dialogs.info("Speicherung unmöglich. Keine Seite verfügbar", containerView.getScene().getWindow());
+				info.showAndWait();
+				return;
+			}
 			String helpXmlContent = "<data>\n";
 			for (TreeItem<String> root : containerView.getPagesAndPreview().getPagesView().getParentTree()
 					.getChildren()) {
 				PageView pageView = (PageView) root.getGraphic();
 				String xml = "";
-				String xmlTemplate = Helper.createXmlTemplate(pageView,root, xml);
+				String xmlTemplate = Helper.createXmlTemplate(pageView, root, xml);
 				helpXmlContent += xmlTemplate + "\n";
 			}
 			helpXmlContent += "</data>";
 			Helper.saveFileInTempdirAndOpen(helpXmlContent, "HELP" + System.currentTimeMillis() + ".xml");
-			Dialog<ButtonType> info = Dialogs.info("Das generierte Template darf nicht geändert werden sonst kann die Datei später nicht mehr importiert werden", containerView.getScene().getWindow());
+			Dialog<ButtonType> info = Dialogs.info(
+					"Das generierte Template darf nicht geändert werden sonst kann die Datei später nicht mehr importiert werden",
+					containerView.getScene().getWindow());
 			info.showAndWait();
 		});
 		containerView.addEventHandler(ContainerViewEvent.IMPORT_XML_TEMPLATE, event -> {
@@ -58,22 +67,39 @@ public class ContainerManager {
 			File template = fileChooser.showOpenDialog(containerView.getScene().getWindow());
 			if (template != null) {
 				List<PageView> pageViews = Helper.readHelperDialogTemplate(template);
-				if(pageViews == null)
+				if (pageViews == null)
 					return;
+				containerView.getPagesAndPreview().getPagesView().clearParentTree(true);
 				for (PageView pageView : pageViews) {
-					Pair<Integer, Pair<String, ObservableList<ConfigurationData>>> pair = new Pair<>(pageView.getIndex(),
-							new Pair<>(pageView.getHtml(), pageView.getConfiguration()));
+					Pair<Integer, Pair<String, ObservableList<ConfigurationData>>> pair = new Pair<>(
+							pageView.getIndex(), new Pair<>(pageView.getHtml(), pageView.getConfiguration()));
 					containerView.getPagesAndPreview().getPagesView().setPageConfigutaion(pair);
-					containerView.getPagesAndPreview().setPlaceHolder(previewView);
-					previewView.setHtmlContent(
-							ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getParentTree()));
 					containerView.getPagesAndPreview().getPagesView()
 							.setEnablePopUpMenuBtn(new Pair<Integer, Boolean>(pageView.getIndex(), false));
 					containerView.getPagesAndPreview().getPagesView().addNewPage(pageView);
 				}
-
+				previewView.setHtmlContent(ContainerService
+						.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getParentTree()));
+				containerView.getPagesAndPreview().setPlaceHolder(previewView);
 			}
 		});
+		
+		containerView.addEventHandler(ContainerViewEvent.FILE_SUCESSFULLY_EXPORTED, event -> {
+			if (containerView.getPagesAndPreview() != null && containerView.getPagesAndPreview().getPagesView() != null
+					&& containerView.getPagesAndPreview().getPagesView().getPageConfigutaion() != null
+					&& containerView.getPagesAndPreview().getPagesView().getPageConfigutaion().getValue() != null
+					&& containerView.getPagesAndPreview().getPagesView().getPageConfigutaion().getValue().getValue() != null
+					&& containerView.getPagesAndPreview().getPagesView().getPageConfigutaion().getValue().getValue()
+							.size() > 0) {
+				Helper.saveHelperAndImagesInTempdir(
+						ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getParentTree()),"help.html");
+				containerView.fireEvent(new ContainerViewEvent(ContainerViewEvent.FILE_SUCESSFULLY_EXPORTED));
+			}else{
+				Dialog<ButtonType> info = Dialogs.info("Keine Konfiguration registriert. Erzeugen Sie eine Seite um diesen Vorgang durchführen zu können.", containerView.getScene().getWindow());
+				info.showAndWait();
+			}
+		});
+		
 		containerView.addEventHandler(PageEvent.PAGE_CONFIGURATION, evt -> {
 			int pageIndex = evt.getPageIndex();
 			String html = evt.getPageHTML();
@@ -104,6 +130,5 @@ public class ContainerManager {
 					ContainerService.builtHtmlPage(containerView.getPagesAndPreview().getPagesView().getParentTree()));
 		});
 	}
-
 
 }

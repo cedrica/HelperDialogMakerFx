@@ -1,6 +1,7 @@
 package com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page;
 
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
+import com.customcontrol.helpdialogmaker.localization.Localization;
 import com.preag.core.ui.service.FXMLService;
 
 import javafx.beans.property.BooleanProperty;
@@ -40,7 +41,7 @@ public class PageView extends HBox {
 	private ListProperty<PageView> subPages = new SimpleListProperty<>();
 
 	public PageView() {
-		FXMLService.INSTANCE.loadView(this);
+		FXMLService.INSTANCE.loadView(this,Localization.getDefault());
 	}
 
 	public final StringProperty nameProperty() {

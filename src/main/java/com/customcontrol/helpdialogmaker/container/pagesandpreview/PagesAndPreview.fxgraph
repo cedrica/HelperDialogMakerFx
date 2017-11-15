@@ -12,7 +12,7 @@ import com.customcontrol.helpdialogmaker.container.pagesandpreview.PagesAndPrevi
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.PagesAndPreviewController
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.PagesView
 dynamic component PagesAndPreview controlledby PagesAndPreviewController styledwith [
-	"/com/customcontrol/helpdialogmaker/container/pagesandpreview/PagesAndPreview.css" ] {
+	"/com/customcontrol/helpdialogmaker/container/pagesandpreview/PagesAndPreview.css" ]  resourcefile "/bundle/language_de_DE.properties"{
 	PagesAndPreview id pagesAndPreview {
 		call VBox#vgrow : "ALWAYS",
 		stylesheets : [

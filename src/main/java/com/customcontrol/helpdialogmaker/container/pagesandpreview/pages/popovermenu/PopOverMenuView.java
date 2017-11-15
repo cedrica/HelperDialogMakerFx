@@ -3,6 +3,7 @@ package com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.popove
 import javax.inject.Singleton;
 
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
+import com.customcontrol.helpdialogmaker.localization.Localization;
 import com.preag.core.ui.service.FXMLService;
 
 import javafx.beans.property.IntegerProperty;
@@ -24,7 +25,7 @@ public class PopOverMenuView extends VBox {
     private ListProperty<ConfigurationData> configuration = new SimpleListProperty<>();
 
     public PopOverMenuView() {
-        FXMLService.INSTANCE.loadView(this);
+        FXMLService.INSTANCE.loadView(this,Localization.getDefault());
     }
 
     public final IntegerProperty pageIndexProperty() {

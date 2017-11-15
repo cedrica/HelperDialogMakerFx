@@ -12,7 +12,8 @@ import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.text.TextMusterView
 import javafx.scene.control.Tooltip
 
-dynamic component TextMusterView controlledby TextMusterController{
+dynamic component TextMusterView controlledby TextMusterController
+ resourcefile "/bundle/language_de_DE.properties"{
 	TextMusterView id textMusterView{
 		spacing : 5,
 		HBox {
@@ -27,7 +28,7 @@ dynamic component TextMusterView controlledby TextMusterController{
 					fontFamily : "FontAwesome",
 					fontSize : 15
 				},
-				text : "Zeile entfernen"
+				text : rstring "musterView.common.removeRow"
 			},
 			StackPane {
 				Button id btnSave {
@@ -37,7 +38,7 @@ dynamic component TextMusterView controlledby TextMusterController{
 						fontFamily : "FontAwesome",
 						fontSize : 15
 					},
-					text : "Speichern",
+					text : rstring "save",
 					visible : true
 				},
 				Button id btnEdit {
@@ -47,7 +48,7 @@ dynamic component TextMusterView controlledby TextMusterController{
 						fontFamily : "FontAwesome",
 						fontSize : 15
 					},
-					text : "Editieren",
+					text : rstring "musterView.common.edit",
 					visible : false
 				}
 			},
@@ -61,7 +62,7 @@ dynamic component TextMusterView controlledby TextMusterController{
 					fontSize : 15
 				},
 				tooltip : Tooltip {
-					text : "Nach oben schieben"
+					text : rstring "musterView.common.moveUp"
 				},
 				onAction : controllermethod onMoveUp
 			},
@@ -75,7 +76,7 @@ dynamic component TextMusterView controlledby TextMusterController{
 					fontSize : 15
 				},
 				tooltip : Tooltip {
-					text : "Nach unten schieben"
+					text : rstring "musterView.common.moveDown"
 				},
 				onAction : controllermethod onMoveDown
 			}

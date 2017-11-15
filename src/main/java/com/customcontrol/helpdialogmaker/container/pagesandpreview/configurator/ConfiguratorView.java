@@ -1,6 +1,7 @@
 package com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator;
 
 import com.customcontrol.helpdialogmaker.enums.Muster;
+import com.customcontrol.helpdialogmaker.localization.Localization;
 import com.preag.core.ui.service.FXMLService;
 
 import javafx.beans.property.BooleanProperty;
@@ -38,7 +39,7 @@ public class ConfiguratorView extends VBox {
     private int lastMusterIndex;
 
     public ConfiguratorView() {
-        FXMLService.INSTANCE.loadView(this);
+        FXMLService.INSTANCE.loadView(this,Localization.getDefault());
     }
 
     public final ObjectProperty<Muster> selectedMusterProperty() {

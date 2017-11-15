@@ -14,12 +14,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.glyphfont.Glyph?>
+<?scenebuilder-preview-i18n-resource /bundle/language_de_DE.properties?>
 <?scenebuilder-stylesheet /com/customcontrol/helpdialogmaker/container/pagesandpreview/configurator/Configurator.css?>
 
 <fx:root xmlns:fx="http://javafx.com/fxml" type="ConfiguratorView" fx:id="configuratorView" fx:controller="com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.ConfiguratorController" style="-fx-background-color:#fff" spacing="10" HBox.hgrow="ALWAYS">
 
 	<HBox alignment="CENTER"> 
-		<Label text="Configurtaion der Seite "> 
+		<Label text="%configuratorView.pageConfiguration"> 
 			<styleClass>
 				<String fx:value="h1" />
 			</styleClass>
@@ -33,14 +34,14 @@
 	<HBox spacing="5"> 
 		<VBox> 
 			<HBox spacing="10"> 
-				<ComboBox fx:id="cbMuster" minHeight="30" promptText="Muster wählen" HBox.hgrow="ALWAYS"> 
+				<ComboBox fx:id="cbMuster" minHeight="30" promptText="%configuratorView.musterMussBeChoosen" HBox.hgrow="ALWAYS"> 
 					<maxWidth><Double fx:constant="MAX_VALUE" /></maxWidth>
 				</ComboBox>
 			</HBox>
 		</VBox>
 	</HBox>
 	<HBox> 
-		<Button fx:id="btnAddNewRow" text="Neue Zeile hinzufügen" onAction="#onAddNewRow"> 
+		<Button fx:id="btnAddNewRow" text="%configuratorView.createNewLine" onAction="#onAddNewRow"> 
 			<styleClass>
 				<String fx:value="button-raised" />
 			</styleClass>
@@ -58,8 +59,8 @@
 		</VBox>
 	</ScrollPane>
 	<HBox spacing="5" alignment="CENTER_RIGHT"> 
-		<Button fx:id="btnSave" text="Seite speichern" onAction="#onSavePage"/> 
-		<Button text="Abbrechen" onAction="#onCancel"/> 
+		<Button fx:id="btnSave" text="%configuratorView.savePage" onAction="#onSavePage"/> 
+		<Button text="%break" onAction="#onCancel"/> 
 	</HBox>
 	<stylesheets>
 		<String fx:value="/com/customcontrol/helpdialogmaker/container/pagesandpreview/configurator/Configurator.css" />

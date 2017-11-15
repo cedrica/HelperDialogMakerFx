@@ -10,7 +10,9 @@ import org.controlsfx.glyphfont.Glyph
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.PagesController
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.PagesView
 
-dynamic component PagesView controlledby PagesController styledwith [ "/com/customcontrol/helpdialogmaker/container/pagesandpreview/pages/PagesView.css" ] {
+dynamic component PagesView controlledby PagesController 
+styledwith [ "/com/customcontrol/helpdialogmaker/container/pagesandpreview/pages/PagesView.css" ] 
+ resourcefile "/bundle/language_de_DE.properties"{
 	PagesView id rootNode{
 		stylesheets : [
 			"/com/customcontrol/helpdialogmaker/container/pagesandpreview/pages/PagesView.css"
@@ -33,7 +35,7 @@ dynamic component PagesView controlledby PagesController styledwith [ "/com/cust
 				VBox {
 					alignment : "CENTER",
 					Label {
-						text : "Seiten"
+						text : rstring "pagesView.pages"
 					}
 				},
 
@@ -76,7 +78,7 @@ dynamic component PagesView controlledby PagesController styledwith [ "/com/cust
 					styleClass : [
 						"my-font"
 					],
-					text : "+ Seite hinzufügen",
+					text : rstring "pagesView.addPages",
 					onAction : controllermethod onAddPage
 				}
 			}

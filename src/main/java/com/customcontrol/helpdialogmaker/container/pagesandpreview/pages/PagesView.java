@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.page.PageView;
 import com.customcontrol.helpdialogmaker.data.ConfigurationData;
+import com.customcontrol.helpdialogmaker.localization.Localization;
 import com.preag.core.ui.service.FXMLService;
 
 import javafx.beans.property.BooleanProperty;
@@ -22,6 +23,8 @@ public class PagesView extends HBox {
 
     private ObjectProperty<Integer> subPageIndex = new SimpleObjectProperty<>();
     
+    private ObjectProperty<Boolean> clearParentTree = new SimpleObjectProperty<>(false);
+    
     private ObjectProperty<Integer> renamePage = new SimpleObjectProperty<>();
 
     private ObjectProperty<Integer> removePage = new SimpleObjectProperty<>();
@@ -35,7 +38,7 @@ public class PagesView extends HBox {
     private ObjectProperty<Pair<Integer,Boolean>> enablePopUpMenuBtn = new SimpleObjectProperty<>();
     
     public PagesView() {
-        FXMLService.INSTANCE.loadView(this);
+        FXMLService.INSTANCE.loadView(this,Localization.getDefault());
     }
 
     public final BooleanProperty btnPagesDisabledProperty() {
@@ -140,5 +143,20 @@ public class PagesView extends HBox {
 	public final void addNewPage(final PageView newPage) {
 		this.newPageProperty().set(newPage);
 	}
+
+	public final ObjectProperty<Boolean> clearParentTreeProperty() {
+		return this.clearParentTree;
+	}
+	
+
+	public final Boolean getClearParentTree() {
+		return this.clearParentTreeProperty().get();
+	}
+	
+
+	public final void clearParentTree(final Boolean clearParentTree) {
+		this.clearParentTreeProperty().set(clearParentTree);
+	}
+	
 
 }

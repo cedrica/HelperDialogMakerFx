@@ -3,6 +3,7 @@ package com.customcontrol.helpdialogmaker.container;
 import javax.inject.Singleton;
 
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.PagesAndPreview;
+import com.customcontrol.helpdialogmaker.localization.Localization;
 import com.preag.core.ui.service.FXMLService;
 
 import javafx.beans.property.BooleanProperty;
@@ -16,7 +17,7 @@ public class ContainerView extends VBox{
     private ObjectProperty<PagesAndPreview> pagesAndPreview = new SimpleObjectProperty<>();
     
     public  ContainerView(){
-        FXMLService.INSTANCE.loadView(this);
+        FXMLService.INSTANCE.loadView(this,Localization.getDefault());
     }
 
     

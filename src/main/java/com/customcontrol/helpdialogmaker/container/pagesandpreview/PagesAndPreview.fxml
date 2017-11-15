@@ -8,6 +8,7 @@
 <?import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.PagesView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?scenebuilder-preview-i18n-resource /bundle/language_de_DE.properties?>
 <?scenebuilder-stylesheet /com/customcontrol/helpdialogmaker/container/pagesandpreview/PagesAndPreview.css?>
 
 <fx:root xmlns:fx="http://javafx.com/fxml" type="PagesAndPreview" fx:id="pagesAndPreview" fx:controller="com.customcontrol.helpdialogmaker.container.pagesandpreview.PagesAndPreviewController" dividerPosition="0.5" VBox.vgrow="ALWAYS">

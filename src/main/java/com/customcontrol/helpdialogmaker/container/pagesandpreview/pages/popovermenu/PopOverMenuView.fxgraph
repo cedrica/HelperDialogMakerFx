@@ -13,7 +13,8 @@ import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.popover
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.popovermenu.PopOverMenuView
 
 dynamic component PopOverMenuView controlledby PopOverMenuController styledwith [
-	"/com/customcontrol/helpdialogmaker/container/pagesandpreview/pages/popovermenu/PopOverMenu.css" ] {
+	"/com/customcontrol/helpdialogmaker/container/pagesandpreview/pages/popovermenu/PopOverMenu.css" ] 
+	resourcefile "/bundle/language_de_DE.properties"{
 	PopOverMenuView id popOverMenuView {
 		padding : Insets {
 			bottom : 10,
@@ -40,7 +41,7 @@ dynamic component PopOverMenuView controlledby PopOverMenuController styledwith 
 				icon : "EDIT",
 				fontFamily : "FontAwesome"
 			},
-			text : "Umbenennen",
+			text : rstring "popOverMenuView.rename",
 			onAction : controllermethod onRename
 		},
 		Button {
@@ -56,7 +57,7 @@ dynamic component PopOverMenuView controlledby PopOverMenuController styledwith 
 				icon : "GEAR",
 				fontFamily : "FontAwesome"
 			},
-			text : "Einstellung",
+			text : rstring "popOverMenuView.configure",
 			onAction : controllermethod onConfig
 		},
 		Button  {
@@ -72,7 +73,7 @@ dynamic component PopOverMenuView controlledby PopOverMenuController styledwith 
 				icon : "LEVEL_DOWN",
 				fontFamily : "FontAwesome"
 			},
-			text : "Unterseite",
+			text :rstring "popOverMenuView.bottomPage",
 			onAction : controllermethod onUnderPage
 		},
 		Button{
@@ -88,7 +89,7 @@ dynamic component PopOverMenuView controlledby PopOverMenuController styledwith 
 				icon : "TRASH",
 				fontFamily : "FontAwesome"
 			},
-			text : "Löschen",
+			text : rstring "popOverMenuView.delete",
 			onAction : controllermethod onRemove
 		}
 	}

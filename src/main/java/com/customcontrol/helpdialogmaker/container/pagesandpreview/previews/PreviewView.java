@@ -2,6 +2,7 @@ package com.customcontrol.helpdialogmaker.container.pagesandpreview.previews;
 
 import javax.inject.Singleton;
 
+import com.customcontrol.helpdialogmaker.localization.Localization;
 import com.preag.core.ui.service.FXMLService;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -11,7 +12,7 @@ import javafx.scene.layout.HBox;
 public class PreviewView extends HBox {
     private StringProperty htmlContent = new SimpleStringProperty();
     public PreviewView(){
-        FXMLService.INSTANCE.loadView(this);
+        FXMLService.INSTANCE.loadView(this,Localization.getDefault());
     }
     
     public final StringProperty htmlContentProperty() {

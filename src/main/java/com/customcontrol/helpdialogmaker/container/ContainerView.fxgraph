@@ -11,7 +11,7 @@ import com.customcontrol.helpdialogmaker.container.ContainerView
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.PagesAndPreview
 import org.controlsfx.glyphfont.Glyph
 dynamic component ContainerView controlledby ContainerController styledwith [
-	"/com/customcontrol/helpdialogmaker/container/Container.css" ] {
+	"/com/customcontrol/helpdialogmaker/container/Container.css" ] resourcefile "/bundle/language_de_DE.properties"{
 	ContainerView id rootNode {
 		stylesheets : [
 			"/com/customcontrol/helpdialogmaker/container/Container.css"
@@ -25,7 +25,7 @@ dynamic component ContainerView controlledby ContainerController styledwith [
 				"my-font"
 			],
 			Button{
-				text : "Als HTML exportieren",
+				text : rstring "containerView.saveAsHTML",
 				graphic : Glyph{
 					fontFamily : "FontAwesome",
 					icon : "UPLOAD"
@@ -33,7 +33,7 @@ dynamic component ContainerView controlledby ContainerController styledwith [
 				onAction :  controllermethod onExport
 			},
 			Button{
-				text : "XML Vorlage importieren",
+				text : rstring "containerView.download",
 				graphic : Glyph{
 					fontFamily : "FontAwesome",
 					icon : "DOWNLOAD"
@@ -41,7 +41,7 @@ dynamic component ContainerView controlledby ContainerController styledwith [
 				onAction : controllermethod onImportXmlTemplate
 			},
 			Button{
-				text : "Als Vorlage Speichern",
+				text : rstring "containerView.saveTemplate",
 				graphic : Glyph{
 					fontFamily : "FontAwesome",
 					icon : "SAVE"

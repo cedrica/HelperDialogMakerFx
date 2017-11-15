@@ -11,7 +11,8 @@ import java.lang.Double
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.image.ImageMusterController
 import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.muster.image.ImageMusterView
 import javafx.scene.control.Tooltip
-dynamic component ImageMusterView controlledby ImageMusterController {
+dynamic component ImageMusterView controlledby ImageMusterController  
+resourcefile "/bundle/language_de_DE.properties"{
 	ImageMusterView id imageMusterView {
 		spacing : 5,
 		HBox {
@@ -28,7 +29,7 @@ dynamic component ImageMusterView controlledby ImageMusterController {
 					fontFamily : "FontAwesome",
 					fontSize : 15
 				},
-				text : "Zeile entfernen"
+				text : rstring "musterView.common.removeRow"
 			},
 			StackPane {
 				Button id btnSave {
@@ -41,7 +42,7 @@ dynamic component ImageMusterView controlledby ImageMusterController {
 						fontFamily : "FontAwesome",
 						fontSize : 15
 					},
-					text : "Speichern",
+					text : rstring "save",
 					visible : true
 				},
 				Button id btnEdit {
@@ -54,7 +55,7 @@ dynamic component ImageMusterView controlledby ImageMusterController {
 						fontFamily : "FontAwesome",
 						fontSize : 15
 					},
-					text : "Editieren",
+					text : rstring "musterView.common.edit",
 					visible : false
 				}
 			},
@@ -68,7 +69,7 @@ dynamic component ImageMusterView controlledby ImageMusterController {
 					fontSize : 15
 				},
 				tooltip : Tooltip {
-					text : "Nach oben schieben"
+					text : rstring "musterView.common.moveUp"
 				},
 				onAction : controllermethod onMoveUp
 			},
@@ -82,7 +83,7 @@ dynamic component ImageMusterView controlledby ImageMusterController {
 					fontSize : 15
 				},
 				tooltip : Tooltip {
-					text : "Nach unten schieben"
+					text : rstring "musterView.common.moveDown"
 				},
 				onAction : controllermethod onMoveDown
 			}
@@ -112,7 +113,7 @@ dynamic component ImageMusterView controlledby ImageMusterController {
 							styleClass : [
 								"button-raised"
 							],
-							text : "Bild ändern",
+							text : rstring "musterView.common.changeImage",
 							minWidth : 200
 						},
 						visible : false

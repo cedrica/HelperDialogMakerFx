@@ -19,7 +19,8 @@ import com.customcontrol.helpdialogmaker.container.pagesandpreview.configurator.
 
 
 dynamic component ConfiguratorView controlledby ConfiguratorController styledwith [
-	"/com/customcontrol/helpdialogmaker/container/pagesandpreview/configurator/Configurator.css"] {
+	"/com/customcontrol/helpdialogmaker/container/pagesandpreview/configurator/Configurator.css"] 
+	 resourcefile "/bundle/language_de_DE.properties"{
 	ConfiguratorView id configuratorView{
 		call HBox#hgrow : "ALWAYS",
 		stylesheets : [
@@ -40,7 +41,7 @@ dynamic component ConfiguratorView controlledby ConfiguratorController styledwit
 				styleClass : [
 					"h1"
 				],
-				text :"Configurtaion der Seite "
+				text :rstring "configuratorView.pageConfiguration"
 			},
 			Label  {
 				styleClass : [
@@ -59,7 +60,7 @@ dynamic component ConfiguratorView controlledby ConfiguratorController styledwit
 						static hgrow : "ALWAYS",
 						maxWidth : const Double#MAX_VALUE,
 						minHeight : 30,
-						promptText: "Muster wählen"
+						promptText: rstring "configuratorView.musterMussBeChoosen"
 					}
 				}
 			}
@@ -71,7 +72,7 @@ dynamic component ConfiguratorView controlledby ConfiguratorController styledwit
 					icon : "PLUS_CIRCLE",
 					fontFamily : "FontAwesome"
 				},
-				text : "Neue Zeile hinzufügen",
+				text : rstring "configuratorView.createNewLine",
 				onAction : controllermethod onAddNewRow
 			}
 		},
@@ -101,11 +102,11 @@ dynamic component ConfiguratorView controlledby ConfiguratorController styledwit
 			spacing : 5,
 			alignment : "CENTER_RIGHT",
 			Button id btnSave {
-				text : "Seite speichern",
+				text : rstring "configuratorView.savePage",
 				onAction : controllermethod onSavePage
 			},
 			Button {
-				text : "Abbrechen",
+				text : rstring "break",
 				onAction : controllermethod onCancel
 			}
 		}

@@ -8,11 +8,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import org.controlsfx.glyphfont.Glyph?>
+<?scenebuilder-preview-i18n-resource /bundle/language_de_DE.properties?>
 <?scenebuilder-stylesheet /com/customcontrol/helpdialogmaker/container/pagesandpreview/pages/popovermenu/PopOverMenu.css?>
 
 <fx:root xmlns:fx="http://javafx.com/fxml" type="PopOverMenuView" fx:id="popOverMenuView" fx:controller="com.customcontrol.helpdialogmaker.container.pagesandpreview.pages.popovermenu.PopOverMenuController" spacing="5">
 
-	<Button maxHeight="30" alignment="CENTER" text="Umbenennen" onAction="#onRename" PopOverMenuView.vgrow="ALWAYS"> 
+	<Button maxHeight="30" alignment="CENTER" text="%popOverMenuView.rename" onAction="#onRename" PopOverMenuView.vgrow="ALWAYS"> 
 		<styleClass>
 			<String fx:value="item-box-info" />
 		</styleClass>
@@ -20,7 +21,7 @@
 			<Glyph contentDisplay="RIGHT" style="-fx-text-fill:#333" icon="EDIT" fontFamily="FontAwesome"/> 
 		</graphic>
 	</Button>
-	<Button maxHeight="30" alignment="CENTER" text="Einstellung" onAction="#onConfig" PopOverMenuView.vgrow="ALWAYS"> 
+	<Button maxHeight="30" alignment="CENTER" text="%popOverMenuView.configure" onAction="#onConfig" PopOverMenuView.vgrow="ALWAYS"> 
 		<styleClass>
 			<String fx:value="item-box-info" />
 		</styleClass>
@@ -28,7 +29,7 @@
 			<Glyph style="-fx-text-fill:#333" icon="GEAR" fontFamily="FontAwesome"/> 
 		</graphic>
 	</Button>
-	<Button maxHeight="30" alignment="CENTER" text="Unterseite" onAction="#onUnderPage" PopOverMenuView.vgrow="ALWAYS"> 
+	<Button maxHeight="30" alignment="CENTER" text="%popOverMenuView.bottomPage" onAction="#onUnderPage" PopOverMenuView.vgrow="ALWAYS"> 
 		<styleClass>
 			<String fx:value="item-box-info" />
 		</styleClass>
@@ -36,7 +37,7 @@
 			<Glyph contentDisplay="RIGHT" style="-fx-text-fill:#333" icon="LEVEL_DOWN" fontFamily="FontAwesome"/> 
 		</graphic>
 	</Button>
-	<Button maxHeight="30" alignment="CENTER" text="Löschen" onAction="#onRemove" PopOverMenuView.vgrow="ALWAYS"> 
+	<Button maxHeight="30" alignment="CENTER" text="%popOverMenuView.delete" onAction="#onRemove" PopOverMenuView.vgrow="ALWAYS"> 
 		<styleClass>
 			<String fx:value="item-box-info" />
 		</styleClass>
